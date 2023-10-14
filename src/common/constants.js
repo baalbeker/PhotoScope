@@ -8,6 +8,25 @@ import doner from "../assets/doner.png"
 import andrewT from "../assets/andrewT.png"
 import serena from "../assets/serena.png"
 
+export const nav_items = [
+  {
+      label: 'Home',
+      href: 'home',
+  },
+  {
+      label: 'Our Users',
+      href: 'our-users',
+  },
+  {
+      label: 'About',
+      href: 'about',
+  },
+  {
+      label: 'How it works?',
+      href: 'howItWorks',
+  },
+];
+
 export const TESTIMONIALS = [
   {
     name: 'Alice Photographer',

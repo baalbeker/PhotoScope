@@ -1,14 +1,18 @@
 import { ChakraProvider, Flex, useColorMode } from "@chakra-ui/react"
 import { Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getDocs, collection, where, query, doc, getDoc } from "firebase/firestore";
+import { useState } from "react";
+import { collection } from "firebase/firestore";
 import { auth, db } from "./config/firebase";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
 import { AuthContext } from "./context/AuthContext"
 import { FriendsContext } from "./context/FriendsContext";
-import ThemeButton from "./components/ThemeButton/ColorModeButton";
+import { useFetchFriends } from "./services/useFetchFriends";
+import { useFetchPhotos } from "./services/useFetchPhotos";
+import { useFetchUser } from "./services/useFetchUser";
+import { signUserOut } from "./services/signUserOut";
+import { useCheckAuth } from "./services/useCheckAuth";
 
+import ThemeButton from "./components/ThemeButton/ColorModeButton";
 import userimage from "./assets/user.png"
 import Navigation from "./components/Navigation/Navigation";
 import NotFound from "./views/NotFound/NotFound";
@@ -42,136 +46,17 @@ function App() {
   const [friends, setFriends] = useState([]);
   const [loading, setLoading] = useState(true);
   const [photoCount,setPhotoCount] = useState(0)
-
-
   const [photos, setPhotos] = useState([])
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-
   const [requests, setRequests] = useState([]);
-
   const { colorMode } = useColorMode();
   const usersCollection = collection(db, "users");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (userDocID) {
-          const userDocref = doc(db, "users", userDocID);
-          const userDoc = await getDoc(userDocref);
-          const userData = userDoc.data();
-
-          const requestsData = userData?.requests || [];
-          setRequests(requestsData);
-
-          const friendsData = userData?.friends || [];
-          const filteredFriends = [];
-
-          for (const friend of friendsData) {
-            const friendDocRef = doc(db, "users", friend.userDocID);
-            const friendDoc = await getDoc(friendDocRef);
-            const friendData = friendDoc.data();
-            filteredFriends.push(friendData);
-          }
-          setFriends(filteredFriends);
-          console.log('app1');
-
-        }
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, [userDocID]);
-
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const q = query(usersCollection, where("id", "==", userID));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        if (doc.data().isBlocked === true) {
-          setIsBlocked(true);
-        }
-        if (doc.data().role === 'admin') {
-          setAdmin(true);
-        }
-        setUserDocID(doc.data().docID)
-        setPhotoCount(doc.data().photoCount)
-        setName(doc.data().name)
-        setFamily(doc.data().family)
-        setUsername(doc.data().username)
-        setEmail(doc.data().email);
-        setPassword(doc.data().password)
-        console.log('app2');
-
-      });
-    };
-    getUsers();
-  }, [usersCollection, userID]);
-
-
-  useEffect(() => {
-    const fetchPhotos = async () => {
-      try {
-        const photoCollection = collection(db, 'photoData');
-        const querySnapshot = await getDocs(photoCollection);
-        const photoData = querySnapshot.docs
-        .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .filter((data) => data.fileName);
-        photoData.sort((a, b) => {
-          const userComparison = (a.userId?.localeCompare(b.userId)) || 0;
-          const timestampA = a.uploadTimestamp || '';
-          const timestampB = b.uploadTimestamp || '';
-          return userComparison !== 0 ? userComparison : timestampB.localeCompare(timestampA);
-        });
-
-        setPhotos(photoData);
-        setLoading(false);
-        console.log('applast');
-
-      } catch (error) {
-        console.error('Error fetching photos:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchPhotos();
-  }, []);
-
-
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsAuth(true);
-        setPhotoURL(user.photoURL || photoURL);
-        setUserID(user.uid);
-      } else {
-        setName('')
-        setEmail("");
-        setIsAuth(false);
-        setAdmin(false);
-        setIsBlocked(false);
-        setPhotoURL(userimage)
-        setUserID("");
-      }
-    });
-    return unsubscribe;
-  }, [photoURL]);
-
-  const signUserOut = () => {
-    signOut(auth)
-      .then(() => {
-        localStorage.setItem("isAuth", false);
-        setIsAuth(false);
-        setEmail("");
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+  useFetchFriends(userDocID, setRequests, setFriends);
+  useFetchUser(usersCollection, userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword);
+  useFetchPhotos(setPhotos, setLoading);
+  useCheckAuth(setIsAuth, setPhotoURL, setUserID, photoURL);
+  const handleSignOut = signUserOut(auth, setIsAuth, setEmail, navigate);
 
   return (
     <AuthContext.Provider
@@ -180,7 +65,7 @@ function App() {
         setIsLoggedIn: setIsAuth,
         isAdmin,
         setAdmin,
-        signOut: signUserOut,
+        signOut: handleSignOut,
         isBlocked,
         setIsBlocked,
         userID,
@@ -222,13 +107,7 @@ function App() {
                 {isAuth &&
                   location.pathname !== "/register" &&
                   location.pathname !== "/login" && <UserMenu />}
-                <Flex
-                  as="main"
-                  flexGrow={1}
-                  justifyContent="center"
-                  alignItems="center"
-                  p={5}
-                >
+                <Flex as="main" flexGrow={1} justifyContent="center" alignItems="center" p={5}>
                   <Flex as="main" direction="column" minHeight="100vh" flexGrow={1} flexShrink={0} justifyContent="center" alignItems="center" p={5}>
                     <Routes marginBottom="auto">
                       <Route path="/" element={isAuth ? <Home /> : <LandingPage />} />
@@ -243,7 +122,6 @@ function App() {
                       <Route path="contacts" element={<ContactForm />} />
                       <Route path="*" element={<NotFound />} />
                       <Route path="/user/:id" element={<UserPhotos />} />
-
                     </Routes>
                     {location.pathname !== "/" && location.pathname !== "/community" && location.pathname !== "/home" ? <Footer /> : null}
                     {location.pathname === "/" ? <ThemeButton/> : null}

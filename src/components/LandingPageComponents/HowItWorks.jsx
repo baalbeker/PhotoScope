@@ -113,7 +113,7 @@ const HowItWorks = ({ onGetStartedClick }) => {
                             top={10}
                             mt={2}
                         >
-                            Get Started
+                            Log in
                         </Button>
                     )}
                 </Flex>

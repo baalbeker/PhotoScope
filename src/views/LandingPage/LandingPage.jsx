@@ -1,14 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import CallToActionWithVideo from "../../components/LandingPageComponents/CallToActionWithVideo";
+import GetStarted from "../../components/LandingPageComponents/GetStarted";
 import UserTestimonials from '../../components/LandingPageComponents/UserTestimonials';
-import LandingPageNav from '../../components/LandingPageComponents/LandingPageNav'; 
+import LandingNavigation from '../../components/LandingPageComponents/LandingNavigation'; 
 import HowItWorks from '../../components/LandingPageComponents/HowItWorks';
-import LandingPageFooter from '../../components/LandingPageComponents/LandingPageFooter'
+import LandingFooter from '../../components/LandingPageComponents/LandingFooter'
 import About from "../About/About"
 
-/**
- * Renders the LandingPage component.
- */
 const LandingPage = () => {
     const navigate = useNavigate();
 
@@ -18,9 +15,9 @@ const LandingPage = () => {
 
     return (
         <div>
-            <LandingPageNav /> 
+            <LandingNavigation /> 
             <div id="home">
-              <CallToActionWithVideo onGetStartedClick={navigateToLogin} />
+              <GetStarted onGetStartedClick={navigateToLogin} />
             </div>
             <div id="our-users">
               <UserTestimonials />
@@ -32,7 +29,7 @@ const LandingPage = () => {
               <HowItWorks onGetStartedClick={navigateToLogin}/>
             </div>
             <div>
-              <LandingPageFooter />
+              <LandingFooter />
             </div>
         </div>
     );
