@@ -5,6 +5,7 @@ import { db } from "../config/firebase";
 export function useFetchFriends(userDocID, setRequests, setFriends) {
   
   useEffect(() => {
+    
     const fetchData = async () => {
       if (userDocID) {
         try {

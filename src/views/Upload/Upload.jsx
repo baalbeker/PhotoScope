@@ -5,12 +5,12 @@ import { AuthContext } from '../../context/AuthContext';
 import { db } from "../../config/firebase";
 import { addDoc, collection, updateDoc,doc,increment,serverTimestamp } from "firebase/firestore";
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {Box,Heading,Button,Input,Text,FormControl,FormLabel,} from '@chakra-ui/react';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Upload() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const { userID,userDocID,username,photoCount } = useContext(AuthContext);
+  const { userID,userDocID,username,photoCount,setPhotos } = useContext(AuthContext);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -23,8 +23,7 @@ function Upload() {
         toast.error('Photo upload limit reached (10 photos max).');
         return;
       }
-      console.log(photoCount);
-
+      
       const now = new Date();
       const timestamp = `${now.getFullYear()}${String(
         now.getMonth() + 1
@@ -63,8 +62,12 @@ function Upload() {
 
       const photoCollection = collection(db, "photoData");
       const docRef = await addDoc(photoCollection, photoData);
+      
       const documentId = docRef.path.split('/').pop();
       await updateDoc(docRef, { docRef: documentId });
+      
+
+      // setPhotos((prevPhotos) => [...prevPhotos, { ...photoData, docRef: documentId }]);
 
       toast.success('Photo uploaded successfully!')
     } catch (error) {

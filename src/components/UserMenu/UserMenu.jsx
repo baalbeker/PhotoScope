@@ -25,6 +25,14 @@ const UserMenu = () => {
     }
   }, [name, family, isAdmin, photoURL]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (loading) handleSignOut();
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, [loading]);
+
   if (loading) {
     return <Spinner position="fixed" top={4} mr={12} right={6} size="lg" />;
   }

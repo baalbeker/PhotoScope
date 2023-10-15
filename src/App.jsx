@@ -1,15 +1,14 @@
 import { ChakraProvider, Flex, useColorMode } from "@chakra-ui/react"
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
-import { collection } from "firebase/firestore";
-import { auth, db } from "./config/firebase";
+import { auth} from "./config/firebase";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext"
 import { FriendsContext } from "./context/FriendsContext";
 import { useFetchFriends } from "./services/useFetchFriends";
 import { useFetchPhotos } from "./services/useFetchPhotos";
 import { useFetchUser } from "./services/useFetchUser";
-import { signUserOut } from "./services/signUserOut";
+import signUserOut from "./services/signUserOut";
 import { useCheckAuth } from "./services/useCheckAuth";
 
 import ThemeButton from "./components/ThemeButton/ColorModeButton";
@@ -50,13 +49,12 @@ function App() {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [requests, setRequests] = useState([]);
   const { colorMode } = useColorMode();
-  const usersCollection = collection(db, "users");
 
-  useFetchFriends(userDocID, setRequests, setFriends);
-  useFetchUser(usersCollection, userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword);
+  useCheckAuth(setIsAuth, setPhotoURL, setUserID, photoURL,setAdmin);
+  useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword,setRequests,setFriends);
   useFetchPhotos(setPhotos, setLoading);
-  useCheckAuth(setIsAuth, setPhotoURL, setUserID, photoURL);
-  const handleSignOut = signUserOut(auth, setIsAuth, setEmail, navigate);
+  useFetchFriends(userDocID, setRequests, setFriends);
+  const handleSignOut = signUserOut(auth, navigate);
 
   return (
     <AuthContext.Provider
