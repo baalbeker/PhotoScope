@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Upload() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const { userID,userDocID,username,photoCount,setPhotos } = useContext(AuthContext);
+  const { userID,userDocID,username,photoCount } = useContext(AuthContext);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -65,9 +65,6 @@ function Upload() {
       
       const documentId = docRef.path.split('/').pop();
       await updateDoc(docRef, { docRef: documentId });
-      
-
-      // setPhotos((prevPhotos) => [...prevPhotos, { ...photoData, docRef: documentId }]);
 
       toast.success('Photo uploaded successfully!')
     } catch (error) {

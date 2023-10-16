@@ -62,8 +62,8 @@ const Friends = () => {
             <>
                 {friends.length > 0 ? (
               <Tbody>
-                {friends.map((user) => (
-                  <Tr key={user.docID}>
+                {friends.map((user,index) => (
+                  <Tr key={index}>
                     <Td>
                       <Flex align="center">
                         <Avatar

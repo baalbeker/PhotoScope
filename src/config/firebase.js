@@ -3,18 +3,6 @@ import {getFirestore} from "firebase/firestore";
 import {getAuth, GoogleAuthProvider } from "firebase/auth"
 import { getStorage} from "firebase/storage"
 
-
-//main beti acc
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBCbKKrqD1FzpP0EX9d9tFdMIlzfdvYy38",
-//   authDomain: "anotherfitness-9da5d.firebaseapp.com",
-//   projectId: "anotherfitness-9da5d",
-//   storageBucket: "anotherfitness-9da5d.appspot.com",
-//   messagingSenderId: "173977706291",
-//   appId: "1:173977706291:web:4f1958c4cd868fa48fe846",
-//   measurementId: "G-GGX6VCXD90"
-// };
-
 //change to this enki acc
 const firebaseConfig = {
   apiKey: "AIzaSyD_twJNidomc19mXGN14fXj2IsHc4Y1drI",

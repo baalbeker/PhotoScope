@@ -24,13 +24,11 @@ export function useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoC
         setRequests(userData.requests || 0);
         setFriends(userData.friends || 0);
       });
-      console.log('app3');
+      console.log('fetched user');
     };
 
     const unsubscribe = onSnapshot(userQuery, updateUserData);
-
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
+    
   }, [userID, setIsBlocked, setAdmin, setUserDocID, setPhotoCount, setName, setFamily, setUsername, setEmail, setPassword, setRequests, setFriends]);
 }

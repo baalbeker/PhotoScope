@@ -1,26 +1,17 @@
 import { Box, Container, Text, Image, Flex } from "@chakra-ui/react";
 import logo from "../../assets/logo.png";
 
-const Logo = (props) => {
-  return (
-    <Box {...props}>
-      <Image src={logo} alt="logo" />
-    </Box>
-  );
-};
-
-export default function SmallWithLogoLeft() {
+export default function Footer() {
   return (
     <Box>
-      <Container
-        mt={"300px"}
-        mb={-80}
-        >
+      <Container mt={"300px"} mb={-80}>
         <Flex align="center" justify="center">
-          <Logo boxSize="100px" mt={10}/>
+          <Box boxSize="100px" mt={10}>
+            <Image src={logo} alt="logo" />
+          </Box>
           <Text ml={4}>© 2023 PhotoScope. All rights reserved</Text>
         </Flex>
       </Container>
     </Box>
   );
-  }
+}

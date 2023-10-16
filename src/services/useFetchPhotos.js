@@ -7,8 +7,7 @@ export function useFetchPhotos(setPhotos, setLoading) {
   useEffect(() => {
     const photoCollection = collection(db, 'photoData');
 
-    // Update the photos when changes occur
-    const updatePhotos = (querySnapshot) => {
+    const fetchPhotos = (querySnapshot) => {
       const photoData = querySnapshot.docs
         .filter((doc) => doc.data().fileName)
         .map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -18,18 +17,13 @@ export function useFetchPhotos(setPhotos, setLoading) {
           const timestampB = b.uploadTimestamp || '';
           return userComparison !== 0 ? userComparison : timestampB.localeCompare(timestampA);
         });
-
       setPhotos(photoData);
       setLoading(false);
-      console.log('app2');
+      console.log('fetched photos');
     };
 
-    // Add the snapshot listener to the collection
-    const unsubscribe = onSnapshot(photoCollection, updatePhotos);
+    const unsubscribe = onSnapshot(photoCollection, fetchPhotos);
+    return () => unsubscribe();
 
-    // Clean up the listener when the component unmounts
-    return () => {
-      unsubscribe();
-    };
   }, [setPhotos, setLoading]);
 }

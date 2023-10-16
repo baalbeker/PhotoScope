@@ -70,7 +70,7 @@ const CommunityLogic = () => {
     };
 
     getUsers();
-  }, [searchTerm, searchType, sortConfig]);
+  }, [searchTerm, searchType, sortConfig,usersCollection]);
 
   /**
 

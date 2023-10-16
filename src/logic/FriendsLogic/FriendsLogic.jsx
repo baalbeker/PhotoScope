@@ -99,6 +99,7 @@ Handles removing a friend.
       const updatedFriends = userData.friends.filter(
         (friend) => friend.userDocID !== friendId
       );
+      setFriends(updatedFriends);
 
       await updateDoc(userDocRef, { friends: updatedFriends });
 
@@ -111,7 +112,6 @@ Handles removing a friend.
       );
 
       await updateDoc(friendDocRef, { friends: updatedFriendFriends });
-      setFriends(updatedFriends);
     } catch (error) {
       console.log("Error removing friend:", error);
     }
@@ -128,8 +128,8 @@ Handles declining a friend request.
       await updateDoc(userDocRef, {
         requests: requests.filter((req) => req.userDocID !== request.userDocID),
       });
-      setRequests(
-        requests.filter((req) => req.userDocID !== request.userDocID)
+      setRequests((prevRequests) =>
+        prevRequests.filter((req) => req.userDocID !== request.userDocID)
       );
     } catch (error) {
       console.log("Error declining request:", error);

@@ -1,15 +1,11 @@
 import { useState } from 'react';
-import emailjs from 'emailjs-com';
 import { Box, Heading, Input, Textarea, Button, FormControl, FormLabel } from '@chakra-ui/react';
 import { ToastContainer, toast } from 'react-toastify';
-
+import emailjs from 'emailjs-com';
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const initialState = {name: '',email: '',message: '',}
+  const [formData, setFormData] = useState(initialState);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,11 +29,11 @@ const ContactForm = () => {
         templateParams,
         'e3YIZAha09Ax2E_nr'
       );
-
+      setFormData(initialState)
       toast.success("Thanks for your message!")
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Error sending email');
+      toast.error('Error sending email');
     }
   };
 
