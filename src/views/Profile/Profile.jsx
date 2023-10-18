@@ -7,6 +7,7 @@ import DeleteUserDialog from "../../components/ProfileComponents/DeleteUserDialo
 import PageContainer from "../../components/ProfileComponents/PageContainer";
 import PageContent from "../../components/ProfileComponents/PageContent";
 import ProfileLogic from "../../logic/ProfileLogic/ProfileLogic";
+import Footer from "../../components/Footer/Footer"
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Profile() {
