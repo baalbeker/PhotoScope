@@ -87,10 +87,7 @@ export const deletePhoto = async (photo, setPhotos,userDocID) => {
     await deleteDoc(photoRef);
     await deleteObject(fileRef);
     await updateDoc(userRef, {photoCount: increment(-1)});
-    setPhotos((prevState) =>
-      prevState.filter((photoItem) => photoItem.docRef !== photo.docRef)
-    );
-    console.log("Photo deleted successfully.");
+    setPhotos((prevState) => prevState.filter((photoItem) => photoItem.docRef !== photo.docRef));
   } catch (error) {
     console.error("Error deleting photo: ", error);
   }
@@ -156,7 +153,6 @@ export const handleCommentDislike = async (commentId,photoID,userID) => {
     const commentRef = doc(db, `photoData/${photoId}/comments/${commentId}`);
     try {
       await deleteDoc(commentRef);
-      console.log("Comment deleted successfully.");
     } catch (error) {
       console.error("Error deleting comment: ", error);
     }

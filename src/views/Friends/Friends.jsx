@@ -8,9 +8,6 @@ import user2 from "../../assets/user2.png"
 import goalheader from "../../assets/img5.jpg";
 import "./Friends.css"
 
-/**
- * Renders the Friends component.
- */
 const Friends = () => {
   const { requests, friends } = useContext(FriendsContext)
   const [isLoading, setIsLoading] = useState(true);
@@ -31,11 +28,9 @@ const Friends = () => {
   }, []);
 
   return (
-    <Box w="1560px">
-      <Grid gap={4} templateRows="repeat(3, 1fr)" templateColumns="repeat(5, 1fr)" h="600px">
-
-        <GridItem colSpan={5} rounded="md" borderColor="gray.50" h="140px" w="1600px" bgImage={goalheader} p={8} />
-
+    <Box w="180vh" mt="7vh">
+      <Grid templateRows="repeat(3, 1fr)" templateColumns="repeat(5, 1fr)" h="600px">
+        <GridItem colSpan={5} rounded="md" borderColor="gray.50" h="25vh" bgImage={goalheader} />
         <GridItem colSpan={4}>
           <Text ml={2} mb={4} fontSize="2xl" fontWeight="bold">Friends</Text>
 
@@ -45,7 +40,6 @@ const Friends = () => {
                 <Th>Name</Th>
                 <Th>Username</Th>
                 <Th>Email</Th>
-                <Th>Phone</Th>
               </Tr>
             </Thead>
             {isLoading ? (
@@ -78,7 +72,6 @@ const Friends = () => {
                     </Td>
                     <Td>{user.username}</Td>
                     <Td>{user.email}</Td>
-                    <Td>{user.phoneNumber}</Td>
                     <Td>
                       <Tooltip label="Remove from friends">
                         <Button

@@ -4,12 +4,12 @@ import { db, auth } from "../../../config/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { addDoc, collection, updateDoc, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Logo from "../../../assets/logo.png"
 import Form1 from './Forms/Form1';
 import Form2 from './Forms/Form2';
 import Form3 from './Forms/Form3';
 import Loading from '../../../components/Loading/Loading';
-import { toast } from "react-toastify";
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -32,11 +32,6 @@ const Register = () => {
   const usersCollectionRef = collection(db, 'users');
   const usersQuery = query(usersCollectionRef);
 
-  /**
- * Validates the username.
- * @param {string} username - The username to be validated.
- * @returns {Promise<void>}
- */
   const validateUsername = async (username) => {
     if (username.length < 2 || username.length > 20) {
       setUsernameError("Username must be between 2 and 20 characters");
@@ -54,11 +49,6 @@ const Register = () => {
     }
   };
 
-  /**
- * Validates the email address.
- * @param {string} email - The email address to be validated.
- * @returns {Promise<void>}
- */
   const validateEmail = async (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -76,11 +66,6 @@ const Register = () => {
     }
   };
 
-  /**
- * Validates the password.
- * @param {string} password - The password to be validated.
- * @returns {Promise<void>}
- */
   const validatePassword = async (password) => {
     if (password.length < 6) {
       setPasswordError('Password must be at least 6 characters');
@@ -90,11 +75,6 @@ const Register = () => {
     }
   }
 
-  /**
- * Validates the name.
- * @param {string} name - The name to be validated.
- * @returns {Promise<void>}
- */
   const validateName = async (name) => {
     if (name.length < 3) {
       setNameError('Name must be at least 3 characters');
@@ -104,11 +84,6 @@ const Register = () => {
     }
   }
 
-  /**
- * Validates the family.
- * @param {string} family - The family name to be validated.
- * @returns {Promise<void>}
- */
   const validateFamily = async (family) => {
     if (family.length < 3) {
       setFamilyError('Family must be at least 3 characters');
@@ -118,12 +93,6 @@ const Register = () => {
     }
   }
 
-  /**
- * Adds a user to the database.
- * @param {number} bmr - The Basal Metabolic Rate (BMR) of the user.
- * @param {object} goals - The user's goals object.
- * @returns {Promise<void>}
- */
   const addUser = async () => {
     const usersCollection = collection(db, "users")
 
@@ -143,21 +112,12 @@ const Register = () => {
     await updateDoc(docRef, dataWithDocID);
   }
 
-  /**
- * Updates the name of the current user's profile.
- * @returns {void}
- */
   const updateName = () => {
     updateProfile(auth.currentUser, {
       displayName: `${regName} ${regFamily}`
     })
   }
 
-  /**
- * Sign up a new user.
- * @param {Event} e - The event object from the form submission.
- * @returns {void}
- */
   const signUp = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -189,23 +149,13 @@ const Register = () => {
   };
 
   return (
-    <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
-    >
+    <Flex minH={"100vh"} align={"center"} justify={"center"} bg={useColorModeValue("gray.50", "gray.800")}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Image src={Logo} alt="Energize Logo" w={64} />
           {isLoading && <Loading size="xl" color="teal.500" />}
         </Stack>
-        <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={8}
-        >
+        <Box rounded={"lg"} bg={useColorModeValue("white", "gray.700")} boxShadow={"lg"} p={8}>
           <Stack spacing={4}>
             <Progress
               hasStripe

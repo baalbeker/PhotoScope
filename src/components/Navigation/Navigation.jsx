@@ -1,20 +1,16 @@
 import { useState, useContext } from 'react'
-import { Flex,IconButton,Box, Image} from '@chakra-ui/react'
+import { Flex,IconButton,Box, Image,useColorMode} from '@chakra-ui/react'
 import { FiMenu, FiHome } from 'react-icons/fi'
 import {HiOutlinePhone} from 'react-icons/hi';
-import { motion } from "framer-motion";
 import { BiPhotoAlbum } from 'react-icons/bi'
 import { CgProfile } from 'react-icons/cg'
 import { FaUsers } from 'react-icons/fa'
+import { motion } from "framer-motion";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FriendsContext } from '../../context/FriendsContext';
 import logo from '../../assets/logo.png'
 import logo2 from '../../assets/logo2.png'
-
 import NavItem from './NavItem'
-import { useColorMode } from "@chakra-ui/react";
-
-
 const MotionBox = motion(Box);
 
 const Navigation = () => {
@@ -26,21 +22,17 @@ const Navigation = () => {
     const bg = (colorMode) === "dark" ? "gray.800" : "white";
     const logoto = (colorMode) === "dark" ? logo2 : logo;
 
-
-
     return (
       <Flex
         pos="sticky"
-        width="100%"
         left="5"
-        h="77vh"
+        h="93vh"
         marginTop="3.5vh"
         boxShadow="0 10px 12px 0 rgba(0, 0, 0, 0.05)"
         borderRadius={navSize == "small" ? "15px" : "30px"}
-        w={navSize == "small" ? "75px" : "200px"}
+        w={navSize == "small" ? "9vh" : "26vh"}
         flexDir="column"
         justifyContent="space-between"
-        bgColor={bg}
       >
         <Flex
           p="5px"

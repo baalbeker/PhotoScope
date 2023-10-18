@@ -16,8 +16,7 @@ export const useCheckAuth = (setIsAuth, setPhotoURL, setUserID, photoURL,setAdmi
         setUserID("");
       }
     });
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
+    
   }, [photoURL]);
 };

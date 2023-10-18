@@ -16,11 +16,12 @@ const LatestPhotos = () => {
   };
 
   return (
-    <Box mt="20px">
-      <Grid h="80%" templateColumns="repeat(5, 1fr)" gap={4}>
+    <Box mt="1vh">
+      <Grid h="52vh" templateColumns="repeat(5, 1fr)" gap={4}>
         {latestPhotos.map((photo, index) => (
           <Box
-            bgColor="#f0f8ff"
+            maxW="30vh"
+            bgColor="gray.200"
             borderRadius="8px"
             key={index}
             textAlign="center"
@@ -33,13 +34,14 @@ const LatestPhotos = () => {
             <Image
               src={photo.url}
               alt={photo.ownerName}
-              maxW="100%"
-              height="auto"
+              fit="cover"
+              width="100%"
+              height="100%"
               alignSelf="center"
             />
 
-            <Flex mt="10px">
-              <Text fontWeight="bold" mr="40px">by @{photo.ownerName}</Text>
+            <Flex mt={"auto"}>
+              <Text fontWeight="bold" mr="3vh">by @{photo.ownerName}</Text>
               {photo.createdAt && (
                 <Box ml="10px">
                   <Text fontWeight="bold" fontSize="sm">

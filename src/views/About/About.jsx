@@ -12,9 +12,7 @@ const About = () => (
         PhotoScope isn't just a photo-sharing website; it's a platform that helps you manage your photos, showcase your talent, and even connects you with fellow photography enthusiasts. My vision? To make PhotoHub your go-to platform for sharing and discovering captivating photos, inspiring and supporting you in your photographic journey. Don't just capture moments, share them. Unleash your creativity. Join PhotoHub!
         </Text>
       </Box>
-      <Heading as="h2" fontSize="2xl" my={4}>
-        Creator
-      </Heading>
+      <Heading as="h2" fontSize="2xl" my={4}>Creator</Heading>
       <Flex justify="center" mb={4}>
         <Box maxW="300px" mx={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
           <Image src={samiImage} alt="Samuil" objectFit="cover" h="300px" borderRadius="md" />
@@ -26,15 +24,12 @@ const About = () => (
           <Flex alignItems="center" ml={"24"} mt={5}>
             <Link href="mailto:samuilmnt@gmail.com" isExternal>
               <Icon as={FaEnvelope} boxSize={6} mr={2} />
-
             </Link>
             <Link href="https://www.linkedin.com/in/samuil-yoshkov-35a269278" isExternal ml={4}>
               <Icon as={FaLinkedin} boxSize={6} mr={2} />
-
             </Link>
           </Flex>
         </Box>
-        
       </Flex>
     </Box>
   </Box>

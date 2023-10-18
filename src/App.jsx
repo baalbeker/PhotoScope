@@ -24,7 +24,6 @@ import LandingPage from "./views/LandingPage/LandingPage";
 import Home from "./views/Home/Home";
 import UserMenu from "./components/UserMenu/UserMenu";
 import Friends from "./views/Friends/Friends";
-import Footer from "./components/Footer/Footer";
 import Upload from "./views/Upload/Upload";
 import ContactForm from "./components/ContactForm/ContactForm";
 import UserPhotos from "./components/UserPhotos/UserPhotos";
@@ -51,7 +50,7 @@ function App() {
   const { colorMode } = useColorMode();
 
   useCheckAuth(setIsAuth, setPhotoURL, setUserID, photoURL,setAdmin);
-  useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword,setRequests,setFriends);
+  useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword);
   useFetchPhotos(setPhotos, setLoading);
   useFetchFriends(userDocID, setRequests, setFriends);
   const handleSignOut = signUserOut(auth, navigate);
@@ -99,13 +98,9 @@ function App() {
             }}>
             <ChakraProvider>
               <Flex className="App" position="relative">
-                {isAuth &&
-                  location.pathname !== "/register" &&
-                  location.pathname !== "/login" && <Navigation colorMode={colorMode} />}
-                {isAuth &&
-                  location.pathname !== "/register" &&
-                  location.pathname !== "/login" && <UserMenu />}
-                <Flex as="main" flexGrow={1} justifyContent="center" alignItems="center" p={5}>
+                {isAuth && location.pathname !== "/register" && location.pathname !== "/login" && <Navigation colorMode={colorMode} />}
+                {isAuth && location.pathname !== "/register" && location.pathname !== "/login" && <UserMenu />}
+                <Flex as="main" flexGrow={1} justifyContent="center" alignItems="center">
                   <Flex as="main" direction="column" minHeight="100vh" flexGrow={1} flexShrink={0} justifyContent="center" alignItems="center" p={5}>
                     <Routes marginBottom="auto">
                       <Route path="/" element={isAuth ? <Home /> : <LandingPage />} />
@@ -121,8 +116,7 @@ function App() {
                       <Route path="*" element={<NotFound />} />
                       <Route path="/user/:id" element={<UserPhotos />} />
                     </Routes>
-                    {location.pathname !== "/" && location.pathname !== "/community" && location.pathname !== "/home" ? <Footer /> : null}
-                    {location.pathname === "/" ? <ThemeButton/> : null}
+                    <ThemeButton/>
                   </Flex>
                 </Flex>
               </Flex>

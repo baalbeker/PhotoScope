@@ -3,11 +3,11 @@ import { FaRegEnvelope, FaLock, FaRegUser } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import DeleteUserDialog from "../../components/ProfileComponents/DeleteUserDialog";
 import PageContainer from "../../components/ProfileComponents/PageContainer";
 import PageContent from "../../components/ProfileComponents/PageContent";
 import ProfileLogic from "../../logic/ProfileLogic/ProfileLogic";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Profile() {
   const {name,email,photoURL,family,username} = useContext(AuthContext);
@@ -204,30 +204,14 @@ export default function Profile() {
             </Stack>
           </Box>
 
-          <Stack
-            direction={["column", "row"]}
-            spacing="1rem"
-            justify="end"
-            marginTop="2rem"
-          >
-            <Button
-              type="submit"
-              colorScheme="main"
-              variant="outline"
-              onClick={updateInfo}
-            >
+          <Stack direction={["column", "row"]} spacing="1rem" justify="end" marginTop="2rem">
+            <Button type="submit" colorScheme="main" variant="outline" onClick={updateInfo}>
               Update settings
             </Button>
-            <Button colorScheme="main" variant="outline" onClick={handleCancel}>
-              Cancel
-            </Button>
+            <Button colorScheme="main" variant="outline" onClick={handleCancel}>Cancel</Button>
           </Stack>
-          <Divider
-            marginTop="2rem"
-            marginBottom="2rem"
-            orientation="horizontal"
-          />
-          <Box bg="secondary.card" rounded="lg" p={5} marginBottom="2rem">
+          <Divider marginTop="2rem" marginBottom="2rem" orientation="horizontal"/>
+          <Box bg="secondary.card" rounded="lg">
             <Stack spacing={0} marginBottom="1rem">
               <Heading as="h4" size="md">
                 Danger zone
@@ -236,12 +220,13 @@ export default function Profile() {
                 Delete your account and data
               </Text>
             </Stack>
-            <Stack spacing={4} marginBottom="1rem">
-            <DeleteUserDialog handleDeleteUser={handleDeleteUser} />
+            <Stack>
+              <DeleteUserDialog handleDeleteUser={handleDeleteUser} />
             </Stack>
             <ToastContainer position="top-center" style={{ zIndex: 2001, top: 30 }} />
           </Box>
         </Container>
+        <Footer/>
       </PageContent>
     </PageContainer>
   );

@@ -4,23 +4,22 @@ import { AuthContext } from "../context/AuthContext";
 import { FriendsContext } from "../context/FriendsContext";
 import userimage from "../assets/user.png"
 
-
 function signUserOut(auth, navigate) {
   const {
     setIsAuth,
-    setAdmin, // Make sure to include these if they are part of your context
-    setIsBlocked, // Include these as needed
-    setUserID, // Include these as needed
-    setUserDocID, // Include these as needed
-    setName, // Include these as needed
-    setFamily, // Include these as needed
-    setUsername, // Include these as needed
-    setEmail, // Include these as needed
-    setPhotoURL, // Include these as needed
-    setPassword, // Include these as needed
-    setPhotos, // Include these as needed
-    setSelectedPhoto, // Include these as needed
-    setPhotoCount, // Include these as needed
+    setAdmin,
+    setIsBlocked,
+    setUserID,
+    setUserDocID,
+    setName,
+    setFamily,
+    setUsername,
+    setEmail,
+    setPhotoURL,
+    setPassword,
+    setPhotos,
+    setSelectedPhoto,
+    setPhotoCount,
   } = useContext(AuthContext);
   const {setRequests,setFriends} = useContext(FriendsContext)
 
@@ -30,21 +29,21 @@ function signUserOut(auth, navigate) {
         localStorage.setItem("isAuth", false);
         setIsAuth(false);
         setEmail("");
-        setAdmin(false); // Reset admin state if necessary
-        setIsBlocked(false); // Reset blocked state if necessary
+        setAdmin(false);
+        setIsBlocked(false);
         setUserID("");
         setUserDocID("");
         setName("");
         setFamily("");
         setUsername("");
         setEmail("");
-        setPhotoURL(userimage); // You need to define userimage
+        setPhotoURL(userimage);
         setPassword("");
-        setFriends([]); // Reset friends array if necessary
-        setPhotoCount(0); // Reset photoCount if necessary
-        setPhotos([]); // Reset photos array if necessary
+        setFriends([]);
+        setPhotoCount(0);
+        setPhotos([]);
         setSelectedPhoto(null);
-        setRequests([]); // Reset requests array if necessary
+        setRequests([]);
         navigate("/");
       })
       .catch((error) => {

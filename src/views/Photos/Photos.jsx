@@ -25,7 +25,7 @@ const Photos = ({ loading }) => {
   const currentPhotos = photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
 
   return (
-    <Container h="calc(87vh)" minWidth="95%" centerContent>
+    <Container minWidth="180vh">
       <Heading mt="30px" as="h1" size="xl" marginBottom="4">
         Photos
       </Heading>

@@ -5,7 +5,7 @@ import { db } from "../config/firebase";
 export function useFetchFriends(userDocID, setRequests, setFriends) {
   
   useEffect(() => {
-    
+
     const fetchData = async () => {
       if (userDocID) {
         try {
@@ -27,13 +27,11 @@ export function useFetchFriends(userDocID, setRequests, setFriends) {
             const friendResults = await Promise.all(friendPromises);
             setFriends(friendResults);
           }
-          console.log('app1');
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       }
     };
-
     fetchData();
   }, [userDocID, setRequests, setFriends]);
 }

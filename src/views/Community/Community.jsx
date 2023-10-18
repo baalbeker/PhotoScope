@@ -7,7 +7,7 @@ import { BsFillPersonCheckFill, BsFillPersonPlusFill, BsFillPersonXFill, BsFillP
 import CommunityLogic from "../../logic/CommunityLogic/CommunityLogic";
 import goalheader from "../../assets/img5.jpg";
 import { useNavigate } from "react-router-dom";
-
+import Footer from "../../components/Footer/Footer";
 
 const Community = () => {
   const { userDocID, isAdmin } = useContext(AuthContext);
@@ -38,16 +38,13 @@ const Community = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const userPhotos = (id) => {
-    navigate(`/user/${id}`);
-  };
+  const userPhotos = (id) => navigate(`/user/${id}`);
   
-
   return (
-    <Box w="1560px">
-      <Grid templateColumns="repeat(1, 1fr)" h="700px">
+    <Box w="180vh" mt="4vh">
+      <Grid templateColumns="repeat(1, 1fr)" h="600px">
 
-        <GridItem colSpan={1} rounded="md" borderColor="gray.50" h="140px" w="1600px" bgImage={goalheader} p={8} />
+        <GridItem colSpan={1} rounded="md" borderColor="gray.50" h="25vh" bgImage={goalheader} p={8} />
 
         <GridItem colSpan={1} bgColor={bg}>
           <FormControl mb={4}>
@@ -95,7 +92,7 @@ const Community = () => {
         </GridItem>
 
         <GridItem colSpan={1}>
-          <Table variant="simple" mb={"56"}>
+          <Table variant="simple" >
           <Thead>
             <Tr>
               <Th onClick={() => onSort('name')} _hover={{ cursor: "pointer" }} color={sortConfig?.field === 'name' ? 'blue.500' : 'black'}>{'Name '}{sortConfig?.field === 'name' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
@@ -116,154 +113,91 @@ const Community = () => {
                 <Tr key={user.id}>
                   <Td>
                     <Flex align="center">
-                      <Avatar
-                        size="sm"
-                        src={user.avatar}
-                        _hover={{ cursor: "pointer" }}
-                      />
-                      <Text ml="2">
-                        {user.name} {user.family}
-                      </Text>
+                      <Avatar size="sm" src={user.avatar}/>
+                      <Text ml="2">{user.name} {user.family}</Text>
                     </Flex>
                   </Td>
-                  
                   <Td>{user.photoCount}</Td>
                   <Td>{user.username}</Td>
                   <Td>{user.email}</Td>
                   <Td>{user.role}</Td>
                   <Td>{user.isBlocked ? "Blocked" : "Not Blocked"}</Td>
-
                   <Td>
                     {user.friends &&
                       user.friends.find(
                         (friend) => friend.userDocID === userDocID
                       ) ? (
                       <Tooltip label="Friend">
-                        <Button
-                          className="friends"
-                          size="md"
-                          variant="ghost"
-                          colorScheme="green"
-                        >
-                          <Flex align="center">
-                            <BsFillPersonCheckFill />
-                          </Flex>
+                        <Button className="friends" size="md"variant="ghost"colorScheme="green">
+                          <Flex align="center"><BsFillPersonCheckFill /></Flex>
                         </Button>
                       </Tooltip>
-                    ) : user.requests &&
-                      user.requests.find(
-                        (request) => request.userDocID === userDocID
-                      ) ? (
-                      <Tooltip label="Cancel Friend Request">
-                        <Button
-                          className="cancelrequest"
-                          onClick={() => handleCancelFriendRequest(user.id)}
-                          size="md"
-                          variant="ghost"
-                          colorScheme="red"
-                        >
-                          <Flex align="center">
-                            <BsFillPersonXFill />
-                          </Flex>
-                        </Button>
-                      </Tooltip>
-                    ) : user.docID === userDocID ? (
-                      <Tooltip label="You">
-                        <Button
-                          className="reddotbutton"
-                          size="md"
-                          variant="ghost"
-                          colorScheme="orange"
-                        >
-                          <Flex align="center">
-                            <BsFillPersonBadgeFill />
-                          </Flex>
-                        </Button>
-                      </Tooltip>
-                    ) : (
-                      <Tooltip label="Send Friend Request">
-                        <Button
-                          className="friendrequest"
-                          onClick={() => handleFriendRequest(user.id)}
-                          size="md"
-                          variant="ghost"
-                          colorScheme="linkedin"
-                        >
-                          <Flex align="center">
-                            <BsFillPersonPlusFill />
-                          </Flex>
-                        </Button>
-                      </Tooltip>
+                      ) : user.requests && user.requests.find((request) => request.userDocID === userDocID
+                        ) ? (
+                        <Tooltip label="Cancel Friend Request">
+                          <Button className="cancelrequest" onClick={() => handleCancelFriendRequest(user.id)} size="md" variant="ghost" colorScheme="red">
+                            <Flex align="center"><BsFillPersonXFill /></Flex>
+                          </Button>
+                        </Tooltip>
+                        ) : user.docID === userDocID ? (
+                          <Tooltip label="You">
+                            <Button className="reddotbutton" size="md" variant="ghost" colorScheme="orange">
+                              <Flex align="center"><BsFillPersonBadgeFill /></Flex>
+                            </Button>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip label="Send Friend Request">
+                            <Button className="friendrequest" onClick={() => handleFriendRequest(user.id)} size="md" variant="ghost" colorScheme="linkedin">
+                              <Flex align="center"><BsFillPersonPlusFill /></Flex>
+                            </Button>
+                          </Tooltip>
                     )}
                   </Td>
-                  {isAdmin && (<>
-                    <Td>
-                      <Tooltip label="Delete User">
-                        <Button
-                          className="deleteuser"
-                          onClick={() => handleDeleteUser(user.id)}
-                          size="lg"
-                          variant="ghost"
-                          colorScheme="red"
-                          p={1}
-                        >
-                          <Flex align="center">
-                            <MdDeleteForever />
-                          </Flex>
-                        </Button>
-                      </Tooltip>
-                    </Td>
-
-                    <Td>
-                    <Button
-                            className="openPhotos"
-                            onClick={() => userPhotos(user.docID)}
-                            size="md"
-                            variant="ghost"
-                            colorScheme="gray">
-                            Photos
-                        </Button>
-                    </Td>
-                    <Td>
-                      {user.isBlocked ? (
-                        <Tooltip label="Unblock User">
-                          <Button
-                            className="unblockuser"
-                            onClick={() => handleUnblockUser(user.id)}
-                            size="md"
-                            variant="ghost"
-                            colorScheme="red"
-                          >
+                  {isAdmin && (
+                    <>
+                      <Td>
+                        <Tooltip label="Delete User">
+                          <Button className="deleteuser" onClick={() => handleDeleteUser(user.id)} size="lg" variant="ghost" colorScheme="red" p={1}>
                             <Flex align="center">
-                              <AiFillLock />
+                              <MdDeleteForever />
                             </Flex>
                           </Button>
                         </Tooltip>
-                      ) : (
-                        <Tooltip label="Block User">
-                          <Button
-                            className="blockuser"
-                            onClick={() => handleBlockUser(user.id)}
-                            size="md"
-                            variant="ghost"
-                            colorScheme="green"
-                          >
-                            <Flex align="center">
-                              <AiFillUnlock />
-                            </Flex>
-                          </Button>
-                        </Tooltip>
-                      )}
-                    </Td>
-                  </>
+                      </Td>
+                      <Td>
+                        <Button className="openPhotos" onClick={() => userPhotos(user.docID)} size="md" variant="ghost" colorScheme="gray">
+                          Photos
+                        </Button>
+                      </Td>
+                      <Td>
+                        {user.isBlocked ? (
+                          <Tooltip label="Unblock User">
+                            <Button
+                              className="unblockuser"
+                              onClick={() => handleUnblockUser(user.id)}
+                              size="md"
+                              variant="ghost"
+                              colorScheme="red"
+                            >
+                              <Flex align="center"><AiFillLock /></Flex>
+                            </Button>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip label="Block User">
+                            <Button className="blockuser" onClick={() => handleBlockUser(user.id)} size="md" variant="ghost" colorScheme="green">
+                              <Flex align="center"><AiFillUnlock /></Flex>
+                            </Button>
+                          </Tooltip>
+                        )}
+                      </Td>
+                    </>
                   )}
-
                 </Tr>
               ))}
             </Tbody>
-)}
-            
+            )}
           </Table>
+          <Footer/>
         </GridItem>
       </Grid>
     </Box>

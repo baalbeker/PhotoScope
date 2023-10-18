@@ -5,37 +5,20 @@ import { AuthContext } from "../../context/AuthContext";
 import { useColorMode } from "@chakra-ui/react";
 
 const CommunityLogic = () => {
-  const { userDocID, name, family } = useContext(AuthContext);
+  const { userDocID, name, family, email, username } = useContext(AuthContext);
   const usersCollection = collection(db, "users");
   const [userList, setUserList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchType, setSearchType] = useState("name");
   const { colorMode } = useColorMode();
   const [sortConfig, setSortConfig] = useState(null);
-
   const bg = colorMode === "dark" ? "gray.800" : "white";
 
-  /**
-  Handles the change event for the search term input.
-  @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
-  */
-  const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  /**
-  Handles the change event for the search type input.
-  @param {React.ChangeEvent<HTMLSelectElement>} event - The change event.
-  */
-  const handleSearchTypeChange = (event) => {
-    setSearchType(event.target.value);
-  };
+  const handleSearchTermChange = (event) => setSearchTerm(event.target.value);
+  const handleSearchTypeChange = (event) => setSearchType(event.target.value);
 
   useEffect(() => {
-    /**
-     Fetches the users from the database based on the search term and type.
-     @returns {Promise<void>}
-     */
+
     const getUsers = async () => {
       let q;
       if (searchTerm.trim() !== "") {
@@ -65,30 +48,17 @@ const CommunityLogic = () => {
           return 0;
         });
       }
-
       setUserList(sortedUsers);
     };
 
     getUsers();
   }, [searchTerm, searchType, sortConfig,usersCollection]);
 
-  /**
-
-Deletes a user from the database and updates the user list.
-@param {string} userId - The ID of the user to delete.
-@returns {Promise<void>}
-*/
   const handleDeleteUser = async (userId) => {
     await deleteDoc(doc(usersCollection, userId));
     setUserList(userList.filter((user) => user.id !== userId));
   };
 
-  /**
-
-Blocks a user and updates the user list.
-@param {string} userId - The ID of the user to block.
-@returns {Promise<void>}
-*/
   const handleBlockUser = async (userId) => {
     const data = { isBlocked: true };
     const docRef = doc(db, "users", userId);
@@ -100,12 +70,6 @@ Blocks a user and updates the user list.
     );
   };
 
-  /**
-
-Unblocks a user and updates the user list.
-@param {string} userId - The ID of the user to unblock.
-@returns {Promise<void>}
-*/
   const handleUnblockUser = async (userId) => {
     const data = { isBlocked: null };
     const docRef = doc(db, "users", userId);
@@ -117,12 +81,6 @@ Unblocks a user and updates the user list.
     );
   };
 
-  /**
-
-Sends a friend request to a user and updates the user list.
-@param {string} userId - The ID of the user to send a friend request to.
-@returns {Promise<void>}
-*/
   const handleFriendRequest = async (userId) => {
     const targetUserDocRef = doc(db, "users", userId);
     const targetDoc = await getDoc(targetUserDocRef);
@@ -132,7 +90,7 @@ Sends a friend request to a user and updates the user list.
     if (updatedFriends.some((friend) => friend.userDocID === userDocID)) {
       return;
     }
-    updatedFriends.push({ userDocID, name, family });
+    updatedFriends.push({ userDocID, name, family, email, username });
     const updatedData = { requests: updatedFriends };
     await updateDoc(targetUserDocRef, updatedData);
     setUserList((prevUserList) =>
@@ -142,24 +100,14 @@ Sends a friend request to a user and updates the user list.
     );
   };
 
-  /**
-
-Cancels a friend request sent to a user and updates the user list.
-@param {string} userId - The ID of the user to cancel the friend request.
-@returns {Promise<void>}
-*/
   const handleCancelFriendRequest = async (userId) => {
     const targetUserDocRef = doc(db, "users", userId);
     const targetDoc = await getDoc(targetUserDocRef);
     const target = targetDoc.data();
 
-    if (!target || !target.requests) {
-      return;
-    }
+    if (!target || !target.requests) return;
 
-    const updatedFriends = target.requests.filter(
-      (friend) => friend.userDocID !== userDocID
-    );
+    const updatedFriends = target.requests.filter((friend) => friend.userDocID !== userDocID);
 
     const updatedData = { requests: updatedFriends };
     await updateDoc(targetUserDocRef, updatedData);
@@ -170,12 +118,6 @@ Cancels a friend request sent to a user and updates the user list.
     );
   };
 
-  /**
-
-Handles the sorting of users based on the field.
-@param {string} field - The field to sort by.
-@returns {void}
-*/
   const onSort = (field) => {
     let direction = "ascending";
 
@@ -186,7 +128,6 @@ Handles the sorting of users based on the field.
     ) {
       direction = "descending";
     }
-
     setSortConfig({ field, direction });
   };
 

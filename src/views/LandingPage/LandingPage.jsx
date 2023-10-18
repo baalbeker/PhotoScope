@@ -8,29 +8,26 @@ import About from "../About/About"
 
 const LandingPage = () => {
     const navigate = useNavigate();
-
-    const navigateToLogin = () => {
-        navigate("/login");
-    };
+    const navigateToLogin = () => navigate("/login");
 
     return (
         <div>
-            <LandingNavigation /> 
-            <div id="home">
-              <GetStarted onGetStartedClick={navigateToLogin} />
-            </div>
-            <div id="our-users">
-              <UserTestimonials />
-            </div>
-            <div id="about">
-              <About />
-            </div>
-            <div id="howItWorks">
-              <HowItWorks onGetStartedClick={navigateToLogin}/>
-            </div>
-            <div>
-              <LandingFooter />
-            </div>
+          <LandingNavigation /> 
+          <div id="home">
+            <GetStarted onGetStartedClick={navigateToLogin} />
+          </div>
+          <div id="our-users">
+            <UserTestimonials />
+          </div>
+          <div id="about">
+            <About />
+          </div>
+          <div id="howItWorks">
+            <HowItWorks onGetStartedClick={navigateToLogin}/>
+          </div>
+          <div>
+            <LandingFooter />
+          </div>
         </div>
     );
 };

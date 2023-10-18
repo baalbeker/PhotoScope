@@ -15,9 +15,7 @@ const UserMenu = () => {
   const bg = (colorMode) === "dark" ? "gray.800" : "white";
 
 
-  const handleSignOut = () => {
-    signOut();
-  }
+  const handleSignOut = () => signOut();
 
   useEffect(() => {
     if (name && family && isAdmin !== undefined && photoURL) {
@@ -38,14 +36,15 @@ const UserMenu = () => {
   }
 
   return (
-    <Flex mt='10px' position="fixed" right={0} backgroundColor={bg} w={"1675px"} zIndex={"sticky"} borderRadius={"md"} h={"70px"}>
-      <Box ml="1430px" paddingTop={"2"}>
+    <Flex mt='10px' position="fixed" right={0} w="37vh" zIndex={"sticky"} borderRadius={"md"} h={"70px"}>
+      <Box paddingTop={"2"}>
         <Heading as="h3" size="sm">{`${name} ${family}`}</Heading>
         <Flex color="gray" alignItems="center">
           <Text textAlign="right">{isAdmin ? ' Admin' : ' User'}</Text>
         </Flex>
         <ThemeButton />
       </Box>
+      
       <Menu>
         <MenuButton ml={"2"} mt={1} as={Avatar} size="md" src={photoURL} _hover={{ cursor: 'pointer' }}>
           <ChevronDownIcon />

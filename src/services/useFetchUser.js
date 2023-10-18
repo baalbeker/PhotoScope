@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { where, query, collection, onSnapshot} from "firebase/firestore";
 import { db } from "../config/firebase";
 
-export function useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword,setRequests,setFriends) {
+export function useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword) {
 
   useEffect(() => {
     const usersCollection = collection(db, "users");
@@ -21,14 +21,11 @@ export function useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoC
         setUsername(userData.username);
         setEmail(userData.email);
         setPassword(userData.password);
-        setRequests(userData.requests || 0);
-        setFriends(userData.friends || 0);
       });
-      console.log('fetched user');
     };
 
     const unsubscribe = onSnapshot(userQuery, updateUserData);
     return () => unsubscribe();
     
-  }, [userID, setIsBlocked, setAdmin, setUserDocID, setPhotoCount, setName, setFamily, setUsername, setEmail, setPassword, setRequests, setFriends]);
+  }, [userID, setIsBlocked, setAdmin, setUserDocID, setPhotoCount, setName, setFamily, setUsername, setEmail, setPassword]);
 }

@@ -19,7 +19,6 @@ export function useFetchPhotos(setPhotos, setLoading) {
         });
       setPhotos(photoData);
       setLoading(false);
-      console.log('fetched photos');
     };
 
     const unsubscribe = onSnapshot(photoCollection, fetchPhotos);
