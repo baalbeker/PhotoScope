@@ -28,11 +28,11 @@ const Friends = () => {
   }, []);
 
   return (
-    <Box w="180vh" mt="7vh">
+    <Box w="170vh" h={"80vh"}>
       <Grid templateRows="repeat(3, 1fr)" templateColumns="repeat(5, 1fr)" h="600px">
         <GridItem colSpan={5} rounded="md" borderColor="gray.50" h="25vh" bgImage={goalheader} />
-        <GridItem colSpan={4}>
-          <Text ml={2} mb={4} fontSize="2xl" fontWeight="bold">Friends</Text>
+        <GridItem mt={3} colSpan={4}>
+          <Text mb={4} fontSize="2xl" fontWeight="bold">Friends</Text>
 
           <Table key={friends.userDocID} variant="unstyled">
             <Thead>
@@ -106,10 +106,9 @@ const Friends = () => {
         </GridItem>
 
         <GridItem colSpan={1}>
-          <Divider orientation='vertical' float="left" />
-
-          <Box ml="60px">
-          <Text ml={2} mb={4} fontSize="2xl" fontWeight="bold">Friend requests</Text>
+          <Divider mt={5} orientation='vertical' float="left" />
+          <Box mt={3} align={"center"}>
+          <Text mb={4} fontSize="2xl" fontWeight="bold">Friend requests</Text>
           {requests.length < 1  ? (
             <Text ml={6}>No friend requests.</Text>
           ) : (

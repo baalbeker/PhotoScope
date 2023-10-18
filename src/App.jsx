@@ -1,4 +1,4 @@
-import { ChakraProvider, Flex, useColorMode } from "@chakra-ui/react"
+import { ChakraProvider, Flex, color, useColorMode } from "@chakra-ui/react"
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { auth} from "./config/firebase";
@@ -27,6 +27,9 @@ import Friends from "./views/Friends/Friends";
 import Upload from "./views/Upload/Upload";
 import ContactForm from "./components/ContactForm/ContactForm";
 import UserPhotos from "./components/UserPhotos/UserPhotos";
+import background from "./assets/background.jpg"
+import backdark from "./assets/backdark.png"
+
 
 function App() {
   const navigate = useNavigate();

@@ -19,17 +19,13 @@ const Home = () => {
   }, []);
 
   return (
-    <Box w="180vh" mt="13vh">
+    <Box w="170vh" h={"80vh"}>
       <Grid h="600px" templateRows="repeat(2, 1fr)" templateColumns="repeat(4, 1fr)" gap={4}>
-        <GridItem mt="-40px" colSpan={5} rounded="md" borderColor="gray.50" h="25vh" bgImage={images[bgImageIndex]} />
-          <GridItem  mt="-150px" rowSpan={2} colSpan={5}>
-            <Box>
-              <Heading>Latest Photos</Heading>
-            </Box>
-            <Box>
-              <LatestPhotos />
-            </Box>
-          </GridItem>
+        <GridItem colSpan={5} rounded="md" borderColor="gray.50" h="25vh" bgImage={images[bgImageIndex]} />
+        <GridItem mt={"-5vh"} rowSpan={2} colSpan={5}>
+            <Heading>Latest Photos</Heading>
+            <LatestPhotos />
+        </GridItem>
       </Grid>
     </Box>
   );

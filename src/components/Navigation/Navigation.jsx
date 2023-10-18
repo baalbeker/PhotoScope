@@ -30,7 +30,7 @@ const Navigation = () => {
         marginTop="3.5vh"
         boxShadow="0 10px 12px 0 rgba(0, 0, 0, 0.05)"
         borderRadius={navSize == "small" ? "15px" : "30px"}
-        w={navSize == "small" ? "9vh" : "26vh"}
+        w={navSize == "small" ? "9vh" : "22vh"}
         flexDir="column"
         justifyContent="space-between"
       >

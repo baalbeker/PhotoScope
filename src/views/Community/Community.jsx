@@ -7,7 +7,6 @@ import { BsFillPersonCheckFill, BsFillPersonPlusFill, BsFillPersonXFill, BsFillP
 import CommunityLogic from "../../logic/CommunityLogic/CommunityLogic";
 import goalheader from "../../assets/img5.jpg";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
 
 const Community = () => {
   const { userDocID, isAdmin } = useContext(AuthContext);
@@ -41,7 +40,7 @@ const Community = () => {
   const userPhotos = (id) => navigate(`/user/${id}`);
   
   return (
-    <Box w="180vh" mt="4vh">
+    <Box w="170vh" h={"80vh"}>
       <Grid templateColumns="repeat(1, 1fr)" h="600px">
 
         <GridItem colSpan={1} rounded="md" borderColor="gray.50" h="25vh" bgImage={goalheader} p={8} />
@@ -197,7 +196,6 @@ const Community = () => {
             </Tbody>
             )}
           </Table>
-          <Footer/>
         </GridItem>
       </Grid>
     </Box>
