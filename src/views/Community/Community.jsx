@@ -1,5 +1,5 @@
 import { useContext,useState,useEffect } from "react";
-import { Box, Button, Text, Tooltip,Spinner, Avatar, FormControl, FormLabel, Input, Select, Flex, Td, Th, Tbody, Thead, Table, Tr, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Button, Text, Tooltip,Spinner, Avatar, FormControl, FormLabel,useColorModeValue, Input, Select, Flex, Td, Th, Tbody, Thead, Table, Tr, Grid, GridItem } from "@chakra-ui/react";
 import { AiFillLock, AiFillUnlock } from "react-icons/ai";
 import { AuthContext } from "../../context/AuthContext";
 import { MdDeleteForever } from "react-icons/md";
@@ -94,12 +94,12 @@ const Community = () => {
           <Table variant="simple" >
           <Thead>
             <Tr>
-              <Th onClick={() => onSort('name')} _hover={{ cursor: "pointer" }} color={sortConfig?.field === 'name' ? 'blue.500' : 'black'}>{'Name '}{sortConfig?.field === 'name' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
-              <Th onClick={() => onSort('photos')} _hover={{ cursor: "pointer" }} color={sortConfig?.field === 'photos' ? 'blue.500' : 'black'}>{'Photos '}{sortConfig?.field === 'photos' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
-              <Th onClick={() => onSort('username')} _hover={{ cursor: "pointer" }} color={sortConfig?.field === 'username' ? 'blue.500' : 'black'}>{'Username '}{sortConfig?.field === 'username' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
-              <Th onClick={() => onSort('email')} _hover={{ cursor: "pointer" }} color={sortConfig?.field === 'email' ? 'blue.500' : 'black'}>{'Email '}{sortConfig?.field === 'email' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
-              <Th onClick={() => onSort('role')} _hover={{ cursor: "pointer" }} color={sortConfig?.field === 'role' ? 'blue.500' : 'black'}>{'Role '}{sortConfig?.field === 'role' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
-              <Th onClick={() => onSort('isBlocked')} _hover={{ cursor: "pointer" }} color={sortConfig?.field === 'isBlocked' ? 'blue.500' : 'black'}>{'Status '}{sortConfig?.field === 'isBlocked' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
+              <Th onClick={() => onSort('name')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Name '}{sortConfig?.field === 'name' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
+              <Th onClick={() => onSort('photos')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Photos '}{sortConfig?.field === 'photos' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
+              <Th onClick={() => onSort('username')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Username '}{sortConfig?.field === 'username' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
+              <Th onClick={() => onSort('email')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Email '}{sortConfig?.field === 'email' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
+              <Th onClick={() => onSort('role')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Role '}{sortConfig?.field === 'role' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
+              <Th onClick={() => onSort('isBlocked')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Status '}{sortConfig?.field === 'isBlocked' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
             </Tr>
           </Thead>
           {isLoading ? (

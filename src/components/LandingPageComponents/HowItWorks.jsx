@@ -59,12 +59,11 @@ const HowItWorks = ({ onGetStartedClick }) => {
                             flexGrow={1}
                             flexBasis={0}
                         >
-                            <Box bgImage={`url(${HOW_IT_WORKS_STEPS[activeStep].bgImage})`} bgSize="cover" bgPos="center" p={3} w="60%">
+                            <Box bgImage={`url(${HOW_IT_WORKS_STEPS[activeStep].bgImage})`}bgPos="center" w="60%">
                                 <Flex
                                     direction="column"
                                     h="100%"
                                     justify="space-between"
-                                    bg="whiteAlpha.700"
                                     p={1}
                                     width="100%"
                                     overflow="auto"

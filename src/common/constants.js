@@ -1,8 +1,7 @@
-import profileIcon from "../assets/fitnessIcon.jpg"
-import goalIcon from "../assets/goalIcon.png"
+import man from "../assets/man.png"
+import woman from "../assets/woman.png"
+import aparat from "../assets/aparat.png"
 import progressIcon from "../assets/pace.png"
-import profileGirlIcon from "../assets/177687.jpg"
-import leadboard from "../assets/leadboard.png"
 import terminator from "../assets/terminator.jpg"
 import doner from "../assets/doner.png"
 import andrewT from "../assets/andrewT.png"
@@ -88,20 +87,19 @@ export const PHOTOGRAPHY_FACTS = [
       title: "Create Profile",
       content: "In PhotoScope, set up your unique profile by providing essential details such as your name, username,and email. Customize your profile to showcase your artistic vision and connect with fellow photographers who share your passions.",
       bgImage: "image/path/here",
-      icon: profileIcon,
-      icon2: profileGirlIcon
+      icon: man,
     },
     {
       title: "Share Your Photos",
       content: "Harness the power of PhotoScope to effortlessly upload, manage, and showcase your stunning photos. Gain exposure by sharing your visual stories with the global PhotoScope community. Explore and engage with other photographers, sparking creative conversations and discovering new perspectives.",
       bgImage: "image/path/here",
-      icon: goalIcon,
+      icon: woman,
     },
     {
       title: "Join Photo Contests",
       content: "Participate in exciting photography contests hosted by PhotoScope. Submit your best work and compete with talented photographers from around the world. Win recognition, prizes, and earn your spot in the PhotoScope Hall of Fame as you embrace the spirit of friendly competition.",
       bgImage: "image/path/here",
-      icon: leadboard,
+      icon: aparat,
     },
     {
       title: "Embrace Your Creative Journey",

@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { Box, Grid, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Grid, Flex, Image, Text ,useColorModeValue} from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import SinglePhotoView from "../SinglePhotoView/SinglePhotoView";
 
 const LatestPhotos = () => {
   const { photos, setPhotos, selectedPhoto, setSelectedPhoto } = useContext(AuthContext);
   const latestPhotos = photos.slice(-5);
+  const bg = useColorModeValue('gray.200', 'gray.700')
 
   const openSinglePhotoView = (photo) => {
     setSelectedPhoto(photo);
@@ -16,12 +17,12 @@ const LatestPhotos = () => {
   };
 
   return (
-    <Box mt="1vh">
+    <Box mt="1vh" mb="1vh">
       <Grid h="52vh" templateColumns="repeat(5, 1fr)" gap={4}>
         {latestPhotos.map((photo, index) => (
           <Box
             maxW="30vh"
-            bgColor="gray.200"
+            bgColor={bg}
             borderRadius="8px"
             key={index}
             textAlign="center"

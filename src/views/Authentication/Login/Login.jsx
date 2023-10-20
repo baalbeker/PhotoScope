@@ -41,9 +41,9 @@ const Login = () => {
 
   return (
 
-    <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
+    <Flex minH={'90vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
       <FactBubble />
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={8} maxW={'lg'} py={12} px={6}>
         <Center>
           <ChakraLink as={RouterLink} to="/">
             <Image src={Logo} alt="Energize Logo" w={64} />

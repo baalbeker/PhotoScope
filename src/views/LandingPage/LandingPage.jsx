@@ -4,7 +4,7 @@ import UserTestimonials from '../../components/LandingPageComponents/UserTestimo
 import LandingNavigation from '../../components/LandingPageComponents/LandingNavigation'; 
 import HowItWorks from '../../components/LandingPageComponents/HowItWorks';
 import LandingFooter from '../../components/LandingPageComponents/LandingFooter'
-import About from "../About/About"
+import About from "../../components/LandingPageComponents/About";
 
 const LandingPage = () => {
     const navigate = useNavigate();

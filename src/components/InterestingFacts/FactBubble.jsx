@@ -1,8 +1,8 @@
 import { Flex, Box, Text, useColorModeValue, Image } from "@chakra-ui/react";
 import displayRandomFact from "./InterestingFacts";
 import { useState, useEffect } from "react";
-import fitnessIcon from '../../assets/fitnessIcon.jpg';
-import girlFitnessIcon from '../../assets/177687.jpg'
+import photoboy from '../../assets/photoboy.png';
+import photogirl from '../../assets/photogirl.png'
 
 const FactBubble = () => {
   const [randomFact, setRandomFact] = useState("");
@@ -10,8 +10,7 @@ const FactBubble = () => {
 
   useEffect(() => {
     setRandomFact(displayRandomFact());
-
-    const icons = [fitnessIcon, girlFitnessIcon];
+    const icons = [photoboy, photogirl];
     setRandomIcon(icons[Math.floor(Math.random() * icons.length)]);
   }, []);
 

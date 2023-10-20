@@ -19,7 +19,6 @@ const Navigation = () => {
     const {requests} = useContext(FriendsContext);
     const [navSize, changeNavSize] = useState("large")
     const { colorMode } = useColorMode();
-    const bg = (colorMode) === "dark" ? "gray.800" : "white";
     const logoto = (colorMode) === "dark" ? logo2 : logo;
 
     return (
