@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Box, Heading, Input, Textarea, Button, FormControl, FormLabel } from '@chakra-ui/react';
+import { Box, Heading,Text, Input, Textarea, Button, FormControl, FormLabel } from '@chakra-ui/react';
 import { ToastContainer, toast } from 'react-toastify';
 import emailjs from 'emailjs-com';
+import { CONTACTMS } from '../../common/constants';
 
-const ContactForm = () => {
+const Contact = () => {
   const initialState = {name: '',email: '',message: '',}
   const [formData, setFormData] = useState(initialState);
 
@@ -38,8 +39,9 @@ const ContactForm = () => {
   };
 
   return (
-    <Box w="30%">
-      <Heading size="lg" mb={4}>Contact Us</Heading>
+    <Box textAlign="center" w="60vh">
+      <Heading  size="lg" mb={4}>Contact Us</Heading>
+      <Text mb="4vh" p={10}>{CONTACTMS}</Text>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel htmlFor="name">Name</FormLabel>
@@ -81,4 +83,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default Contact;

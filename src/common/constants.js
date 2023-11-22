@@ -108,3 +108,5 @@ export const PHOTOGRAPHY_FACTS = [
       icon: progressIcon,
     },
   ];
+
+  export const CONTACTMS = "Welcome to our contact page! We value your feedback, inquiries, and suggestions. Whether you have a question about our products, need assistance with an order, or simply want to say hello, we'd love to hear from you. Please use the contact form below to reach out, and we'll get back to you as soon as possible."

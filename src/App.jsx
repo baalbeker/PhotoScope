@@ -25,7 +25,7 @@ import Home from "./views/Home/Home";
 import UserMenu from "./components/UserMenu/UserMenu";
 import Friends from "./views/Friends/Friends";
 import Upload from "./views/Upload/Upload";
-import ContactForm from "./components/ContactForm/ContactForm";
+import Contact from "./views/Contact/Contact";
 import UserPhotos from "./components/UserPhotos/UserPhotos";
 
 
@@ -113,7 +113,7 @@ function App() {
                       <Route path="register" element={<Register />} />
                       <Route path="login" element={<Login />} />
                       <Route path="upload" element={<Upload />} />
-                      <Route path="contacts" element={<ContactForm />} />
+                      <Route path="contacts" element={<Contact />} />
                       <Route path="*" element={<NotFound />} />
                       <Route path="/user/:id" element={<UserPhotos />} />
                     </Routes>
