@@ -26,16 +26,12 @@ const Login = () => {
         navigate("/home");
       })
       .catch((error) => {
-        if (error.code === "auth/invalid-email") {
-          toast.error("Incorrect email! Please try again.");
-        } else if (error.code === "auth/wrong-password") {
-          toast.error("Incorrect password!  Please try again.");
-        } else if (error.code === "auth/user-not-found") {
-          toast.error("No such user existing! Please try again.");
+        console.log(error);
+        if (error.code === "auth/invalid-email" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+          toast.error("Incorrect email or password! Please try again.");
         } else {
           toast.error("An error occurred. Please try again later.");
         }
-        console.log(error);
       });
   };
 

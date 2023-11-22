@@ -48,11 +48,12 @@ const CommunityLogic = () => {
           return 0;
         });
       }
+      console.log('logic');
       setUserList(sortedUsers);
     };
 
     getUsers();
-  }, [searchTerm, searchType, sortConfig,usersCollection]);
+  }, [searchTerm, searchType, sortConfig,db]);
 
   const handleDeleteUser = async (userId) => {
     await deleteDoc(doc(usersCollection, userId));

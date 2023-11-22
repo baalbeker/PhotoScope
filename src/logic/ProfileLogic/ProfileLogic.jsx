@@ -8,15 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function ProfileLogic() {
-    const {name,setName,password,setPassword,setEmail,setPhotoURL,userID,family,setFamily,userDocID,setUsername,setWeight,setHeight,setPhoneNumber} = useContext(AuthContext);
+    const {name,setName,password,setPassword,setEmail,setPhotoURL,userID,family,setFamily,userDocID,setUsername} = useContext(AuthContext);
     const [changedName, setChangedName] = useState("");
     const [changedUsername, setChangedUsername] = useState("");
     const [changedFamily, setChangedFamily] = useState("");
     const [changedEmail, setChangedEmail] = useState("");
-    const [changedPhone, setChangedPhone] = useState("");
     const [changedPhoto, setChangedPhoto] = useState(null);
-    const [changedWeight, setChangedWeight] = useState("");
-    const [changedHeight, setChangedHeight] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,9 +25,6 @@ export default function ProfileLogic() {
     const usernameInputRef = useRef(null);
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
-    const phoneInputRef = useRef(null);
-    const weightInputRef = useRef(null);
-    const heightInputRef = useRef(null);
   
     const handleChangeName = (event) => {
       setChangedName(event.target.value);
@@ -41,20 +35,11 @@ export default function ProfileLogic() {
     const handleChangeUsername = (event) => {
       setChangedUsername(event.target.value);
     };
-    const handleChangePhone = (event) => {
-      setChangedPhone(event.target.value);
-    };
     const handleChangeEmail = (event) => {
       setChangedEmail(event.target.value);
     };
     const handleChangeAvatar = (event) => {
       setChangedPhoto(event.target.files[0]);
-    };
-    const handleChangeWeight = (event) => {
-      setChangedWeight(event.target.value);
-    };
-    const handleChangeHeight = (event) => {
-      setChangedHeight(event.target.value);
     };
     const handleCurrentPassword = (event) => {
       setCurrentPassword(event.target.value);
@@ -86,9 +71,6 @@ export default function ProfileLogic() {
       familyInputRef.current.value = null;
       emailInputRef.current.value = null;
       passwordInputRef.current.value = null;
-      phoneInputRef.current.value = null;
-      weightInputRef.current.value = null;
-      heightInputRef.current.value = null;
     };
   
     const updateInfo = (event) => {
@@ -103,7 +85,7 @@ export default function ProfileLogic() {
         toast.error("Your changed passwords doesn't match");
         return;
       }
-      if (!changedPhoto && !newPassword && !changedEmail && !changedName && !changedFamily && !changedUsername && !changedPhone && !changedWeight && !changedHeight) {
+      if (!changedPhoto && !newPassword && !changedEmail && !changedName && !changedFamily && !changedUsername) {
         toast.error("No information to update");
         return;
       }
@@ -150,15 +132,6 @@ export default function ProfileLogic() {
             .catch((error) => {
               console.log("Error updating username:", error);
             });
-        }
-      if (changedPhone) {
-        updateDoc(userRef, { phoneNumber: changedPhone })
-          .then(() => {
-            setPhoneNumber(changedPhone);
-          })
-          .catch((error) => {
-            console.log("Error updating phone number:", error);
-          });
       }
       if (changedName) {
         let fixname = `${changedName} ${family}`;
@@ -192,24 +165,6 @@ export default function ProfileLogic() {
             console.log("Error updating profile:", error);
           });
       }
-      if (changedWeight) {
-        updateDoc(userRef, { weight: changedWeight })
-          .then(() => {
-            setWeight(changedWeight);
-          })
-          .catch((error) => {
-            console.log("Error updating weight:", error);
-          });
-      }
-      if (changedHeight) {
-        updateDoc(userRef, { height: changedHeight })
-          .then(() => {
-            setHeight(changedHeight);
-          })
-          .catch((error) => {
-            console.log("Error updating height:", error);
-          });
-      }
       if (newPassword) {
         updatePassword(auth.currentUser, newPassword).then(() => {
           updateDoc(userRef, { password: newPassword })
@@ -230,17 +185,11 @@ export default function ProfileLogic() {
     usernameInputRef,
     emailInputRef,
     passwordInputRef,
-    phoneInputRef,
-    weightInputRef,
-    heightInputRef,
     handleChangeName,
     handleChangeFamily,
     handleChangeUsername,
-    handleChangePhone,
     handleChangeEmail,
     handleChangeAvatar,
-    handleChangeWeight,
-    handleChangeHeight,
     handleCurrentPassword,
     handleNewPassword,
     handleConfirmPassword,

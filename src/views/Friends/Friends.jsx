@@ -4,7 +4,7 @@ import { Popover, Tooltip, Avatar, Td, Th, Tbody, Thead, Table,Divider, Tr, Grid
 import { BsFillPersonXFill, } from "react-icons/bs";
 import { FriendsContext } from "../../context/FriendsContext";
 import FriendsLogic from "../../logic/FriendsLogic/FriendsLogic";
-import user from "../../assets/user.png"
+import userimage from "../../assets/user.png"
 import goalheader from "../../assets/img5.jpg";
 import "./Friends.css"
 
@@ -62,7 +62,7 @@ const Friends = () => {
                       <Flex align="center">
                         <Avatar
                           size="sm"
-                          src={user.avatar ? user.avatar : user}
+                          src={user.avatar ? user.avatar : userimage}
                           _hover={{ cursor: "pointer" }}
                         />
                         <Text ml="2">

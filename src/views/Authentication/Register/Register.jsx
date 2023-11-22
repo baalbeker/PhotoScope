@@ -105,6 +105,7 @@ const Register = () => {
       role: "user",
       isBlocked: false,
       id: auth.currentUser.uid,
+      photoCount: 0,
     });
 
     const docID = docRef.id;

@@ -95,7 +95,7 @@ const Community = () => {
           <Thead>
             <Tr>
               <Th onClick={() => onSort('name')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Name '}{sortConfig?.field === 'name' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
-              <Th onClick={() => onSort('photos')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Photos '}{sortConfig?.field === 'photos' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
+              <Th onClick={() => onSort('photoCount')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Photos '}{sortConfig?.field === 'photoCount' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
               <Th onClick={() => onSort('username')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Username '}{sortConfig?.field === 'username' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
               <Th onClick={() => onSort('email')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Email '}{sortConfig?.field === 'email' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>
               <Th onClick={() => onSort('role')} _hover={{ cursor: "pointer" }} color={useColorModeValue('black', 'white')}>{'Role '}{sortConfig?.field === 'role' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}</Th>

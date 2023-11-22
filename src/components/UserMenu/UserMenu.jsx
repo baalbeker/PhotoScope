@@ -5,14 +5,11 @@ import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from '@chakra-ui/react'
 import ThemeButton from "../ThemeButton/ColorModeButton";
-import { useColorMode } from "@chakra-ui/react";
 
 const UserMenu = () => {
   const { name, family, isAdmin, signOut, photoURL } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { colorMode } = useColorMode();
-  const bg = (colorMode) === "dark" ? "gray.800" : "white";
 
 
   const handleSignOut = () => signOut();

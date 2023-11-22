@@ -105,7 +105,7 @@ function App() {
                   <Flex as="main" direction="column" minHeight="100vh" flexGrow={1} flexShrink={0} justifyContent="center" alignItems="center" p={5}>
                     <Routes marginBottom="auto">
                       <Route path="/" element={isAuth ? <Home /> : <LandingPage />} />
-                      <Route path="home" element={<Home colorMode={colorMode} />} />
+                      <Route path="home" element={<Home />} />
                       <Route path="photos" element={<Photos loading={loading} />} />
                       <Route path="community" element={<Community />} />
                       <Route path="friends" element={<Friends />} />
