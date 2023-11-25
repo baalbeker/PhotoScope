@@ -26,9 +26,7 @@ const Photos = ({ loading }) => {
 
   return (
     <Container minWidth="180vh" minHeight={"80vh"}>
-      <Heading mt="30px" as="h1" size="xl" marginBottom="4">
-        Photos
-      </Heading>
+      <Heading mt="30px" as="h1" size="xl" marginBottom="4">Photos</Heading>
       {loading ? (
         <Loading />
       ) : (
@@ -40,36 +38,65 @@ const Photos = ({ loading }) => {
           ))}
         </Grid>
       )}
-
-      {selectedPhoto && (
-        <SinglePhotoView photo={selectedPhoto} setPhoto={setSelectedPhoto} onClose={closeSinglePhotoView} setPhotos={setPhotos} />
-      )}
-
-      <Box ml="30px">
-        {currentPage > 1 && (
+      <Box m="auto" width="100vh" display="flex" justifyContent="space-between" alignItems="center" position="absolute" bottom="14vh" left="50%" transform="translateX(-50%)">
+        {currentPage > 1 ? (
           <Button
-            size="lg"
-            borderRadius="47%"
-            right="30px"
-            padding="20px"
-            onClick={() => setCurrentPage(currentPage - 1)}
-            marginRight="2"
+          bgColor="#00CED1"
+          color="white"
+          m="auto"
+          size="lg"
+          padding="10px"
+          borderRadius="8%"
+          right="30px"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          marginRight="2"
           >
-            <AiOutlineArrowLeft />
+            <AiOutlineArrowLeft size="lg"/>
+          </Button>
+        ) : (
+          <Button
+          bgColor="grey.900"
+          color="white"
+          m="auto"
+          size="lg"
+          padding="10px"
+          borderRadius="8%"
+          right="30px"
+          marginRight="2"
+          >
+            <AiOutlineArrowLeft size="lg"/>
           </Button>
         )}
-        {currentPage < totalPages && (
+
+        {currentPage < totalPages ? (
           <Button
-            size="lg"
-            padding="20px"
-            borderRadius="47%"
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={indexOfLastPhoto >= photos.length}
+          bgColor="#00CED1"
+          color="white"
+          m="auto"
+          size="lg"
+          padding="10px"
+          borderRadius="8%"
+          onClick={() => setCurrentPage(currentPage + 1)}
           >
-            <AiOutlineArrowRight />
+            <AiOutlineArrowRight size="lg"/>
+          </Button>
+        ) : (
+          <Button
+          bgColor="grey.900"
+          color="white"
+          m="auto"
+          size="lg"
+          padding="10px"
+          borderRadius="8%"
+          >
+            <AiOutlineArrowRight size="lg"/>
           </Button>
         )}
       </Box>
+
+        {selectedPhoto && (
+          <SinglePhotoView photo={selectedPhoto} setPhoto={setSelectedPhoto} onClose={closeSinglePhotoView} setPhotos={setPhotos} />
+        )}
     </Container>
   );
 };

@@ -19,17 +19,20 @@ export default function Profile() {
     usernameInputRef,
     emailInputRef,
     passwordInputRef,
+    adminInputRef,
     handleChangeName,
     handleChangeFamily,
     handleChangeUsername,
     handleChangeEmail,
     handleChangeAvatar,
+    handleAddAdmin,
     handleCurrentPassword,
     handleNewPassword,
     handleConfirmPassword,
     handleDeleteUser,
     handleCancel,
     updateInfo,
+    addAdmin,
   } = ProfileLogic();
 
 
@@ -49,7 +52,6 @@ export default function Profile() {
                   <Input
                     focusBorderColor="main.500"
                     type="text"
-                    name="name"
                     id="name"
                     placeholder={name}
                     onChange={handleChangeName}
@@ -65,7 +67,6 @@ export default function Profile() {
                   <Input
                     focusBorderColor="main.500"
                     type="text"
-                    name="family"
                     id="family"
                     placeholder={family}
                     onChange={handleChangeFamily}
@@ -81,7 +82,6 @@ export default function Profile() {
                   <Input
                     focusBorderColor="main.500"
                     type="text"
-                    name="username"
                     id="username"
                     placeholder={username}
                     onChange={handleChangeUsername}
@@ -97,11 +97,26 @@ export default function Profile() {
                   <Input
                     focusBorderColor="main.500"
                     type="email"
-                    name="email"
                     id="email"
                     placeholder={email}
                     onChange={handleChangeEmail}
                     ref={emailInputRef}
+                  />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl>
+                <Stack justifyContent="space-between" isInline>
+                  <FormLabel htmlFor="new_avatar">Upload new avatar</FormLabel>
+                </Stack>
+                <InputGroup>
+                  <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
+                  <Input
+                    focusBorderColor="main.500"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleChangeAvatar}
+                    ref={avatarInputRef}
                   />
                 </InputGroup>
               </FormControl>
@@ -113,7 +128,6 @@ export default function Profile() {
                   size="md"
                   fontWeight="500"
                   colorScheme="main"
-                  name="subscribe"
                   id="subscribe"
                 >
                   Receive newsletter
@@ -133,6 +147,23 @@ export default function Profile() {
 
           <Box bg="secondary.card" rounded="lg" p={5}>
             <Stack spacing={4} marginBottom="1rem">
+
+            <FormControl>
+                <Stack justifyContent="space-between" isInline>
+                  <FormLabel htmlFor="old_password">Add admin</FormLabel>
+                </Stack>
+                <InputGroup>
+                  <Input
+                    focusBorderColor="main.500"
+                    type="email"
+                    placeholder="Enter user email"
+                    ref={adminInputRef}
+                    onChange={handleAddAdmin}
+                  />
+                  <Button colorScheme="main" variant="outline" onClick={addAdmin}>Add</Button>
+                </InputGroup>
+              </FormControl>
+
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
                   <FormLabel htmlFor="old_password">Current password</FormLabel>
@@ -141,7 +172,6 @@ export default function Profile() {
                   <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
-                    name="old_password"
                     id="old_password"
                     type="password"
                     placeholder="Enter your current password"
@@ -158,7 +188,6 @@ export default function Profile() {
                   <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
-                    name="new_password"
                     id="new_password"
                     type="password"
                     placeholder="Enter your new password"
@@ -177,7 +206,6 @@ export default function Profile() {
                   <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
-                    name="new_password2"
                     id="new_password2"
                     type="password"
                     placeholder="Confirm your new password"
@@ -187,21 +215,7 @@ export default function Profile() {
                   />
                 </InputGroup>
               </FormControl>
-              <FormControl>
-                <Stack justifyContent="space-between" isInline>
-                  <FormLabel htmlFor="new_avatar">Upload new avatar</FormLabel>
-                </Stack>
-                <InputGroup>
-                  <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
-                  <Input
-                    focusBorderColor="main.500"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleChangeAvatar}
-                    ref={avatarInputRef}
-                  />
-                </InputGroup>
-              </FormControl>
+              
             </Stack>
           </Box>
 

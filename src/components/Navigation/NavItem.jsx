@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function NavItem({ icon, title, active, navSize, link, friendRequestCount }) {
   const navigate = useNavigate();
-
-  const handleNavigation = () => {
-    navigate(link);
-  };
+  const handleNavigation = () => navigate(link);
 
   return (
     <Flex
@@ -25,14 +22,13 @@ export default function NavItem({ icon, title, active, navSize, link, friendRequ
             padding: '8px',
             borderRadius: '8px',
             cursor: 'pointer',
+            minWidth: navSize === "large" ? "90%" : "auto"
           }}
         >
           <MenuButton w="100%">
             <Flex>
-              <Icon as={icon} fontSize="xl" color={active ? "#82AAAD" : "gray.500"} />
-              <Text ml={5} display={navSize === "small" ? "none" : "flex"}>
-                {title}
-              </Text>
+              <Icon as={icon} fontSize="xl" color={active ? "white" : "gray.500"} />
+              <Text ml={5} display={navSize === "small" ? "none" : "flex"}>{title}</Text>
               {title === "Friends" && friendRequestCount > 0 && navSize !== "small" && (
                 <Badge
                   color="white"

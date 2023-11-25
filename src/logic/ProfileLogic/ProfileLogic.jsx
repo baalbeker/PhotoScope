@@ -2,7 +2,7 @@ import { useState, useContext, useRef } from "react";
 import { updateProfile, updateEmail, deleteUser,updatePassword } from "firebase/auth";
 import { storage, auth, db } from "../../config/firebase";
 import { AuthContext } from "../../context/AuthContext";
-import { updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { updateDoc, doc, deleteDoc, collection, query, getDocs, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -17,6 +17,8 @@ export default function ProfileLogic() {
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [newAdmin, setNewAdmin] = useState("");
+
     let navigate = useNavigate();
   
     const avatarInputRef = useRef(null);
@@ -25,6 +27,7 @@ export default function ProfileLogic() {
     const usernameInputRef = useRef(null);
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
+    const adminInputRef = useRef(null)
   
     const handleChangeName = (event) => {
       setChangedName(event.target.value);
@@ -41,6 +44,9 @@ export default function ProfileLogic() {
     const handleChangeAvatar = (event) => {
       setChangedPhoto(event.target.files[0]);
     };
+    const handleAddAdmin = (event) => {
+      setNewAdmin(event.target.value);
+    };
     const handleCurrentPassword = (event) => {
       setCurrentPassword(event.target.value);
     };
@@ -49,6 +55,27 @@ export default function ProfileLogic() {
     };
     const handleConfirmPassword = (event) => {
       setConfirmPassword(event.target.value);
+    };
+
+    const addAdmin = async () => {
+      if (newAdmin) {
+        const usersCollection = collection(db, "users");
+        const userQuery = query(usersCollection, where("email", "==", newAdmin));
+        try {
+          const querySnapshot = await getDocs(userQuery);
+          if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            const docRef = doc(usersCollection, userDoc.data().docID);
+            await updateDoc(docRef, { role: "admin" });
+            adminInputRef.current.value = null
+            toast.success(`User with email ${newAdmin} is now an admin.`);
+          } else {
+            toast.error(`User with email ${newAdmin} not found.`);
+          }
+        } catch (error) {
+          console.error("Error updating user:", error);
+        }
+      }
     };
 
     const handleDeleteUser = () => {
@@ -71,6 +98,7 @@ export default function ProfileLogic() {
       familyInputRef.current.value = null;
       emailInputRef.current.value = null;
       passwordInputRef.current.value = null;
+      adminInputRef.current.value = null;
     };
   
     const updateInfo = (event) => {
@@ -185,17 +213,20 @@ export default function ProfileLogic() {
     usernameInputRef,
     emailInputRef,
     passwordInputRef,
+    adminInputRef,
     handleChangeName,
     handleChangeFamily,
     handleChangeUsername,
     handleChangeEmail,
     handleChangeAvatar,
+    handleAddAdmin,
     handleCurrentPassword,
     handleNewPassword,
     handleConfirmPassword,
     handleDeleteUser,
     handleCancel,
     updateInfo,
+    addAdmin,
   };
 }
 
