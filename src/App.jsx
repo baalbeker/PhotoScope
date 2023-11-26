@@ -36,6 +36,7 @@ function App() {
   const [isBlocked, setIsBlocked] = useState(false);
   const [userID, setUserID] = useState("");
   const [userDocID, setUserDocID] = useState("")
+  const [avatar, setAvatar] = useState(userimage);
   const [name, setName] = useState("");
   const [family, setFamily] = useState("");
   const [username, setUsername] = useState("");
@@ -51,7 +52,7 @@ function App() {
   const { colorMode } = useColorMode();
 
   useCheckAuth(setIsAuth, setPhotoURL, setUserID, photoURL,setAdmin);
-  useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword);
+  useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword,setAvatar);
   useFetchPhotos(setPhotos, setLoading);
   useFetchFriends(userDocID, setRequests, setFriends);
   const handleSignOut = signUserOut(auth, navigate);
@@ -87,7 +88,9 @@ function App() {
         selectedPhoto,
         setSelectedPhoto,
         photoCount,
-        setPhotoCount
+        setPhotoCount,
+        avatar,
+        setAvatar,
       }}
     >
           <FriendsContext.Provider

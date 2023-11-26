@@ -11,7 +11,7 @@ import Footer from "../../components/Footer/Footer"
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Profile() {
-  const {name,email,photoURL,family,username} = useContext(AuthContext);
+  const {name,email,avatar,family,username, isAdmin} = useContext(AuthContext);
   const {
     avatarInputRef,
     nameInputRef,
@@ -43,7 +43,7 @@ export default function Profile() {
           <Heading marginBottom="1.5rem">Edit profile</Heading>
 
           <Box bg="secondary.card" rounded="lg" p={5}>
-            <Avatar size="2xl" src={photoURL} />
+            <Avatar size="2xl" src={avatar} />
             <Stack spacing={4} marginBottom="1rem">
               <FormControl>
                 <FormLabel htmlFor="name">Your first name</FormLabel>
@@ -148,21 +148,23 @@ export default function Profile() {
           <Box bg="secondary.card" rounded="lg" p={5}>
             <Stack spacing={4} marginBottom="1rem">
 
-            <FormControl>
-                <Stack justifyContent="space-between" isInline>
-                  <FormLabel htmlFor="old_password">Add admin</FormLabel>
-                </Stack>
-                <InputGroup>
-                  <Input
-                    focusBorderColor="main.500"
-                    type="email"
-                    placeholder="Enter user email"
-                    ref={adminInputRef}
-                    onChange={handleAddAdmin}
-                  />
-                  <Button colorScheme="main" variant="outline" onClick={addAdmin}>Add</Button>
-                </InputGroup>
-              </FormControl>
+            {isAdmin && (
+              <FormControl>
+              <Stack justifyContent="space-between" isInline>
+                <FormLabel htmlFor="old_password">Add admin</FormLabel>
+              </Stack>
+              <InputGroup>
+                <Input
+                  focusBorderColor="main.500"
+                  type="email"
+                  placeholder="Enter user email"
+                  ref={adminInputRef}
+                  onChange={handleAddAdmin}
+                />
+                <Button colorScheme="main" variant="outline" onClick={addAdmin}>Add</Button>
+              </InputGroup>
+            </FormControl>
+            )}
 
               <FormControl>
                 <Stack justifyContent="space-between" isInline>

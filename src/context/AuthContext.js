@@ -46,6 +46,9 @@ export const AuthContext = createContext({
   setSelectedPhoto: () => {},
 
   photoCount: "",
-  setPhotoCount: () => {}
+  setPhotoCount: () => {},
+
+  avatar: "",
+  setAvatar: () => {},
 });
 

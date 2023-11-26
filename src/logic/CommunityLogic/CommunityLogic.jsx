@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useColorMode } from "@chakra-ui/react";
 
 const CommunityLogic = () => {
-  const { userDocID, name, family, email, username } = useContext(AuthContext);
+  const { userDocID, name, family, email, username, avatar } = useContext(AuthContext);
   const usersCollection = collection(db, "users");
   const [userList, setUserList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -91,7 +91,7 @@ const CommunityLogic = () => {
     if (updatedFriends.some((friend) => friend.userDocID === userDocID)) {
       return;
     }
-    updatedFriends.push({ userDocID, name, family, email, username });
+    updatedFriends.push({ userDocID, name, family, email, username, avatar });
     const updatedData = { requests: updatedFriends };
     await updateDoc(targetUserDocRef, updatedData);
     setUserList((prevUserList) =>

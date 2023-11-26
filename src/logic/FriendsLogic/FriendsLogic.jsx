@@ -23,11 +23,11 @@ const FriendsLogic = () => {
       await updateDoc(userDocRef, {requests: updatedRequests,friends: updatedFriends});
       setFriends(updatedFriends);
       setRequests(updatedRequests);
-
+      
       const friendDocRef = doc(db, "users", request.userDocID);
       const friendDoc = await getDoc(friendDocRef);
       const friendData = friendDoc.data();
-
+      
       let updatedFriendFriends = [];
       if (friendData.friends && Array.isArray(friendData.friends)) {
         updatedFriendFriends = [
@@ -37,6 +37,7 @@ const FriendsLogic = () => {
             userDocID: userDocID,
             username: userData.username,
             email: userData.email,
+            avatar: userData.avatar
           },
         ];
       } else {
@@ -46,10 +47,11 @@ const FriendsLogic = () => {
             userDocID: userDocID,
             username: userData.username,
             email: userData.email,
+            avatar: userData.avatar
           },
         ];
       }
-
+      
       const updatedFriendData = {
         ...friendData,
         friends: updatedFriendFriends,

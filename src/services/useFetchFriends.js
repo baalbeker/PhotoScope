@@ -26,6 +26,7 @@ export function useFetchFriends(userDocID, setRequests, setFriends) {
             });
             const friendResults = await Promise.all(friendPromises);
             setFriends(friendResults);
+            console.log('friends fetch');
           }
         } catch (error) {
           console.error("Error fetching data:", error);
