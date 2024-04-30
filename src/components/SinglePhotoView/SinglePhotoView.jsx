@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import CommentForm from '../Comments/CommentForm';
 import CommentList from './CommentList';
 import { handleLike, handleDislike, deletePhoto } from "../../services/photoServices";
-import {AiOutlineLike,AiOutlineDislike} from "react-icons/ai"
+import {AiFillLike,AiFillDislike, AiFillDelete} from "react-icons/ai"
 
 const SinglePhotoView = ({ photo, onClose, setPhoto,setPhotos }) => {
   const {userID,userDocID, isAdmin} = useContext(AuthContext)
@@ -91,10 +91,19 @@ const SinglePhotoView = ({ photo, onClose, setPhoto,setPhotos }) => {
         <ModalBody>
           <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
             <Image src={photo.url} alt={`Photo`} mt="3%" maxW="80%" maxH="80vh" />
+            
             <Flex justify="center">
-              <Text fontWeight="bold" mr="40px">by @{photo.ownerName}</Text>
+              <Text fontWeight="bold" mr="40px">Uploader: @{photo.ownerName}</Text>
               {photo.createdAt && (
-                <Box ml="10px">
+                <Flex>
+                    <Text mr={"10px"} fontWeight="bold" fontSize="sm">
+                      {photo.createdAt.toDate().toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                      })}
+                    </Text>
+
                     <Text fontWeight="bold" fontSize="sm">
                       {photo.createdAt.toDate().toLocaleTimeString([], {
                         hour: "2-digit",
@@ -102,28 +111,22 @@ const SinglePhotoView = ({ photo, onClose, setPhoto,setPhotos }) => {
                         hour12: false,
                       })}
                     </Text>
-                    <Text fontWeight="bold" fontSize="sm">
-                      {photo.createdAt.toDate().toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "2-digit",
-                      })}
-                    </Text>
-                </Box>
+                </Flex>
               )}
             </Flex>
+
             <Flex alignItems="center" mt="2">
-              <Button colorScheme="teal" size="sm" mr="2" onClick={handleLikePhoto}>
-                <AiOutlineLike/>
+              <Button colorScheme="green" size="sm" mr="2" onClick={handleLikePhoto}>
+                <AiFillLike/>
                 <Text fontWeight="bold">{likes}</Text>
               </Button>
               <Button colorScheme="red" size="sm" mr="2" onClick={handleDislikePhoto}>
-                <AiOutlineDislike/>
+                <AiFillDislike/>
                 <Text fontWeight="bold">{dislikes}</Text>
               </Button>
               {(isAdmin || userDocID === photo.owner) && (
                 <Button colorScheme="red" size="sm" mr="2" onClick={deletePhotoHandler}>
-                  Delete
+                  <AiFillDelete/>
                 </Button>
               )}
             </Flex>

@@ -17,7 +17,7 @@ const LatestPhotos = () => {
   };
 
   return (
-    <Box mt="1vh" mb="1vh">
+    <Box>
       <Grid h="52vh" templateColumns="repeat(5, 1fr)" gap={4}>
         {latestPhotos.map((photo, index) => (
           <Box

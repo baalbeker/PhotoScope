@@ -3,7 +3,7 @@ import { Button, Text, Flex, Box, ListItem, UnorderedList } from "@chakra-ui/rea
 import { handleCommentLike, handleCommentDislike, deleteComment } from "../../services/photoServices";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../context/AuthContext";
-import {AiOutlineLike,AiOutlineDislike} from "react-icons/ai"
+import {AiFillLike,AiFillDislike,AiFillDelete } from "react-icons/ai"
 
 
 const CommentList = ({ comments, photo }) => {
@@ -12,58 +12,67 @@ const CommentList = ({ comments, photo }) => {
   return (
     <UnorderedList listStyleType="none">
       {comments.map((comment) => (
-        <ListItem key={comment.id} id="commentbox" borderBottom="1px solid #ccc" py={2}>
-          <Flex alignItems="center">
+        <ListItem
+          key={comment.id}
+          id="commentbox"
+          width="50vh"
+          overflow-wrap="break-word"
+          textAlign={"left"}
+          wordBreak={"break-word"}
+          minHeight={"10vh"}
+          borderBottom="1px solid #ccc"
+          py={2}>
+          <Box alignItems="center">
             <Text fontSize="md" fontWeight="bold" mr={2}>
-              by @{comment.authorName}
+            @{comment.authorName}
             </Text>
             <Text fontSize="md">{comment.text}</Text>
-          </Flex>
+          </Box>
 
-          <Flex alignItems="center" mt={2}>
+          <Flex alignItems="center" mt={1}>
+
             <Button
-              size="sm"
-              colorScheme="teal"
-              mr={2}
+                size="xs"
+                colorScheme="green"
               onClick={() => handleCommentLike(comment.id, photo.docRef, userID)}
               disabled={comment.likedBy && comment.likedBy.includes(userID)}
             >
-            <AiOutlineLike/>
-            <Text fontSize="md" fontWeight="bold">{comment.likes}</Text>
+            <AiFillLike/>
+            <Text fontSize="xsm" fontWeight="bold">{comment.likes}</Text>
             </Button>
 
             <Button
-              size="sm"
-              colorScheme="red"
+                size="xs"
+                colorScheme="red"
               ml={2}
               onClick={() => handleCommentDislike(comment.id, photo.docRef, userID)}
               disabled={comment.dislikedBy && comment.dislikedBy.includes(userID)}
             >
-            <AiOutlineDislike/>
-            <Text fontSize="md" fontWeight="bold">{comment.dislikes}</Text>
+            <AiFillDislike/>
+            <Text fontSize="xsm" fontWeight="bold">{comment.dislikes}</Text>
             </Button>
 
             {(userID === comment.authorId || isAdmin) && (
               <Button
-                size="sm"
+                size="xs"
                 colorScheme="red"
                 ml={2}
                 onClick={() => deleteComment(photo.docRef, comment.id)}
               >
-                Delete
+                <AiFillDelete />
               </Button>
             )}
 
             {comment.createdAt && (
-              <Box ml="10px">
-                <Text fontSize="sm">
+              <Box  align={"center"} marginLeft="auto">
+                <Text fontSize="xs">
                   {comment.createdAt.toDate().toLocaleDateString("en-GB", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "2-digit",
                   })}
                 </Text>
-                <Text fontSize="sm">
+                <Text fontSize="xs">
                   {comment.createdAt.toDate().toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -72,6 +81,7 @@ const CommentList = ({ comments, photo }) => {
                 </Text>
               </Box>
             )}
+
           </Flex>
         </ListItem>
       ))}

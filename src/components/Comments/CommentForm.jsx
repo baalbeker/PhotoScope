@@ -45,7 +45,7 @@ const CommentForm = ({ photo }) => {
             placeholder="Add a comment..."
             
           />
-          <Button mt={4} ml={5} id="commentsubmitbutton" type="submit" colorScheme="teal">Add</Button>
+          <Button mt={4} ml={5} id="commentsubmitbutton" type="submit" colorScheme="twitter">Add</Button>
         </form>
       ) : (
         <Alert status="error">

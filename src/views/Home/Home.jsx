@@ -19,11 +19,11 @@ const Home = () => {
   }, []);
 
   return (
-    <Box w="170vh" h={"80vh"}>
+    <Box w="170vh" h={"80vh"} mb={""}>
       <Grid h="600px" templateRows="repeat(2, 1fr)" templateColumns="repeat(4, 1fr)" gap={4}>
         <GridItem colSpan={5} rounded="md" borderColor="gray.50" h="25vh" bgImage={images[bgImageIndex]} />
         <GridItem mt={"-5vh"} rowSpan={2} colSpan={5}>
-            <Heading>Latest Photos</Heading>
+            <Heading mb={"2vh"}>Latest Photos</Heading>
             <LatestPhotos />
         </GridItem>
       </Grid>
