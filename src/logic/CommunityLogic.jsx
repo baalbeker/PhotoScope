@@ -1,7 +1,7 @@
-import { db } from "../../config/firebase";
+import { db } from "../config/firebase";
 import {getDocs,collection,query,where,deleteDoc,doc,updateDoc,getDoc,} from "firebase/firestore";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useColorMode } from "@chakra-ui/react";
 
 const CommunityLogic = () => {

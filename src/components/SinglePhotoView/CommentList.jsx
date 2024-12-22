@@ -15,7 +15,7 @@ const CommentList = ({ comments, photo }) => {
         <ListItem
           key={comment.id}
           id="commentbox"
-          width="50vh"
+          width="40vh"
           overflow-wrap="break-word"
           textAlign={"left"}
           wordBreak={"break-word"}

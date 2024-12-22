@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { Box, Grid, Flex, Image, Text ,useColorModeValue} from "@chakra-ui/react";
+import { Box, Grid, Flex, Image, Text, useColorModeValue, VStack } from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import SinglePhotoView from "../SinglePhotoView/SinglePhotoView";
 
 const LatestPhotos = () => {
   const { photos, setPhotos, selectedPhoto, setSelectedPhoto } = useContext(AuthContext);
   const latestPhotos = photos.slice(-5);
-  const bg = useColorModeValue('gray.200', 'gray.700')
+  const bg = useColorModeValue('gray.100', 'gray.700');
 
   const openSinglePhotoView = (photo) => {
     setSelectedPhoto(photo);
@@ -18,41 +18,45 @@ const LatestPhotos = () => {
 
   return (
     <Box>
-      <Grid h="52vh" templateColumns="repeat(5, 1fr)" gap={4}>
+      <Grid
+        templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }}
+        gap={6}
+        mb={8}
+      >
         {latestPhotos.map((photo, index) => (
           <Box
-            maxW="30vh"
-            bgColor={bg}
-            borderRadius="8px"
             key={index}
-            textAlign="center"
+            bg={bg}
+            borderRadius="md"
+            boxShadow="md"
             onClick={() => openSinglePhotoView(photo)}
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
+            _hover={{ cursor: "pointer", boxShadow: "lg" }}
+            transition="all 0.3s ease"
           >
             <Image
               src={photo.url}
               alt={photo.ownerName}
-              fit="cover"
+              borderTopRadius="md"
+              objectFit="cover"
               width="100%"
-              height="100%"
-              alignSelf="center"
+              height="200px"
+              mb={4}
             />
 
-            <Flex mt={"auto"}>
-              <Text fontWeight="bold" mr="3vh">by @{photo.ownerName}</Text>
+            <VStack align="start" p={4}>
+              <Text fontWeight="bold" fontSize="lg">
+                by @{photo.ownerName}
+              </Text>
               {photo.createdAt && (
-                <Box ml="10px">
-                  <Text fontWeight="bold" fontSize="sm">
+                <Box>
+                  <Text fontSize="sm" color="gray.500">
                     {photo.createdAt.toDate().toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: false,
                     })}
                   </Text>
-                  <Text fontWeight="bold" fontSize="sm">
+                  <Text fontSize="sm" color="gray.500">
                     {photo.createdAt.toDate().toLocaleDateString("en-GB", {
                       day: "2-digit",
                       month: "2-digit",
@@ -61,7 +65,7 @@ const LatestPhotos = () => {
                   </Text>
                 </Box>
               )}
-            </Flex>
+            </VStack>
           </Box>
         ))}
       </Grid>

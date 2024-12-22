@@ -1,37 +1,59 @@
-import { useState, useEffect, useContext } from 'react';
-import {Modal,ModalOverlay,ModalContent,ModalCloseButton,ModalBody,Image,Box,Text,Button,Flex,} from '@chakra-ui/react';
-import {doc,getDoc,collection,query,orderBy,onSnapshot,} from 'firebase/firestore';
-import { db } from '../../config/firebase';
-import { AuthContext } from '../../context/AuthContext';
-import CommentForm from '../Comments/CommentForm';
-import CommentList from './CommentList';
-import { handleLike, handleDislike, deletePhoto } from "../../services/photoServices";
-import {AiFillLike,AiFillDislike, AiFillDelete} from "react-icons/ai"
+import { useState, useEffect, useContext } from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  Image,
+  Box,
+  Text,
+  Button,
+  Flex,
+} from "@chakra-ui/react";
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { AuthContext } from "../../context/AuthContext";
+import CommentForm from "../Comments/CommentForm";
+import CommentList from "./CommentList";
+import {
+  handleLike,
+  handleDislike,
+  deletePhoto,
+} from "../../services/photoServices";
+import { AiFillLike, AiFillDislike, AiFillDelete } from "react-icons/ai";
 
-const SinglePhotoView = ({ photo, onClose, setPhoto,setPhotos }) => {
-  const {userID,userDocID, isAdmin} = useContext(AuthContext)
+const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
+  const { userID, userDocID, isAdmin } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(true);
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [comments, setComments] = useState([]);
-  
+
   useEffect(() => {
     setIsOpen(true);
     const fetchLikesAndDislikes = async () => {
       try {
-        const photoRef = doc(db, 'photoData', photo.docRef);
+        const photoRef = doc(db, "photoData", photo.docRef);
         const photoSnapshot = await getDoc(photoRef);
         if (photoSnapshot.exists()) {
           const photoData = photoSnapshot.data();
           setLikes(photoData.likes || 0);
           setDislikes(photoData.dislikes || 0);
-          console.log('singlephotoview1');
+          console.log("singlephotoview1");
         }
       } catch (error) {
-        console.error('Error fetching likes and dislikes:', error);
+        console.error("Error fetching likes and dislikes:", error);
       }
     };
-    
+
     fetchLikesAndDislikes();
   }, [photo]);
 
@@ -41,7 +63,10 @@ const SinglePhotoView = ({ photo, onClose, setPhoto,setPhotos }) => {
   };
 
   useEffect(() => {
-    const commentsCollectionRef = collection(db, `photoData/${photo.docRef}/comments`);
+    const commentsCollectionRef = collection(
+      db,
+      `photoData/${photo.docRef}/comments`
+    );
     const commentsQuery = query(commentsCollectionRef, orderBy("createdAt"));
     const unsubscribe = onSnapshot(commentsQuery, (querySnapshot) => {
       const newComments = [];
@@ -49,12 +74,10 @@ const SinglePhotoView = ({ photo, onClose, setPhoto,setPhotos }) => {
         newComments.push({ id: doc.id, ...doc.data() });
       });
       setComments(newComments);
-      console.log('singlephotoview2');
-
+      console.log("singlephotoview2");
     });
     return unsubscribe;
   }, [photo]);
-
 
   const handleLikePhoto = async () => {
     const updatedPhotoData = await handleLike(photo, userID);
@@ -79,59 +102,89 @@ const SinglePhotoView = ({ photo, onClose, setPhoto,setPhotos }) => {
   };
 
   const deletePhotoHandler = async () => {
-    await deletePhoto(photo, setPhotos,userDocID);
+    await deletePhoto(photo, setPhotos, userDocID);
     handleClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} size="5xl" >
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      size={{ base: "2xl", md: "4xl" }}
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton />
+        <ModalCloseButton size="lg"  top={-0.5} right={-1}/>
         <ModalBody>
-          <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
-            <Image src={photo.url} alt={`Photo`} mt="3%" maxW="80%" maxH="80vh" />
-            
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            textAlign="center"
+          >
+            <Image
+              src={photo.url}
+              alt={`Photo`}
+              mt="7%"
+            />
+
             <Flex justify="center">
-              <Text fontWeight="bold" mr="40px">Uploader: @{photo.ownerName}</Text>
+              <Text fontWeight="bold" mr="40px">
+                Uploader: @{photo.ownerName}
+              </Text>
               {photo.createdAt && (
                 <Flex>
-                    <Text mr={"10px"} fontWeight="bold" fontSize="sm">
-                      {photo.createdAt.toDate().toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "2-digit",
-                      })}
-                    </Text>
+                  <Text mr={"10px"} fontWeight="bold" fontSize="sm">
+                    {photo.createdAt.toDate().toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "2-digit",
+                    })}
+                  </Text>
 
-                    <Text fontWeight="bold" fontSize="sm">
-                      {photo.createdAt.toDate().toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: false,
-                      })}
-                    </Text>
+                  <Text fontWeight="bold" fontSize="sm">
+                    {photo.createdAt.toDate().toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })}
+                  </Text>
                 </Flex>
               )}
             </Flex>
 
             <Flex alignItems="center" mt="2">
-              <Button colorScheme="green" size="sm" mr="2" onClick={handleLikePhoto}>
-                <AiFillLike/>
+              <Button
+                colorScheme="green"
+                size="sm"
+                mr="2"
+                onClick={handleLikePhoto}
+              >
+                <AiFillLike />
                 <Text fontWeight="bold">{likes}</Text>
               </Button>
-              <Button colorScheme="red" size="sm" mr="2" onClick={handleDislikePhoto}>
-                <AiFillDislike/>
+              <Button
+                colorScheme="red"
+                size="sm"
+                mr="2"
+                onClick={handleDislikePhoto}
+              >
+                <AiFillDislike />
                 <Text fontWeight="bold">{dislikes}</Text>
               </Button>
               {(isAdmin || userDocID === photo.owner) && (
-                <Button colorScheme="red" size="sm" mr="2" onClick={deletePhotoHandler}>
-                  <AiFillDelete/>
+                <Button
+                  colorScheme="red"
+                  size="sm"
+                  mr="2"
+                  onClick={deletePhotoHandler}
+                >
+                  <AiFillDelete />
                 </Button>
               )}
             </Flex>
             <CommentForm photo={photo} />
-            <CommentList comments={comments} photo={photo}/>
+            <CommentList comments={comments} photo={photo} />
           </Box>
         </ModalBody>
       </ModalContent>

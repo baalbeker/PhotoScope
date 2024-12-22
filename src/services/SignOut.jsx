@@ -1,10 +1,9 @@
 import { useContext } from "react";
 import { signOut } from "firebase/auth";
 import { AuthContext } from "../context/AuthContext";
-import { FriendsContext } from "../context/FriendsContext";
 import userimage from "../assets/user.png"
 
-function signUserOut(auth, navigate) {
+function SignOut(auth, navigate) {
   const {
     setIsAuth,
     setAdmin,
@@ -20,8 +19,9 @@ function signUserOut(auth, navigate) {
     setPhotos,
     setSelectedPhoto,
     setPhotoCount,
+    setRequests,
+    setFriends
   } = useContext(AuthContext);
-  const {setRequests,setFriends} = useContext(FriendsContext)
 
   return () => {
     signOut(auth)
@@ -52,4 +52,4 @@ function signUserOut(auth, navigate) {
   };
 }
 
-export default signUserOut;
+export default SignOut;

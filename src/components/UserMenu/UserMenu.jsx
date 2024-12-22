@@ -11,7 +11,6 @@ const UserMenu = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-
   const handleSignOut = () => signOut();
 
   useEffect(() => {
@@ -24,7 +23,7 @@ const UserMenu = () => {
     const timer = setTimeout(() => {
       if (loading) handleSignOut();
     }, 5000);
-    
+
     return () => clearTimeout(timer);
   }, [loading]);
 
@@ -33,9 +32,19 @@ const UserMenu = () => {
   }
 
   return (
-    <Flex mt='10px' position="fixed" right={0} w="37vh" zIndex={"sticky"} borderRadius={"md"} h={"70px"}>
+    <Flex
+      mt={-2}
+      position="fixed"
+      right={1}
+      zIndex={"sticky"}
+      borderRadius={"md"}
+      h={"70px"}
+      justifyContent={{ base: 'center', md: 'flex-end' }} // Center on small screens, align right on medium and larger screens
+      alignItems="center" // Center vertically
+      w="100%" // Ensures the Flex container takes full width
+    >
       <Box paddingTop={"2"}>
-        <Heading as="h3" size="sm">{`${name} ${family}`}</Heading>
+        <Heading as="h3" size="xs">{`${name} ${family}`}</Heading>
         <Flex color="gray" alignItems="center">
           <Text textAlign="right">{isAdmin ? ' Admin' : ' User'}</Text>
         </Flex>
@@ -43,7 +52,7 @@ const UserMenu = () => {
       </Box>
       
       <Menu>
-        <MenuButton ml={"2"} mt={1} as={Avatar} size="md" src={photoURL} _hover={{ cursor: 'pointer' }}>
+        <MenuButton ml={"2"} as={Avatar} size="sm" src={photoURL} _hover={{ cursor: 'pointer' }}>
           <ChevronDownIcon />
         </MenuButton>
         <MenuList>

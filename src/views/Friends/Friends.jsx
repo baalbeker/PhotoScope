@@ -2,14 +2,14 @@ import { Box, Text, Button, ButtonGroup, Flex, Heading,Spinner } from "@chakra-u
 import { useContext,useState,useEffect } from "react";
 import { Popover, Tooltip, Avatar, Td, Th, Tbody, Thead, Table,Divider, Tr, Grid, PopoverTrigger, PopoverContent, GridItem, PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverFooter } from "@chakra-ui/react";
 import { BsFillPersonXFill, } from "react-icons/bs";
-import { FriendsContext } from "../../context/FriendsContext";
-import FriendsLogic from "../../logic/FriendsLogic/FriendsLogic";
+import { AuthContext } from "../../context/AuthContext";
+import FriendsLogic from "../../logic/FriendsLogic";
 import userimage from "../../assets/user.png"
 import goalheader from "../../assets/img5.jpg";
 import "./Friends.css"
 
 const Friends = () => {
-  const { requests, friends } = useContext(FriendsContext)
+  const { requests, friends } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(true);
 
   const {

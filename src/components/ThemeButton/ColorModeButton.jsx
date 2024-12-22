@@ -7,11 +7,11 @@ const ThemeButton = () => {
     return (
         <IconButton
             position="fixed"
-            top={4}
-            right={4}
+            top={2}
+            left={5}
             icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             onClick={toggleColorMode}
-            size="md"
+            size="sm"
             aria-label="Toggle dark mode"
           />
     )

@@ -4,7 +4,7 @@ import { AiFillLock, AiFillUnlock } from "react-icons/ai";
 import { AuthContext } from "../../context/AuthContext";
 import { MdDeleteForever } from "react-icons/md";
 import { BsFillPersonCheckFill, BsFillPersonPlusFill, BsFillPersonXFill, BsFillPersonBadgeFill, } from "react-icons/bs";
-import CommunityLogic from "../../logic/CommunityLogic/CommunityLogic";
+import CommunityLogic from "../../logic/CommunityLogic";
 import goalheader from "../../assets/img5.jpg";
 import { useNavigate } from "react-router-dom";
 

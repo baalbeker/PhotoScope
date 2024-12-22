@@ -1,7 +1,7 @@
 import { useState, useContext, useRef } from "react";
 import { updateProfile, updateEmail, deleteUser,updatePassword } from "firebase/auth";
-import { storage, auth, db } from "../../config/firebase";
-import { AuthContext } from "../../context/AuthContext";
+import { storage, auth, db } from "../config/firebase";
+import { AuthContext } from "../context/AuthContext";
 import { updateDoc, doc, deleteDoc, collection, query, getDocs, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";

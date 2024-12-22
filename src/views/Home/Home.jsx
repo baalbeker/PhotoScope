@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import LatestPhotos from "../../components/LatestPhotos/LatestPhotos";
 import img1 from "../../assets/img1.jpg";
 import img2 from "../../assets/img2.jpg";
@@ -19,12 +19,31 @@ const Home = () => {
   }, []);
 
   return (
-    <Box w="170vh" h={"80vh"} mb={""}>
-      <Grid h="600px" templateRows="repeat(2, 1fr)" templateColumns="repeat(4, 1fr)" gap={4}>
-        <GridItem colSpan={5} rounded="md" borderColor="gray.50" h="25vh" bgImage={images[bgImageIndex]} />
-        <GridItem mt={"-5vh"} rowSpan={2} colSpan={5}>
-            <Heading mb={"2vh"}>Latest Photos</Heading>
-            <LatestPhotos />
+    <Box w="100%" h="100vh" mb={4} mt={8}>
+      <Grid
+        h="100%"
+        templateRows={{ base: "1fr 1fr", md: "1fr 1fr" }}
+        templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }}
+        gap={4}
+      >
+        <GridItem
+          colSpan={4}
+          rowSpan={1}
+          rounded="md"
+          borderColor="gray.50"
+          h={{ base: "20vh", md: "20vh" }}
+          bgImage={`url(${images[bgImageIndex]})`}
+          bgSize="cover"
+          bgPosition="center"
+        />
+        <GridItem
+          rowSpan={1}
+          colSpan={4}
+        >
+          <Heading mb={{ base: "1vh", md: "2vh" }} textAlign="center">
+            Latest Photos
+          </Heading>
+          <LatestPhotos />
         </GridItem>
       </Grid>
     </Box>

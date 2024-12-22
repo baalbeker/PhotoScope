@@ -1,12 +1,10 @@
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useContext, useRef } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../../config/firebase";
-import { FriendsContext } from "../../context/FriendsContext";
+import { db } from "../config/firebase";
 
 const FriendsLogic = () => {
-  const { userDocID } = useContext(AuthContext);
-  const { requests, setRequests, setFriends } = useContext(FriendsContext);
+  const { userDocID,requests, setRequests, setFriends } = useContext(AuthContext);
   const initialFocusRef = useRef();
 
   const handleAccept = async (request) => {

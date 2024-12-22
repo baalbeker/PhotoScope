@@ -1,125 +1,177 @@
-import { useState, useContext } from 'react'
-import { Flex,IconButton,Box, Image,useColorMode} from '@chakra-ui/react'
-import { FiMenu, FiHome } from 'react-icons/fi'
-import {HiOutlinePhone} from 'react-icons/hi';
-import { BiPhotoAlbum } from 'react-icons/bi'
-import { CgProfile } from 'react-icons/cg'
-import { FaUsers } from 'react-icons/fa'
+import { useContext } from "react";
+import {
+  Flex,
+  IconButton,
+  Box,
+  Image,
+  useColorMode,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerCloseButton,
+  DrawerHeader,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { FiMenu, FiHome } from "react-icons/fi";
+import { HiOutlinePhone } from "react-icons/hi";
+import { BiPhotoAlbum } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { FaUsers } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useLocation, useNavigate } from 'react-router-dom';
-import { FriendsContext } from '../../context/FriendsContext';
-import logo from '../../assets/logo.png'
-import logo2 from '../../assets/logo2.png'
-import NavItem from './NavItem'
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import logo from "../../assets/logo.png";
+import logo2 from "../../assets/logo2.png";
+import NavItem from "./NavItem";
+
 const MotionBox = motion(Box);
 
 const Navigation = () => {
-    const location = useLocation();
-    const navigate = useNavigate()
-    const {requests} = useContext(FriendsContext);
-    const [navSize, changeNavSize] = useState("large")
-    const { colorMode } = useColorMode();
-    const logoto = (colorMode) === "dark" ? logo2 : logo;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { requests } = useContext(AuthContext);
+  const { colorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-    return (
-      <Flex
-        pos="sticky"
-        left="5"
-        h="93vh"
-        marginTop="3.5vh"
-        boxShadow="0 10px 12px 0 rgba(0, 0, 0, 0.05)"
-        borderRadius={navSize == "small" ? "15px" : "30px"}
-        w={navSize == "small" ? "9vh" : "22vh"}
-        flexDir="column"
-        justifyContent="space-between"
-      >
-        <Flex
-          p="5px"
-          flexDir="column"
-          w="100%"
-          alignItems={navSize == "small" ? "center" : "flex-start"}
-          as="nav"
-          className="logo-holder" 
-        >
-          <MotionBox
-            as={Image}
-            src={logoto}
-            alt="Logo"
-            w="150px"
-            h="auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            cursor="pointer"
-            onClick={() => navigate("/home")}
-            className="bg" 
-          />
-          <IconButton
-            background="none"
-            mt={5}
-            _hover={{ background: "gray.200" }}
-            icon={<FiMenu />}
-            onClick={() => {
-              if (navSize == "small") changeNavSize("large");
-              else changeNavSize("small");
-            }}
-          />
-          <NavItem
-            link="/home"
-            navSize={navSize}
-            icon={FiHome}
-            title="Home"
-            active={location.pathname === "/home"}
-          />
-          <NavItem
-            link="/photos"
-            navSize={navSize}
-            icon={BiPhotoAlbum}
-            title="Photos"
-            active={location.pathname === "/photos"}
-          />
-          <NavItem
-            link="/community"
-            navSize={navSize}
-            icon={FaUsers}
-            title="Community"
-            active={location.pathname === "/community"}
-          />
-          <NavItem
-          link="/friends"
-          navSize={navSize}
-          icon={FaUsers}
-          title="Friends"
-          active={location.pathname === "/friends"}
-          friendRequestCount={requests.length} 
-        />
+  const logoto = colorMode === "dark" ? logo2 : logo;
+
+  return (
+    <Flex>
+      {/* Mobile Navigation (Drawer) */}
+      <IconButton
+        background="none"
+        display={{ base: "block", md: "none" }}
+        _hover={{ background: "gray.200" }}
+        icon={<FiMenu />}
+        onClick={onOpen}
+        size="lg"
+        position="absolute"
+        right="1"
+        zIndex="overlay"
+      />
+
+      <Drawer isOpen={isOpen} onClose={onClose} placement="right">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton size="xl" />
+          <DrawerHeader>
+            <MotionBox
+              as={Image}
+              src={logoto}
+              alt="Logo"
+              w="150px"
+              h="auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              cursor="pointer"
+              onClick={() => navigate("/home")}
+            />
+          </DrawerHeader>
+          <DrawerBody>
+            <NavItem
+              link="/home"
+              icon={FiHome}
+              title="Home"
+              active={location.pathname === "/home"}
+            />
+            <NavItem
+              link="/photos"
+              icon={BiPhotoAlbum}
+              title="Photos"
+              active={location.pathname === "/photos"}
+            />
+            <NavItem
+              link="/community"
+              icon={FaUsers}
+              title="Community"
+              active={location.pathname === "/community"}
+            />
+            <NavItem
+              link="/friends"
+              icon={FaUsers}
+              title="Friends"
+              active={location.pathname === "/friends"}
+              friendRequestCount={requests.length}
+            />
             <NavItem
               link="/contacts"
-              navSize={navSize}
               icon={HiOutlinePhone}
               title="Contacts"
               active={location.pathname === "/contacts"}
             />
-          <NavItem
-            link="/profile"
-            navSize={navSize}
-            icon={CgProfile}
-            title="Profile"
-            active={location.pathname === "/profile"}
-          />
-        </Flex>
+            <NavItem
+              link="/profile"
+              icon={CgProfile}
+              title="Profile"
+              active={location.pathname === "/profile"}
+            />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
 
-        <Flex
-          p="5%"
-          flexDir="column"
-          w="100%"
-          alignItems={navSize == "small" ? "center" : "flex-start"}
-          mb={4}
-          className="progress-bars"
-        >
-        </Flex>
+      {/* Desktop Navigation */}
+      <Flex
+        display={{ base: "none", md: "flex" }}
+        p="5px"
+        flexDir="column"
+        w="100%"
+        ml={6}
+        as="nav"
+      >
+        <MotionBox
+          as={Image}
+          src={logoto}
+          alt="Logo"
+          w="150px"
+          h="auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          cursor="pointer"
+          onClick={() => navigate("/home")}
+        />
+        <NavItem
+          link="/home"
+          icon={FiHome}
+          title="Home"
+          active={location.pathname === "/home"}
+        />
+        <NavItem
+          link="/photos"
+          icon={BiPhotoAlbum}
+          title="Photos"
+          active={location.pathname === "/photos"}
+        />
+        <NavItem
+          link="/community"
+          icon={FaUsers}
+          title="Community"
+          active={location.pathname === "/community"}
+        />
+        <NavItem
+          link="/friends"
+          icon={FaUsers}
+          title="Friends"
+          active={location.pathname === "/friends"}
+          friendRequestCount={requests.length}
+        />
+        <NavItem
+          link="/contacts"
+          icon={HiOutlinePhone}
+          title="Contacts"
+          active={location.pathname === "/contacts"}
+        />
+        <NavItem
+          link="/profile"
+          icon={CgProfile}
+          title="Profile"
+          active={location.pathname === "/profile"}
+        />
       </Flex>
-    );
-}
+    </Flex>
+  );
+};
 
 export default Navigation;

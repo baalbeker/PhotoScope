@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import DeleteUserDialog from "../../components/ProfileComponents/DeleteUserDialog";
 import PageContainer from "../../components/ProfileComponents/PageContainer";
 import PageContent from "../../components/ProfileComponents/PageContent";
-import ProfileLogic from "../../logic/ProfileLogic/ProfileLogic";
+import ProfileLogic from "../../logic/ProfileLogic";
 import Footer from "../../components/Footer/Footer"
 import 'react-toastify/dist/ReactToastify.css';
 
