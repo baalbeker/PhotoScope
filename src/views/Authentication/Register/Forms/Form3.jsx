@@ -21,41 +21,53 @@ const Form3 = ({
 
   return (
     <>
-      <Box h="300px" overflowY="auto" w="250px">
+      <Box
+        h="300px"
+        overflowY="auto"
+      >
         <Box>
           <FormControl isRequired>
-            <FormLabel fontSize={17} fontWeight="normal">Username</FormLabel>
+            <FormLabel fontSize={["14px", "15px", "16px", "17px"]} fontWeight="normal">
+              Username
+            </FormLabel>
             <Input
               type="text"
               placeholder="Username"
               onChange={(e) => handleUsernameChange(e.target.value)}
+              fontSize={["14px", "15px", "16px", "17px"]}
             />
           </FormControl>
-          {usernameError && <Text fontSize={11}  color="red">{usernameError}</Text>}
+          {usernameError && <Text fontSize={11} color="red">{usernameError}</Text>}
         </Box>
 
         <Box mt={4}>
           <FormControl isRequired>
-            <FormLabel fontSize={17} fontWeight="normal">Email</FormLabel>
+            <FormLabel fontSize={["14px", "15px", "16px", "17px"]} fontWeight="normal">
+              Email
+            </FormLabel>
             <Input
               type="email"
               placeholder="Email"
               onChange={(e) => handleEmailChange(e.target.value)}
+              fontSize={["14px", "15px", "16px", "17px"]}
             />
           </FormControl>
-          {emailError && <Text fontSize={11}  color="red">{emailError}</Text>}
+          {emailError && <Text fontSize={11} color="red">{emailError}</Text>}
         </Box>
 
         <Box mt={4}>
           <FormControl isRequired>
-            <FormLabel fontSize={17} fontWeight="normal">Password</FormLabel>
+            <FormLabel fontSize={["14px", "15px", "16px", "17px"]} fontWeight="normal">
+              Password
+            </FormLabel>
             <Input
               type="password"
               placeholder="Password"
               onChange={(e) => handlePasswordChange(e.target.value)}
+              fontSize={["14px", "15px", "16px", "17px"]}
             />
           </FormControl>
-          {passwordError && <Text fontSize={11}  color="red">{passwordError}</Text>}
+          {passwordError && <Text fontSize={11} color="red">{passwordError}</Text>}
         </Box>
       </Box>
     </>

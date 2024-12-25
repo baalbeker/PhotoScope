@@ -73,39 +73,45 @@ const Navigation = () => {
             <NavItem
               link="/home"
               icon={FiHome}
-              title="Home"
+              title="Начало"
               active={location.pathname === "/home"}
+              onClick={onClose}
             />
             <NavItem
               link="/photos"
               icon={BiPhotoAlbum}
-              title="Photos"
+              title="Снимки"
               active={location.pathname === "/photos"}
+              onClick={onClose} 
             />
             <NavItem
               link="/community"
               icon={FaUsers}
-              title="Community"
+              title="Общност"
               active={location.pathname === "/community"}
+              onClick={onClose} 
             />
             <NavItem
               link="/friends"
               icon={FaUsers}
-              title="Friends"
+              title="Приятели"
               active={location.pathname === "/friends"}
               friendRequestCount={requests.length}
+              onClick={onClose} 
             />
             <NavItem
               link="/contacts"
               icon={HiOutlinePhone}
-              title="Contacts"
+              title="Контакт"
               active={location.pathname === "/contacts"}
+              onClick={onClose} 
             />
             <NavItem
               link="/profile"
               icon={CgProfile}
-              title="Profile"
+              title="Профил"
               active={location.pathname === "/profile"}
+              onClick={onClose} 
             />
           </DrawerBody>
         </DrawerContent>
@@ -135,38 +141,38 @@ const Navigation = () => {
         <NavItem
           link="/home"
           icon={FiHome}
-          title="Home"
+          title="Начало"
           active={location.pathname === "/home"}
         />
         <NavItem
           link="/photos"
           icon={BiPhotoAlbum}
-          title="Photos"
+          title="Снимки"
           active={location.pathname === "/photos"}
         />
         <NavItem
           link="/community"
           icon={FaUsers}
-          title="Community"
+          title="Общност"
           active={location.pathname === "/community"}
         />
         <NavItem
           link="/friends"
           icon={FaUsers}
-          title="Friends"
+          title="Приятели"
           active={location.pathname === "/friends"}
           friendRequestCount={requests.length}
         />
         <NavItem
           link="/contacts"
           icon={HiOutlinePhone}
-          title="Contacts"
+          title="Контакт"
           active={location.pathname === "/contacts"}
         />
         <NavItem
           link="/profile"
           icon={CgProfile}
-          title="Profile"
+          title="Профил"
           active={location.pathname === "/profile"}
         />
       </Flex>

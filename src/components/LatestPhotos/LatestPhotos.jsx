@@ -1,13 +1,20 @@
 import { useContext } from "react";
-import { Box, Grid, Flex, Image, Text, useColorModeValue, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  Flex,
+  Image,
+  Text,
+  useColorModeValue,
+  Spinner,
+} from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import SinglePhotoView from "../SinglePhotoView/SinglePhotoView";
 
 const LatestPhotos = () => {
-  const { photos, setPhotos, selectedPhoto, setSelectedPhoto } = useContext(AuthContext);
-  const latestPhotos = photos.slice(-5);
-  const bg = useColorModeValue('gray.100', 'gray.700');
-
+  const { photos, setPhotos, selectedPhoto, setSelectedPhoto, loading } = useContext(AuthContext);
+  const latestPhotos = photos.reverse().slice(0, 6);
+  const bg = useColorModeValue("gray.100", "gray.700");
   const openSinglePhotoView = (photo) => {
     setSelectedPhoto(photo);
   };
@@ -16,10 +23,27 @@ const LatestPhotos = () => {
     setSelectedPhoto(null);
   };
 
+  if (loading) {
+    return (
+      <Flex align="center" justify="center" height="68vh">
+        <Spinner
+          thickness="6px"
+          speed="0.65s"
+          color="blue.500"
+          w="130px" // Set custom width
+          h="130px" // Set custom height
+        />
+      </Flex>
+    );
+  }
   return (
     <Box>
       <Grid
-        templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }}
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          lg: "repeat(3, 1fr)",
+        }}
         gap={6}
         mb={8}
       >
@@ -43,12 +67,12 @@ const LatestPhotos = () => {
               mb={4}
             />
 
-            <VStack align="start" p={4}>
+            <Flex align="center" justify="space-between" p={4}>
               <Text fontWeight="bold" fontSize="lg">
-                by @{photo.ownerName}
+                {photo.ownerName}
               </Text>
               {photo.createdAt && (
-                <Box>
+                <Flex gap="2" align="center">
                   <Text fontSize="sm" color="gray.500">
                     {photo.createdAt.toDate().toLocaleTimeString([], {
                       hour: "2-digit",
@@ -63,9 +87,9 @@ const LatestPhotos = () => {
                       year: "2-digit",
                     })}
                   </Text>
-                </Box>
+                </Flex>
               )}
-            </VStack>
+            </Flex>
           </Box>
         ))}
       </Grid>

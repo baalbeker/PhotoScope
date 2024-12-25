@@ -2,10 +2,13 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext, useRef } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { useColorModeValue } from "@chakra-ui/react";  
 
 const FriendsLogic = () => {
-  const { userDocID,requests, setRequests, setFriends } = useContext(AuthContext);
+  const { userDocID, requests, setRequests, setFriends } = useContext(AuthContext);
   const initialFocusRef = useRef();
+  
+  const bg = useColorModeValue("white", "gray.800");  
 
   const handleAccept = async (request) => {
     try {
@@ -18,7 +21,7 @@ const FriendsLogic = () => {
       else updatedFriends = [request];
 
       const updatedRequests = requests.filter((req) => req.userDocID !== request.userDocID);
-      await updateDoc(userDocRef, {requests: updatedRequests,friends: updatedFriends});
+      await updateDoc(userDocRef, { requests: updatedRequests, friends: updatedFriends });
       setFriends(updatedFriends);
       setRequests(updatedRequests);
       
@@ -49,7 +52,7 @@ const FriendsLogic = () => {
           },
         ];
       }
-      
+
       const updatedFriendData = {
         ...friendData,
         friends: updatedFriendFriends,
@@ -84,8 +87,8 @@ const FriendsLogic = () => {
   const handleDecline = async (request) => {
     try {
       const userDocRef = doc(db, "users", userDocID);
-      await updateDoc(userDocRef, {requests: requests.filter((req) => req.userDocID !== request.userDocID)});
-      setRequests((prevRequests) =>prevRequests.filter((req) => req.userDocID !== request.userDocID));
+      await updateDoc(userDocRef, { requests: requests.filter((req) => req.userDocID !== request.userDocID) });
+      setRequests((prevRequests) => prevRequests.filter((req) => req.userDocID !== request.userDocID));
     } catch (error) {
       console.log("Error declining request:", error);
     }
@@ -96,6 +99,7 @@ const FriendsLogic = () => {
     handleRemoveFriend,
     initialFocusRef,
     handleDecline,
+    bg,  
   };
 };
 

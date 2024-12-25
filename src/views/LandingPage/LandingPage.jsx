@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import GetStarted from "../../components/LandingPageComponents/GetStarted";
 import UserTestimonials from '../../components/LandingPageComponents/UserTestimonials';
-import LandingNavigation from '../../components/LandingPageComponents/LandingNavigation'; 
-import HowItWorks from '../../components/LandingPageComponents/HowItWorks';
-import LandingFooter from '../../components/LandingPageComponents/LandingFooter'
+import LandingNavigation from '../../components/LandingPageComponents/LandingNavigation';
+import LandingFooter from '../../components/LandingPageComponents/LandingFooter';
 import About from "../../components/LandingPageComponents/About";
 
 const LandingPage = () => {
@@ -11,23 +10,20 @@ const LandingPage = () => {
     const navigateToLogin = () => navigate("/login");
 
     return (
-        <div>
-          <LandingNavigation /> 
-          <div id="home">
-            <GetStarted onGetStartedClick={navigateToLogin} />
-          </div>
-          <div id="our-users">
-            <UserTestimonials />
-          </div>
-          <div id="about">
-            <About />
-          </div>
-          <div id="howItWorks">
-            <HowItWorks onGetStartedClick={navigateToLogin}/>
-          </div>
-          <div>
-            <LandingFooter />
-          </div>
+        <div style={{ width: '100%', maxWidth: '100vw', overflowX: 'hidden' }}>
+                <LandingNavigation /> 
+            <div id="home" style={{ padding: '0 16px' }}>
+                <GetStarted onGetStartedClick={navigateToLogin} />
+            </div>
+            <div id="our-users" style={{ padding: '0 16px' }}>
+                <UserTestimonials />
+            </div>
+            <div id="about" style={{ padding: '0 16px' }}>
+                <About />
+            </div>
+            <div style={{ padding: '0 16px' }}>
+                <LandingFooter />
+            </div>
         </div>
     );
 };

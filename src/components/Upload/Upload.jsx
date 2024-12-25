@@ -73,24 +73,42 @@ function Upload() {
   };
 
   return (
-    <Box p={4} borderWidth="1px" borderRadius="md">
-      <Heading as="h1" size="lg" mb={4}>
-        Upload a new photo
-      </Heading>
-      <FormControl>
-        <FormLabel>Select a Photo</FormLabel>
-        <Input type="file" accept="image/*" onChange={handleFileChange} mb={4} />
-        {selectedFile && (
-          <Box>
-            <Text>Selected File: {selectedFile.name}</Text>
-            <Button colorScheme="blue" mt={2} onClick={handleUpload}>
-              Upload
-            </Button>
-          </Box>
-        )}
-      </FormControl>
-      <ToastContainer position="top-center" style={{ zIndex: 2001, top: 30 }} />
-    </Box>
+<Box
+  p={4}
+  borderWidth="1px"
+  borderRadius="md"
+  maxW={{ base: "100%", sm: "400px", md: "500px" }} // Adjust max width on different screens
+  mx="auto" // Center the Box on the page
+>
+  <Heading as="h1" size="lg" mb={4}>
+    Upload a new photo
+  </Heading>
+  <FormControl>
+    <FormLabel>Select a Photo</FormLabel>
+    <Input
+      type="file"
+      accept="image/*"
+      onChange={handleFileChange}
+      mb={4}
+      w="100%" // Ensure the Input takes full width on smaller screens
+    />
+    {selectedFile && (
+      <Box>
+        <Text>Selected File: {selectedFile.name}</Text>
+        <Button
+          colorScheme="blue"
+          mt={2}
+          onClick={handleUpload}
+          width="100%" // Make the button full width on smaller screens
+        >
+          Upload
+        </Button>
+      </Box>
+    )}
+  </FormControl>
+  <ToastContainer position="top-center" style={{ zIndex: 2001, top: 30 }} />
+</Box>
+
   );
 }
 

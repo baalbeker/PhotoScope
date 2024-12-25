@@ -1,77 +1,19 @@
-// import { createContext } from "react";
-
-// export const AuthContext = createContext({
-//   isAuth: false,
-//   setIsAuth: () => {},
-
-//   isLoggedIn: false,
-//   setIsLoggedIn: () => {},
-
-//   isAdmin: false,
-//   setAdmin: () => {},
-
-//   signOut: () => {},
-
-//   isBlocked: "",
-//   setIsBlocked: () => {},
-
-//   userID: "",
-//   setUserID: () => {},
-
-//   userDocID: "",
-//   setUserDocID: () => {},
-
-//   name: "",
-//   setName: () => {},
-
-//   family: "",
-//   setFamily: () => {},
-
-//   username: "",
-//   setUsername: () => {},
-
-//   email: "",
-//   setEmail: () => {},
-
-//   photoURL: "",
-//   setPhotoURL: () => {},
-
-//   password: "",
-//   setPassword: () => {},
-
-//   photos: "",
-//   setPhotos: () => {},
-
-//   selectedPhoto: "",
-//   setSelectedPhoto: () => {},
-
-//   photoCount: "",
-//   setPhotoCount: () => {},
-
-//   avatar: "",
-//   setAvatar: () => {},
-
-//   requests: "",
-//   setRequests: () => {},
-
-//   friends: "",
-//   setFriends: () => {},
-// });
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { auth } from "../config/firebase";
+import { signOut as firebaseSignOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useCheckAuth } from "../services/useCheckAuth";
-import { useFetchFriends } from "../services/useFetchFriends";
-import { useFetchPhotos } from "../services/useFetchPhotos";
-import { useFetchUser } from "../services/useFetchUser";
-import SignOut from "../services/SignOut";
 import userImage from "../assets/user.png";
+import { useFetchUser } from "../services/useFetchUser";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth") === "true");
+  const [isAuth, setIsAuth] = useState(
+    localStorage.getItem("isAuth") === "true"
+  );
   const [isAdmin, setAdmin] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
   const [userID, setUserID] = useState("");
@@ -90,13 +32,92 @@ export const AuthProvider = ({ children }) => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [requests, setRequests] = useState([]);
 
-  const handleSignOut = () => SignOut(auth, navigate);
+  const handleSignOut = () => {
+    firebaseSignOut(auth)
+      .then(() => {
+        localStorage.setItem("isAuth", false);
+        setIsAuth(false);
+        setEmail("");
+        setAdmin(false);
+        setIsBlocked(false);
+        setUserID("");
+        setUserDocID("");
+        setName("");
+        setFamily("");
+        setUsername("");
+        setPhotoURL(userImage);
+        setPassword("");
+        setFriends([]);
+        setPhotoCount(0);
+        setPhotos([]);
+        setSelectedPhoto(null);
+        setRequests([]);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
 
-  // Fetch data and handle authentication
-  useCheckAuth(setIsAuth, setPhotoURL, setUserID, photoURL, setAdmin);
-  useFetchUser(userID, setIsBlocked, setAdmin, setUserDocID, setPhotoCount, setName, setFamily, setUsername, setEmail, setPassword, setAvatar);
-  useFetchPhotos(setPhotos, setLoading);
-  useFetchFriends(userDocID, setRequests, setFriends);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsAuth(true);
+        setPhotoURL(user.photoURL || userImage);
+        setUserID(user.uid);
+      } else {
+        setAdmin(false);
+        setIsAuth(false);
+        setPhotoURL(userImage);
+        setUserID("");
+      }
+    });
+    return () => unsubscribe();
+  }, [photoURL]);
+
+  useFetchUser(
+    userID,
+    setIsBlocked,
+    setAdmin,
+    setUserDocID,
+    setPhotoCount,
+    setName,
+    setFamily,
+    setUsername,
+    setEmail,
+    setPassword,
+    setAvatar
+  );
+
+  useEffect(() => {
+    if (!userID) return;
+
+    const photoCollection = collection(db, "photoData");
+
+    const fetchPhotos = (querySnapshot) => {
+      console.log("fetch photos");
+
+      const photoData = querySnapshot.docs
+        .filter((doc) => doc.data().fileName)
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .sort((a, b) => {
+          const userComparison = a.userId?.localeCompare(b.userId) || 0;
+          const timestampA = a.uploadTimestamp || "";
+          const timestampB = b.uploadTimestamp || "";
+          return userComparison !== 0
+            ? userComparison
+            : timestampB.localeCompare(timestampA);
+        });
+
+      setPhotos(photoData);
+      setLoading(false);
+    };
+
+    setLoading(true);
+    const unsubscribe = onSnapshot(photoCollection, fetchPhotos);
+
+    return () => unsubscribe();
+  }, [userID]);
 
   return (
     <AuthContext.Provider
@@ -137,6 +158,7 @@ export const AuthProvider = ({ children }) => {
         friends,
         setFriends,
         loading,
+        setLoading,
       }}
     >
       {children}

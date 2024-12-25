@@ -1,16 +1,32 @@
-import { Flex, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button, Heading, Text, useColorModeValue, Box, Image, Center, Tooltip } from '@chakra-ui/react';
-import { Link as RouterLink, Link as ChakraLink, useNavigate } from "react-router-dom";
+import {
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+  Box,
+  Image,
+  Center,
+} from "@chakra-ui/react";
+import {
+  Link as RouterLink,
+  Link as ChakraLink,
+  useNavigate,
+} from "react-router-dom";
 import { auth } from "../../../config/firebase";
 import { AuthContext } from "../../../context/AuthContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useContext, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Logo from "../../../assets/logo.png"
-import FactBubble from '../../../components/InterestingFacts/FactBubble';
+import Logo from "../../../assets/logo.png";
 
 const Login = () => {
-
-  const { setIsLoggedIn, email, setEmail, password, setPassword } = useContext(AuthContext);
+  const { setIsLoggedIn, email, setEmail, password, setPassword } =
+    useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +43,9 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        if (error.code === "auth/invalid-email" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+        if (
+          error.code === "auth/invalid-login-credentials"
+        ) {
           toast.error("Incorrect email or password! Please try again.");
         } else {
           toast.error("An error occurred. Please try again later.");
@@ -36,39 +54,73 @@ const Login = () => {
   };
 
   return (
-
-    <Flex minH={'90vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
-      <FactBubble />
-      <Stack spacing={8} maxW={'lg'} py={12} px={6}>
+    <Flex
+      minH={"90vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack spacing={8} maxW={"lg"} py={12} px={6}>
         <Center>
           <ChakraLink as={RouterLink} to="/">
-            <Image src={Logo} alt="Energize Logo" w={64} />
+            <Image
+              src={Logo}
+              alt="Energize Logo"
+              w={{ base: "50%", sm: "64" }}
+            />
           </ChakraLink>
         </Center>
-        <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>to enjoy all of our cool features ✌️</Text>
+        <Stack align={"center"}>
+          <Heading fontSize={{ base: "3xl", sm: "4xl" }}>
+            Влезте в профила си
+          </Heading>
+          <Text fontSize={{ base: "md", sm: "lg" }} color={"gray.600"}>
+            за да използвате всички предимства ✌️
+          </Text>
         </Stack>
-        <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
+        <Box
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
+        >
           <Stack spacing={4}>
             <form onSubmit={signIn}>
               <FormControl id="email">
-                <FormLabel>Email address</FormLabel>
-                <Input type="email" onChange={(e) => setEmail(e.target.value)} />
+                <FormLabel>Имейл</FormLabel>
+                <Input
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </FormControl>
               <FormControl id="password">
-                <FormLabel>Password</FormLabel>
-                <Input type="password" onChange={(e) => setPassword(e.target.value)} />
+                <FormLabel>Парола</FormLabel>
+                <Input
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </FormControl>
-              <Stack spacing={10}>
-                <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
-                </Stack>
-                <Button type="submit" bg={'blue.400'} color={'white'} _hover={{ bg: 'blue.500',}}>Sign in</Button>
+              <Stack mt={5} spacing={10}>
+                <Button
+                  type="submit"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{ bg: "blue.500" }}
+                >
+                  Влез
+                </Button>
                 <Box>
-                  <Text align={'center'}>Don't have an account?{" "}
-                    <Button as={RouterLink} to="/register" colorScheme="blue" variant="link" size="md">Register now!</Button>
+                  <Text align={"center"}>
+                    Нямате профил?{" "}
+                    <Button
+                      as={RouterLink}
+                      to="/register"
+                      colorScheme="blue"
+                      variant="link"
+                      size="md"
+                    >
+                      Регистрация
+                    </Button>
                   </Text>
                 </Box>
               </Stack>
@@ -76,9 +128,16 @@ const Login = () => {
           </Stack>
         </Box>
       </Stack>
-      <ToastContainer position="top-center" toastStyle={{position: 'relative', top: '40%',left: '30%', marginTop: '-10px'}}/>
+      <ToastContainer
+      position="top-center"
+      toastStyle={{
+        position: "relative",
+        top: ["10%", "30%", "40%"], // Responsive top positioning
+        left: ["10%", "20%", "30%"], // Responsive left positioning
+      }}
+    />
     </Flex>
   );
-}
+};
 
 export default Login;

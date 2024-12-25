@@ -1,4 +1,4 @@
-import {Container,Avatar,Box,Text,Stack,InputGroup,Input,InputLeftElement,Icon,FormLabel,Checkbox,Button,Divider,FormControl,Heading,} from "@chakra-ui/react";
+import {Container,Avatar,Box,Text,Stack,InputGroup,Input,InputLeftElement,Icon,FormLabel,Button,Divider,FormControl,Heading,} from "@chakra-ui/react";
 import { FaRegEnvelope, FaLock, FaRegUser } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
@@ -40,13 +40,13 @@ export default function Profile() {
     <PageContainer isFixedNav>
       <PageContent centerContent={true}>
         <Container maxW="container.sm">
-          <Heading marginBottom="1.5rem">Edit profile</Heading>
+          <Heading mt={5} mb={3}>Профил</Heading>
 
           <Box bg="secondary.card" rounded="lg" p={5}>
             <Avatar size="2xl" src={avatar} />
             <Stack spacing={4} marginBottom="1rem">
               <FormControl>
-                <FormLabel htmlFor="name">Your first name</FormLabel>
+                <FormLabel htmlFor="name">Име</FormLabel>
                 <InputGroup>
                   <InputLeftElement><Icon as={FaRegUser} color="secondary.inputHelper" /></InputLeftElement>
                   <Input
@@ -61,7 +61,7 @@ export default function Profile() {
               </FormControl>
 
               <FormControl>
-                <FormLabel htmlFor="family">Your family name</FormLabel>
+                <FormLabel htmlFor="family">Фамилия</FormLabel>
                 <InputGroup>
                   <InputLeftElement><Icon as={FaRegUser} color="secondary.inputHelper" /></InputLeftElement>
                   <Input
@@ -76,7 +76,7 @@ export default function Profile() {
               </FormControl>
 
               <FormControl>
-                <FormLabel htmlFor="username">Username</FormLabel>
+                <FormLabel htmlFor="username">Никнейм</FormLabel>
                 <InputGroup>
                   <InputLeftElement><Icon as={FaRegUser} color="secondary.inputHelper" /></InputLeftElement>
                   <Input
@@ -91,7 +91,7 @@ export default function Profile() {
               </FormControl>
 
               <FormControl>
-                <FormLabel htmlFor="email">Email Address</FormLabel>
+                <FormLabel htmlFor="email">Имейл</FormLabel>
                 <InputGroup>
                   <InputLeftElement><Icon as={FaRegEnvelope} color="secondary.inputHelper" /></InputLeftElement>
                   <Input
@@ -107,7 +107,7 @@ export default function Profile() {
 
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
-                  <FormLabel htmlFor="new_avatar">Upload new avatar</FormLabel>
+                  <FormLabel htmlFor="new_avatar">Смени профилна снимка</FormLabel>
                 </Stack>
                 <InputGroup>
                   <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
@@ -122,26 +122,14 @@ export default function Profile() {
               </FormControl>
 
             </Stack>
-            <Stack justifyContent="space-between" isInline marginBottom="1rem">
-              <Stack isInline>
-                <Checkbox
-                  size="md"
-                  fontWeight="500"
-                  colorScheme="main"
-                  id="subscribe"
-                >
-                  Receive newsletter
-                </Checkbox>
-              </Stack>
-            </Stack>
           </Box>
 
           <Stack spacing={0} marginTop="2rem" marginBottom="1rem">
             <Heading as="h4" size="md">
-              Security settings
+              Защита
             </Heading>
             <Text color="gray.500" fontSize="md">
-              Update your password
+              Сменете парола
             </Text>
           </Stack>
 
@@ -151,7 +139,7 @@ export default function Profile() {
             {isAdmin && (
               <FormControl>
               <Stack justifyContent="space-between" isInline>
-                <FormLabel htmlFor="old_password">Add admin</FormLabel>
+                <FormLabel htmlFor="old_password">Добави админ</FormLabel>
               </Stack>
               <InputGroup>
                 <Input
@@ -161,14 +149,14 @@ export default function Profile() {
                   ref={adminInputRef}
                   onChange={handleAddAdmin}
                 />
-                <Button colorScheme="main" variant="outline" onClick={addAdmin}>Add</Button>
+                <Button ml={2} colorScheme="main" variant="outline" onClick={addAdmin}>Добави</Button>
               </InputGroup>
             </FormControl>
             )}
 
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
-                  <FormLabel htmlFor="old_password">Current password</FormLabel>
+                  <FormLabel htmlFor="old_password">Сегашна парола</FormLabel>
                 </Stack>
                 <InputGroup>
                   <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
@@ -184,7 +172,7 @@ export default function Profile() {
               </FormControl>
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
-                  <FormLabel htmlFor="new_password">New password</FormLabel>
+                  <FormLabel htmlFor="new_password">Нова парола</FormLabel>
                 </Stack>
                 <InputGroup>
                   <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
@@ -201,7 +189,7 @@ export default function Profile() {
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
                   <FormLabel htmlFor="new_password2">
-                    Confirm new password
+                    Потвърди нова парола
                   </FormLabel>
                 </Stack>
                 <InputGroup>
@@ -223,18 +211,18 @@ export default function Profile() {
 
           <Stack direction={["column", "row"]} spacing="1rem" justify="end" marginTop="2rem">
             <Button type="submit" colorScheme="main" variant="outline" onClick={updateInfo}>
-              Update settings
+              Запиши промени
             </Button>
-            <Button colorScheme="main" variant="outline" onClick={handleCancel}>Cancel</Button>
+            <Button colorScheme="main" variant="outline" onClick={handleCancel}>Откажи</Button>
           </Stack>
           <Divider marginTop="2rem" marginBottom="2rem" orientation="horizontal"/>
           <Box bg="secondary.card" rounded="lg">
             <Stack spacing={0} marginBottom="1rem">
               <Heading as="h4" size="md">
-                Danger zone
+                Опасна зона
               </Heading>
               <Text color="gray.500" fontSize="sm">
-                Delete your account and data
+                Изтрийте профила си
               </Text>
             </Stack>
             <Stack>

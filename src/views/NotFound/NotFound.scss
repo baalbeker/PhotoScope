@@ -1,0 +1,121 @@
+@import 'https://fonts.googleapis.com/css?family=Inconsolata';
+
+.not-found {
+  height: 100vh; /* Full viewport height */
+  width: 100vw;  /* Full viewport width */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  position: relative; /* To position the noise and overlay elements */
+  background-color: #1a1a1a; /* Dark background color */
+}
+
+.not-found html,
+.not-found body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.not-found .noise {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  opacity: 0.02;
+}
+
+.not-found .overlay {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background:
+      repeating-linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0) 100%);
+  background-size: auto 4px;
+  z-index: 1;
+}
+
+.not-found .overlay::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+      0deg,
+      transparent 0%,
+      rgba(32, 128, 32, 0.2) 2%,
+      rgba(32, 128, 32, 0.8) 3%,
+      rgba(32, 128, 32, 0.2) 3%,
+      transparent 100%);
+  background-repeat: no-repeat;
+  animation: scan 7.5s linear 0s infinite;
+}
+
+@keyframes scan {
+  0%        { background-position: 0 -100vh; }
+  35%, 100% { background-position: 0 100vh; }
+}
+
+.not-found .terminal {
+  width: 100%;
+  max-width: 1200px; /* Increased max-width for bigger content */
+  padding: 6rem; /* Increase padding for larger text */
+  text-transform: uppercase;
+  color: rgba(128, 255, 128, 0.8);
+  font-family: 'Inconsolata', Helvetica, sans-serif;
+  text-align: center; /* Center the text inside the terminal */
+  z-index: 2; /* Ensure it stays on top of noise and overlay */
+}
+
+.not-found h1 {
+  font-size: 6rem; /* Larger font size for the main heading */
+  margin-bottom: 1rem; /* Space below the heading */
+}
+
+.not-found .errorcode {
+  color: white;
+  font-size: 8rem; /* Make the error code significantly larger */
+}
+
+.not-found .output {
+  font-size: 2rem; /* Larger text for the output */
+  color: rgba(128, 255, 128, 0.8);
+  text-shadow:
+      0 0 1px rgba(51, 255, 51, 0.4),
+      0 0 2px rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+}
+
+.not-found .output::before {
+  content: "> ";
+}
+
+.not-found a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 2rem; /* Larger links */
+}
+
+.not-found a::before {
+  content: "["; /* Add square brackets around links */
+}
+
+.not-found a::after {
+  content: "]"; /* Add square brackets around links */
+}

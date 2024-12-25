@@ -14,7 +14,7 @@ function DeleteUserDialog({ handleDeleteUser }) {
     return (
       <>
         <Button colorScheme='red' onClick={onOpen}>
-          Delete User
+          Изтрий профил
         </Button>
   
         <AlertDialog
@@ -25,19 +25,19 @@ function DeleteUserDialog({ handleDeleteUser }) {
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                Delete User
+                Изтрий профил
               </AlertDialogHeader>
   
               <AlertDialogBody>
-                Are you sure? You can't undo this action afterwards.
+              Сигурни ли сте? Това действие не може да бъде отменено.
               </AlertDialogBody>
   
               <AlertDialogFooter>
                 <Button ref={cancelRef} onClick={onClose}>
-                  Cancel
+                  Откажи
                 </Button>
                 <Button colorScheme='red'onClick={handleDelete} ml={3}>
-                  Delete
+                  Изтрий
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>

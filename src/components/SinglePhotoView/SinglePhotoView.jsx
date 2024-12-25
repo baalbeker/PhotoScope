@@ -39,45 +39,54 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
 
   useEffect(() => {
     setIsOpen(true);
-    const fetchLikesAndDislikes = async () => {
+
+    const fetchData = async () => {
       try {
+        // Fetch likes and dislikes
         const photoRef = doc(db, "photoData", photo.docRef);
         const photoSnapshot = await getDoc(photoRef);
         if (photoSnapshot.exists()) {
           const photoData = photoSnapshot.data();
           setLikes(photoData.likes || 0);
           setDislikes(photoData.dislikes || 0);
-          console.log("singlephotoview1");
         }
+
+        // Fetch comments using onSnapshot for real-time updates
+        const commentsCollectionRef = collection(
+          db,
+          `photoData/${photo.docRef}/comments`
+        );
+        const commentsQuery = query(commentsCollectionRef, orderBy("createdAt"));
+        const unsubscribe = onSnapshot(commentsQuery, (querySnapshot) => {
+          const newComments = [];
+          querySnapshot.forEach((doc) => {
+            newComments.push({ id: doc.id, ...doc.data() });
+          });
+          setComments(newComments);
+        });
+
+        // Return the unsubscribe function to clean up the listener when the component unmounts
+        return unsubscribe;
       } catch (error) {
-        console.error("Error fetching likes and dislikes:", error);
+        console.error("Error fetching photo data:", error);
       }
     };
 
-    fetchLikesAndDislikes();
+    // Call fetchData on mount
+    const unsubscribe = fetchData();
+
+    return () => {
+      // Cleanup: unsubscribe from comments listener
+      if (unsubscribe && typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
   }, [photo]);
 
   const handleClose = () => {
     setIsOpen(false);
     onClose();
   };
-
-  useEffect(() => {
-    const commentsCollectionRef = collection(
-      db,
-      `photoData/${photo.docRef}/comments`
-    );
-    const commentsQuery = query(commentsCollectionRef, orderBy("createdAt"));
-    const unsubscribe = onSnapshot(commentsQuery, (querySnapshot) => {
-      const newComments = [];
-      querySnapshot.forEach((doc) => {
-        newComments.push({ id: doc.id, ...doc.data() });
-      });
-      setComments(newComments);
-      console.log("singlephotoview2");
-    });
-    return unsubscribe;
-  }, [photo]);
 
   const handleLikePhoto = async () => {
     const updatedPhotoData = await handleLike(photo, userID);
@@ -114,20 +123,10 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton size="lg"  top={-0.5} right={-1}/>
+        <ModalCloseButton size="lg" top={-0.5} right={-1} />
         <ModalBody>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            textAlign="center"
-          >
-            <Image
-              src={photo.url}
-              alt={`Photo`}
-              mt="7%"
-            />
-
+          <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
+            <Image src={photo.url} alt={`Photo`} mt="7%" />
             <Flex justify="center">
               <Text fontWeight="bold" mr="40px">
                 Uploader: @{photo.ownerName}

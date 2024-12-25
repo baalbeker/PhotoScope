@@ -39,47 +39,47 @@ const Contact = () => {
   };
 
   return (
-    <Box textAlign="center" w="60vh">
-      <Heading  size="lg" mb={4}>Contact Us</Heading>
-      <Text mb="4vh" p={10}>{CONTACTMS}</Text>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel htmlFor="name">Name</FormLabel>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            isRequired
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel htmlFor="email">Email</FormLabel>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            isRequired
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel htmlFor="message">Message</FormLabel>
-          <Textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            isRequired
-          />
-        </FormControl>
-        <Button type="submit" mt={4} colorScheme="teal">Submit</Button>
-      </form>
-      <ToastContainer position="top-center" style={{ zIndex: 2001, top: 30 }} />
+<Box textAlign="center" w={{ base: "90%", md: "60vh" }} px={{ base: 4, md: 10 }}>
+  <Heading size="lg" mb={4}>Свържете се с нас</Heading>
+  <Text  p={7}>{CONTACTMS}</Text>
+  <form onSubmit={handleSubmit}>
+    <FormControl>
+      <FormLabel htmlFor="name">Име</FormLabel>
+      <Input
+        type="text"
+        id="name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        isRequired
+      />
+    </FormControl>
+    <FormControl mt={4}>
+      <FormLabel htmlFor="email">Имейл</FormLabel>
+      <Input
+        type="email"
+        id="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        isRequired
+      />
+    </FormControl>
+    <FormControl mt={4}>
+      <FormLabel htmlFor="message">Съобщение</FormLabel>
+      <Textarea
+        id="message"
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        isRequired
+      />
+    </FormControl>
+    <Button type="submit" mt={4} colorScheme="teal">Изпрати</Button>
+  </form>
+  <ToastContainer position="top-center" style={{ zIndex: 2001, top: 30 }} />
+</Box>
 
-    </Box>
   );
 };
 

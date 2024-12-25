@@ -8,9 +8,15 @@ export default function NavItem({
   active,
   link,
   friendRequestCount,
+  onClick, // Added the onClick prop
 }) {
   const navigate = useNavigate();
-  const handleNavigation = () => navigate(link);
+  const handleNavigation = () => {
+    navigate(link);
+    if (onClick) {
+      onClick(); // Close the drawer if onClick is passed
+    }
+  };
 
   return (
     <Flex mt={30} flexDir="column" w="100%">
@@ -18,7 +24,7 @@ export default function NavItem({
         <div
           onClick={handleNavigation}
           style={{
-            backgroundColor: active && "#AEC8CA",
+            backgroundColor: active ? "#AEC8CA" : "transparent", // Added fallback for non-active items
             padding: "8px",
             borderRadius: "8px",
             cursor: "pointer",
@@ -62,4 +68,5 @@ NavItem.propTypes = {
   active: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
   friendRequestCount: PropTypes.number,
+  onClick: PropTypes.func, // Added prop type for onClick
 };

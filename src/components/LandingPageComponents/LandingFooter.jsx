@@ -22,18 +22,16 @@ function LandingFooter() {
         spacing={{ base: 4, md: 0 }}
         justify={{ base: 'center', md: 'space-between' }}
         align="center"
-        mt={20}
-        mb={-10}
       >
         <Box>
           <Image src={logo} alt="Logo" boxSize="100px" mt={10} />
         </Box>
-        <Text>© 2023 PhotoScope. All rights reserved</Text>
-        <Stack direction={'row'} spacing={3} ml={10}>
+        <Text>© 2024 PhotoScope. All rights reserved</Text>
+        <Stack direction={'row'} spacing={3}>
           {nav_items.map((navItem) => (
             <Link
               key={navItem.label}
-              p={2}
+              
               onClick={() => scrollToSection(navItem.href)}
               fontSize='sm'
               fontWeight={500}

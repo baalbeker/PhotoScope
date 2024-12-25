@@ -1,133 +1,5 @@
-// import { ChakraProvider, Flex, useColorMode } from "@chakra-ui/react"
-// import { Route, Routes } from "react-router-dom";
-// import { useState } from "react";
-// import { auth} from "./config/firebase";
-// import { useNavigate } from "react-router-dom";
-// import { AuthContext } from "./context/AuthContext"
-// import { useFetchFriends } from "./services/useFetchFriends";
-// import { useFetchPhotos } from "./services/useFetchPhotos";
-// import { useFetchUser } from "./services/useFetchUser";
-// import SignOut from "./services/SignOut";
-// import { useCheckAuth } from "./services/useCheckAuth";
-
-// import ThemeButton from "./components/ThemeButton/ColorModeButton";
-// import userimage from "./assets/user.png"
-// import Navigation from "./components/Navigation/Navigation";
-// import NotFound from "./views/NotFound/NotFound";
-// import Register from "./views/Authentication/Register/Register"
-// import Profile from "./views/Profile/Profile";
-// import Photos from "./views/Photos/Photos";
-// import Community from "./views/Community/Community";
-// import Login from "./views/Authentication/Login/Login";
-// import LandingPage from "./views/LandingPage/LandingPage";
-// import Home from "./views/Home/Home";
-// import UserMenu from "./components/UserMenu/UserMenu";
-// import Friends from "./views/Friends/Friends";
-// import Upload from "./views/Upload/Upload";
-// import Contact from "./views/Contact/Contact";
-// import UserPhotos from "./components/UserPhotos/UserPhotos";
-
-
-// function App() {
-//   const navigate = useNavigate();
-//   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth") === "true");
-//   const [isAdmin, setAdmin] = useState(false);
-//   const [isBlocked, setIsBlocked] = useState(false);
-//   const [userID, setUserID] = useState("");
-//   const [userDocID, setUserDocID] = useState("")
-//   const [avatar, setAvatar] = useState(userimage);
-//   const [name, setName] = useState("");
-//   const [family, setFamily] = useState("");
-//   const [username, setUsername] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [photoURL, setPhotoURL] = useState(userimage);
-//   const [password, setPassword] = useState("")
-//   const [friends, setFriends] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [photoCount,setPhotoCount] = useState(0)
-//   const [photos, setPhotos] = useState([])
-//   const [selectedPhoto, setSelectedPhoto] = useState(null);
-//   const [requests, setRequests] = useState([]);
-//   const { colorMode } = useColorMode();
-
-//   useCheckAuth(setIsAuth, setPhotoURL, setUserID, photoURL,setAdmin);
-//   useFetchUser(userID,setIsBlocked,setAdmin,setUserDocID,setPhotoCount,setName,setFamily,setUsername,setEmail,setPassword,setAvatar);
-//   useFetchPhotos(setPhotos, setLoading);
-//   useFetchFriends(userDocID, setRequests, setFriends);
-//   const handleSignOut = SignOut(auth, navigate);
-
-//   return (
-//     <AuthContext.Provider
-//       value={{
-//         isLoggedIn: isAuth,
-//         setIsLoggedIn: setIsAuth,
-//         isAdmin,
-//         setAdmin,
-//         signOut: handleSignOut,
-//         isBlocked,
-//         setIsBlocked,
-//         userID,
-//         setUserID,
-//         name,
-//         setName,
-//         family,
-//         setFamily,
-//         username,
-//         setUsername,
-//         email,
-//         setEmail,
-//         photoURL,
-//         setPhotoURL,
-//         password,
-//         setPassword,
-//         userDocID,
-//         setUserDocID,
-//         photos,
-//         setPhotos,
-//         selectedPhoto,
-//         setSelectedPhoto,
-//         photoCount,
-//         setPhotoCount,
-//         avatar,
-//         setAvatar,
-//         requests,
-//         setRequests,
-//         friends,
-//         setFriends
-//       }}
-//     >
-//             <ChakraProvider>
-//               <Flex>
-//                 {isAuth && location.pathname !== "/register" && location.pathname !== "/login" && <Navigation colorMode={colorMode} />}
-//                 {isAuth && location.pathname !== "/register" && location.pathname !== "/login" && <UserMenu />}
-//                 <Flex as="main" flexGrow={1} justifyContent="center" alignItems="center">
-//                   <Flex as="main" direction="column" minHeight="100vh" flexGrow={1} flexShrink={0} justifyContent="center" alignItems="center" p={5}>
-//                     <Routes marginBottom="auto">
-//                       <Route path="/" element={isAuth ? <Home /> : <LandingPage />} />
-//                       <Route path="home" element={<Home />} />
-//                       <Route path="photos" element={<Photos loading={loading} />} />
-//                       <Route path="community" element={<Community />} />
-//                       <Route path="friends" element={<Friends />} />
-//                       <Route path="profile" element={<Profile />} />
-//                       <Route path="register" element={<Register />} />
-//                       <Route path="login" element={<Login />} />
-//                       <Route path="upload" element={<Upload />} />
-//                       <Route path="contacts" element={<Contact />} />
-//                       <Route path="*" element={<NotFound />} />
-//                       <Route path="/user/:id" element={<UserPhotos />} />
-//                     </Routes>
-//                     <ThemeButton/>
-//                   </Flex>
-//                 </Flex>
-//               </Flex>
-//             </ChakraProvider>
-//     </AuthContext.Provider>
-//   );
-// }
-
-// export default App;
 import { ChakraProvider, Flex, useColorMode } from "@chakra-ui/react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ThemeButton from "./components/ThemeButton/ColorModeButton";
 import Navigation from "./components/Navigation/Navigation";
@@ -141,39 +13,104 @@ import LandingPage from "./views/LandingPage/LandingPage";
 import Home from "./views/Home/Home";
 import UserMenu from "./components/UserMenu/UserMenu";
 import Friends from "./views/Friends/Friends";
-import Upload from "./views/Upload/Upload";
+import Upload from "./components/Upload/Upload";
 import Contact from "./views/Contact/Contact";
 import UserPhotos from "./components/UserPhotos/UserPhotos";
+import PrivateRoute from "./components/PrivateRoute";
+import { useEffect, useState } from "react";
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { colorMode } = useColorMode();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const isAuth = localStorage.getItem("isAuth") === "true";
+
+  useEffect(() => {
+    if (isAuth && location.pathname === "/") {
+      navigate("/home");
+    // } else if (!isAuth && location.pathname === "/") {
+    //   navigate("/"); 
+    } else {
+      setIsLoading(false); 
+    }
+  }, [isAuth, location.pathname, navigate]);
+
+  const isPrivateRoute =
+    location.pathname !== "/" &&
+    location.pathname !== "/register" &&
+    location.pathname !== "/login";
+
+
+  if (isLoading) {
+    return null; 
+  }
 
   return (
     <AuthProvider>
       <ChakraProvider>
         <Flex>
-          {location.pathname !== "/register" && location.pathname !== "/login" && (
+          {isPrivateRoute && (
             <>
               <Navigation colorMode={colorMode} />
               <UserMenu />
             </>
           )}
-          <Flex as="main" flexGrow={1} justifyContent="center" alignItems="center">
-            <Flex as="main" direction="column" minHeight="100vh" flexGrow={1} flexShrink={0} justifyContent="center" alignItems="center" p={5}>
+
+          <Flex
+            as="main"
+            flexGrow={1}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Flex
+              as="main"
+              direction="column"
+              minHeight="100vh"
+              flexGrow={1}
+              flexShrink={0}
+              justifyContent="center"
+              alignItems="center"
+              w={{ base: "full", md: "auto" }}
+            >
               <Routes marginBottom="auto">
                 <Route path="/" element={<LandingPage />} />
-                <Route path="home" element={<Home />} />
-                <Route path="photos" element={<Photos />} />
-                <Route path="community" element={<Community />} />
-                <Route path="friends" element={<Friends />} />
-                <Route path="profile" element={<Profile />} />
+                <Route
+                  path="home"
+                  element={<PrivateRoute element={<Home />} />}
+                />
+                <Route
+                  path="photos"
+                  element={<PrivateRoute element={<Photos />} />}
+                />
+                <Route
+                  path="community"
+                  element={<PrivateRoute element={<Community />} />}
+                />
+                <Route
+                  path="friends"
+                  element={<PrivateRoute element={<Friends />} />}
+                />
+                <Route
+                  path="profile"
+                  element={<PrivateRoute element={<Profile />} />}
+                />
                 <Route path="register" element={<Register />} />
                 <Route path="login" element={<Login />} />
-                <Route path="upload" element={<Upload />} />
-                <Route path="contacts" element={<Contact />} />
+                <Route
+                  path="upload"
+                  element={<PrivateRoute element={<Upload />} />}
+                />
+                <Route
+                  path="contacts"
+                  element={<PrivateRoute element={<Contact />} />}
+                />
+                <Route 
+                  path="/user/:id"
+                  element={<PrivateRoute element={<UserPhotos />} />}
+                />
                 <Route path="*" element={<NotFound />} />
-                <Route path="/user/:id" element={<UserPhotos />} />
               </Routes>
               <ThemeButton />
             </Flex>

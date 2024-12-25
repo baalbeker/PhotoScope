@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Box w="100%" h="100vh" mb={4} mt={8}>
+    <Box w="100%" h="100vh" mb={4} mt={8} p={5}>
       <Grid
         h="100%"
         templateRows={{ base: "1fr 1fr", md: "1fr 1fr" }}
@@ -41,7 +41,7 @@ const Home = () => {
           colSpan={4}
         >
           <Heading mb={{ base: "1vh", md: "2vh" }} textAlign="center">
-            Latest Photos
+            Нови снимки
           </Heading>
           <LatestPhotos />
         </GridItem>

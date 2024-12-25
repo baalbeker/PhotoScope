@@ -1,13 +1,26 @@
-import { useState, useContext } from 'react';
-import { Box, Button, Container, Heading, Image, Grid } from '@chakra-ui/react';
-import Loading from '../../components/Loading/Loading';
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
-import SinglePhotoView from '../../components/SinglePhotoView/SinglePhotoView';
-import { AuthContext } from '../../context/AuthContext';
+import { useContext, useState } from "react";
+import {
+  Box,
+  Container,
+  Heading,
+  Image,
+  Grid,
+  Button,
+  Spinner,
+  Flex,
+} from "@chakra-ui/react";
+import SinglePhotoView from "../../components/SinglePhotoView/SinglePhotoView";
+import { AuthContext } from "../../context/AuthContext";
 
-const Photos = ({loading}) => {
-  const { photos, setPhotos, selectedPhoto, setSelectedPhoto } = useContext(AuthContext);
-  const [currentPage, setCurrentPage] = useState(1);
+const Photos = () => {
+  const {
+    photos,
+    setPhotos,
+    selectedPhoto,
+    setSelectedPhoto,
+    loading,
+  } = useContext(AuthContext);
+  const [visiblePhotos, setVisiblePhotos] = useState(10);
 
   const openSinglePhotoView = (photo) => {
     setSelectedPhoto(photo);
@@ -17,91 +30,77 @@ const Photos = ({loading}) => {
     setSelectedPhoto(null);
   };
 
-  const photosPerPage = 10;
-  const totalPages = Math.ceil(photos.length / photosPerPage);
+  const loadMorePhotos = () => {
+    setVisiblePhotos((prev) => prev + 10);
+  };
 
-  const indexOfLastPhoto = currentPage * photosPerPage;
-  const indexOfFirstPhoto = indexOfLastPhoto - photosPerPage;
-  const currentPhotos = photos.slice(indexOfFirstPhoto, indexOfLastPhoto);
+  if (loading) {
+    return (
+      <Flex align="center" justify="center" height="68vh">
+        <Spinner
+          thickness="6px"
+          speed="0.65s"
+          color="blue.500"
+          w="130px"
+          h="130px"
+        />
+      </Flex>
+    );
+  }
 
   return (
-    <Container minWidth="180vh" minHeight={"80vh"} align="center">
-      <Heading align="left" mt="30px" as="h1" size="xl" marginBottom="4">Photos</Heading>
+    <Container mt={7} mb={5} minWidth="100%" align="center" overflow="auto">
+      <Heading align="left" mt="30px" as="h1" size="xl" marginBottom="4">
+        Снимки
+      </Heading>
 
-        {loading ? (
-          <Box minWidth="100vh" minHeight={"30vh"} align={"center"} >
-            <Loading />
+      <Grid
+        h="auto"
+        templateColumns={{
+          base: "repeat(2, 1fr)",
+          sm: "repeat(3, 1fr)",
+          md: "repeat(5, 1fr)",
+        }}
+        gap={4}
+      >
+        {photos.slice(0, visiblePhotos).map((photo, index) => (
+          <Box key={index} onClick={() => openSinglePhotoView(photo)}>
+            <Image
+              src={photo.url}
+              alt={`Photo ${index}`}
+              width="100%"
+              height="250px"
+              objectFit="cover"
+            />
           </Box>
-        ) : (
-          <Grid h="80%" templateColumns="repeat(5, 1fr)" gap={4}>
-            {currentPhotos.map((photo, index) => (
-              <Box key={index} onClick={() => openSinglePhotoView(photo)}>
-                <Image src={photo.url} alt={`Photo ${index}`} width="100%" height="250px" objectFit="cover" />
-              </Box>
-            ))}
-          </Grid>
-        )}
+        ))}
+      </Grid>
 
-          <Box display="flex" mt={"3vh"} ml="90vh" transform="translateX(-50%)">
-            {currentPage > 1 ? (
-              <Button
-              bgColor="#00CED1"
-              color="white"
-              m="auto"
-              size="lg"
-              padding="10px"
-              borderRadius="8%"
-              right="30px"
-              onClick={() => setCurrentPage(currentPage - 1)}
-              marginRight="2"
-              >
-                <AiOutlineArrowLeft size="lg"/>
-              </Button>
-            ) : (
-              <Button
-              bgColor="grey.900"
-              color="white"
-              m="auto"
-              size="lg"
-              padding="10px"
-              borderRadius="8%"
-              right="30px"
-              marginRight="2"
-              >
-                <AiOutlineArrowLeft size="lg"/>
-              </Button>
-            )}
+      {photos.length > visiblePhotos && (
+        <Button
+          mt={4}
+          mb={4}
+          onClick={loadMorePhotos}
+          bg="blue.500"
+          color="white"
+          _hover={{ bg: "blue.600" }}
+          _active={{ bg: "blue.700" }}
+          borderRadius="md"
+          px={4}
+          py={2}
+        >
+          Повече
+        </Button>
+      )}
 
-            {currentPage < totalPages ? (
-              <Button
-              bgColor="#00CED1"
-              color="white"
-              m="auto"
-              size="lg"
-              padding="10px"
-              borderRadius="8%"
-              onClick={() => setCurrentPage(currentPage + 1)}
-              >
-                <AiOutlineArrowRight size="lg"/>
-              </Button>
-            ) : (
-              <Button
-              bgColor="grey.900"
-              color="white"
-              m="auto"
-              size="lg"
-              padding="10px"
-              borderRadius="8%"
-              >
-                <AiOutlineArrowRight size="lg"/>
-              </Button>
-            )}
-          </Box>
-
-        {selectedPhoto && (
-          <SinglePhotoView photo={selectedPhoto} setPhoto={setSelectedPhoto} onClose={closeSinglePhotoView} setPhotos={setPhotos} />
-        )}
-        
+      {selectedPhoto && (
+        <SinglePhotoView
+          photo={selectedPhoto}
+          setPhoto={setSelectedPhoto}
+          onClose={closeSinglePhotoView}
+          setPhotos={setPhotos}
+        />
+      )}
     </Container>
   );
 };

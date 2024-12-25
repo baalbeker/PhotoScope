@@ -58,6 +58,7 @@ export default function ProfileLogic() {
     };
 
     const addAdmin = async () => {
+      console.log("add admin fetch");
       if (newAdmin) {
         const usersCollection = collection(db, "users");
         const userQuery = query(usersCollection, where("email", "==", newAdmin));
@@ -79,6 +80,7 @@ export default function ProfileLogic() {
     };
 
     const handleDeleteUser = () => {
+      console.log("delete user fetch");
       deleteUser(auth.currentUser)
       .then(() => {
         deleteDoc(doc(db, "users", userDocID));

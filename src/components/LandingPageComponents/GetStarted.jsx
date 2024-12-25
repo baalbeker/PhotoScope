@@ -16,8 +16,7 @@ const GetStarted = ({ onGetStartedClick }) => {
       <Stack
         align={"center"}
         spacing={{ base: 8, md: 10 }}
-        py={{ base: 10, md: 20 }}
-        mt={50}
+        py={{ base: 2, md: 20 }}
         direction={{ base: "column", md: "row" }}
       >
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>
@@ -40,19 +39,15 @@ const GetStarted = ({ onGetStartedClick }) => {
                 zIndex: -1,
               }}
             >
-              Get inspired,
+              Вдъхнови се
             </Text>
             <br />
             <Text as={"span"} color={"purple.400"}>
-              Be creative!
+              Бъди креативен!
             </Text>
           </Heading>
           <Text color={"gray.500"}>
-            PhotoScope is an all-inclusive photography platform that enables you
-            to capture moments, organize your photography projects, and
-            seamlessly share your visual stories with the world. Elevate your
-            photographic journey with PhotoHub, and unlock the power of
-            creativity for free!
+          PhotoScope е всестранна платформа за фотография, която ви позволява да улавяте моменти, организирате вашите фотографски проекти и лесно да споделяте визуалните си истории със света. Повишете фотографското си пътуване с PhotoHub и отключете силата на креативността безплатно!
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}
@@ -68,7 +63,7 @@ const GetStarted = ({ onGetStartedClick }) => {
               _hover={{ bg: "purple.500" }}
               onClick={onGetStartedClick}
             >
-              Get started
+              Влизане
             </Button>
           </Stack>
         </Stack>

@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from 'prop-types';
 
-
 const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
   const handleNameChange = (value) => {
     validateName(value);
@@ -19,13 +18,24 @@ const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
   };
 
   return (
-    <Box h="300px" overflowY="auto">
-      <Heading size="lg" w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
+    <Box h="300px" overflowY="auto" >
+      <Heading
+        size="lg"
+        w="100%"
+        textAlign={"center"}
+        fontWeight="normal"
+        mb={{ base: 4, md: 2 }}
+        fontSize={{ base: "lg", md: "xl" }}
+      >
         What’s your first and last name? We’re happy you’re here!
       </Heading>
-      <Flex>
-        <Box mt={4}>
-          <FormControl mr="5%" id="firstName" isRequired>
+      <Flex
+        direction={{ base: "column", md: "row" }}
+        justify="space-between"
+        align="center"
+      >
+        <Box mt={4} w={{ base: "100%", md: "45%" }}>
+          <FormControl mr={{ md: "5%" }} id="firstName" isRequired>
             <FormLabel fontWeight={"normal"}>First name</FormLabel>
             <Input
               type="text"
@@ -40,7 +50,7 @@ const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
           )}
         </Box>
 
-        <Box mt={4} ml={3}>
+        <Box mt={4} ml={{ base: 0, md: 3 }} w={{ base: "100%", md: "45%" }}>
           <FormControl id="last-name" isRequired>
             <FormLabel fontWeight={"normal"}>Last name</FormLabel>
             <Input
@@ -59,7 +69,6 @@ const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
       <Text align={"center"} mt={4}>
         Let’s get to know a little about you.
       </Text>
-      
     </Box>
   );
 };

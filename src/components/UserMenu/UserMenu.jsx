@@ -7,64 +7,73 @@ import { Spinner } from '@chakra-ui/react'
 import ThemeButton from "../ThemeButton/ColorModeButton";
 
 const UserMenu = () => {
-  const { name, family, isAdmin, signOut, photoURL } = useContext(AuthContext);
+  const {isAdmin, name, family, photoURL, signOut } = useContext(AuthContext);  
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleSignOut = () => signOut();
-
   useEffect(() => {
-    if (name && family && isAdmin !== undefined && photoURL) {
+    if (name && family && photoURL) {
       setLoading(false);
     }
-  }, [name, family, isAdmin, photoURL]);
+  }, [name, family, photoURL]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (loading) handleSignOut();
-    }, 5000);
+if (loading) {
+  return <Spinner position="fixed" top={4} mr={12} right={6} size="lg" />;
+}
 
-    return () => clearTimeout(timer);
-  }, [loading]);
+return (
+  <Flex
+    mt={-2}
+    position="fixed"
+    right={1}
+    zIndex="sticky"
+    borderRadius="md"
+    h="70px"
+    justifyContent={{ base: 'center', md: 'flex-end' }}
+    alignItems="center"
+    w="100%"
+    px={{ base: 4, md: 6 }}
+  >
+    <Box paddingTop={2}>
+      <Heading as="h3" size="xs" textAlign={{ base: 'center', md: 'right' }}>
+        {`${name} ${family}`}
+      </Heading>
+      <Flex color="gray" alignItems="center" justifyContent={{ base: 'center', md: 'flex-end' }}>
+        <Text textAlign={{ base: 'center', md: 'right' }}>
+          {isAdmin ? ' Admin' : ' User'}
+        </Text>
+      </Flex>
+      <ThemeButton />
+    </Box>
 
-  if (loading) {
-    return <Spinner position="fixed" top={4} mr={12} right={6} size="lg" />;
-  }
+    <Menu>
+  <MenuButton
+    ml={{ base: 3, md: 2 }}
+    as={Avatar}
+    size="sm"
+    src={photoURL}
+    _hover={{ cursor: 'pointer' }}
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+  >
+    <ChevronDownIcon />
+  </MenuButton>
+  <MenuList
+    minWidth="130px"
+  >
+    <MenuItem onClick={() => navigate('/profile')}>Профил</MenuItem>
+    <MenuDivider />
+    <MenuItem onClick={() => navigate('/upload')}>Качи снимка</MenuItem>
+    <MenuDivider />
+    <MenuItem onClick={signOut}>Излез</MenuItem>
+  </MenuList>
+</Menu>
 
-  return (
-    <Flex
-      mt={-2}
-      position="fixed"
-      right={1}
-      zIndex={"sticky"}
-      borderRadius={"md"}
-      h={"70px"}
-      justifyContent={{ base: 'center', md: 'flex-end' }} // Center on small screens, align right on medium and larger screens
-      alignItems="center" // Center vertically
-      w="100%" // Ensures the Flex container takes full width
-    >
-      <Box paddingTop={"2"}>
-        <Heading as="h3" size="xs">{`${name} ${family}`}</Heading>
-        <Flex color="gray" alignItems="center">
-          <Text textAlign="right">{isAdmin ? ' Admin' : ' User'}</Text>
-        </Flex>
-        <ThemeButton />
-      </Box>
-      
-      <Menu>
-        <MenuButton ml={"2"} as={Avatar} size="sm" src={photoURL} _hover={{ cursor: 'pointer' }}>
-          <ChevronDownIcon />
-        </MenuButton>
-        <MenuList>
-          <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
-          <MenuDivider />
-          <MenuItem onClick={() => navigate('/upload')}>Upload</MenuItem>
-          <MenuDivider />
-          <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
-        </MenuList>
-      </Menu>
-    </Flex>
-  );
+
+  </Flex>
+);
+
 }
 
 export default UserMenu;

@@ -9,104 +9,71 @@ import serena from "../assets/serena.png"
 
 export const nav_items = [
   {
-      label: 'Home',
+      label: 'Начало',
       href: 'home',
   },
   {
-      label: 'Our Users',
+      label: 'Мнения',
       href: 'our-users',
   },
   {
-      label: 'About',
+      label: 'За нас',
       href: 'about',
-  },
-  {
-      label: 'How it works?',
-      href: 'howItWorks',
   },
 ];
 
 export const TESTIMONIALS = [
   {
-    name: 'Alice Photographer',
-    role: 'Photography Enthusiast',
+    name: 'Алиса Фотограф',
+    role: 'Фотография ентусиаст',
     content:
-      "Since using PhotoHub, I no longer wonder where to showcase my latest photos. Instead, I simply upload them and share them with the world. PhotoHub helps me maintain a vibrant online portfolio and empowers me to connect with fellow photographers.",
+      "Откакто използвам PhotoScope, вече не се чудя къде да показвам последните си снимки. Просто ги качвам и ги споделям със света.",
     avatar: doner,
   },
   {
-    name: 'Bob Shutterbug',
-    role: 'Amateur Photographer',
+    name: 'Боб Шатърбъг',
+    role: 'Аматьор фотограф',
     content:
-    "Capture the moments, seize the day! PhotoHub has transformed my photography hobby into a visual journey of exploration and sharing. I upload every shot, engage with a photography community, and see my skills grow. Get ready to embark on a photographic adventure because with PhotoHub, the possibilities are endless!",
+    "Улавяйте моментите, живейте деня! PhotoScope трансформира моето хоби във фотография в визуално пътуване на изследване и споделяне.",
     avatar: terminator,
   },
   {
-    name: 'Charlie Camera',
-    role: 'Aspiring Photographer',
+    name: 'Чарли Камера',
+    role: 'Амбициозен фотограф',
     content:
-    "Hello, fellow photographers! PhotoHub and its features have totally leveled up my photography game. It's like having a personal gallery to showcase my work and connect with other creative minds. So if you're ready to unleash your inner artist and join the PhotoHub community, grab your camera and let's capture the world together!",
+    "Здравейте, колеги фотографи! PhotoScope и неговите функции изцяло подобриха моите фотографски умения. Това е като да имаш лична галерия, в която да показваш работата си и да се свързваш с други творчески умове. ",
     avatar: andrewT,
   },
   {
-    name: 'Diana Snap',
-    role: 'Instagram Influencer',
+    name: 'Диана Снап',
+    role: 'Инстаграм влиятел',
     content:
-    "Hey everyone, Diana Snap here! PhotoHub is my go-to platform for sharing my photography journey. It's like a spotlight that helps me shine and connect with photography enthusiasts. With PhotoHub, I'm sharing my visual stories and gaining followers one click at a time!",
+    "Здравейте всички, Диана Снап съм! PhotoScope е моята предпочитана платформа за споделяне на фотографското ми пътуване. ",
     avatar: serena
   },
 ];
 
 export const PHOTOGRAPHY_FACTS = [
-  "Just 30 minutes of practicing photography each day can significantly improve your skills and lead to more stunning photos.",
-  "Regularly engaging in photography can boost your creativity and artistic thinking. Studies show it can enhance your ability to see and capture unique moments.",
-  "Each photograph you take can tell a story. Capturing compelling visuals can spark emotions and create lasting memories.",
-  "During a photography session, you can capture countless unique and beautiful shots, each with its own story to tell.",
-  "Different photographers have unique styles and strengths, but all contribute to the diverse world of photography.",
-  "The camera lens is your creative tool, allowing you to frame and focus on the subject, just like an artist with a canvas.",
-  "Editing your photos can be a creative process in itself, enhancing colors, contrast, and mood to make your images stand out.",
-  "Experimenting with different lighting conditions and angles can dramatically impact the mood and quality of your photos.",
-  "Photographers often have a vast collection of photos, each capturing a unique moment in time.",
-  "Photography isn't just about capturing images; it's about telling stories and sharing experiences through visuals.",
-  "Taking your camera with you on your travels can lead to a collection of breathtaking travel photos.",
-  "Exploring various photography genres, from portraits to landscapes, can expand your skills and artistic horizons.",
-  "Choosing the right camera equipment and accessories can make a significant difference in the quality of your photos.",
-  "Photography allows you to freeze moments in time, preserving memories for years to come.",
-  "Sharing your photos with others can create connections and conversations, bringing people together through visuals.",
-  "Experimenting with different photography techniques, such as long exposure or macro photography, can open up new creative possibilities.",
-  "Photography isn't just about capturing the world; it's about how you see and interpret it through your lens.",
-  "Taking the time to appreciate and study the work of other photographers can inspire and inform your own photography.",
-  "Just as every photograph is unique, every photographer has their own artistic voice and perspective.",
-  "Exploring the world through your camera lens can lead to a deeper appreciation of the beauty and intricacies of life."
+  "Само 30 минути практика с фотография всеки ден могат значително да подобрят уменията ви и да доведат до по-завладяващи снимки.",
+  "Редовното занимаване с фотография може да увеличи вашето творчество и артистично мислене. Проучвания показват, че може да подобри способността ви да виждате и улавяте уникални моменти.",
+  "Всяка снимка, която правите, може да разкаже история. Улавянето на завладяващи визуализации може да предизвика емоции и да създаде трайни спомени.",
+  "По време на фотосесия можете да улавяте безброй уникални и красиви кадри, всеки със собствена история за разказване.",
+  "Различните фотографи имат уникални стилове и силни страни, но всички допринасят за разнообразния свят на фотографията.",
+  "Обективът на камерата е вашият творчески инструмент, който ви позволява да кадрирате и фокусирате върху обекта, точно като художник с платно.",
+  "Редактирането на вашите снимки може да бъде творчески процес сам по себе си, като подобрите цветовете, контраста и настроението, за да направите снимките си да изпъкват.",
+  "Експериментирането с различни условия на осветление и ъгли може драматично да повлияе на настроението и качеството на снимките ви.",
+  "Фотографите често имат голяма колекция от снимки, всяка от които улавя уникален момент от времето.",
+  "Фотографията не е само за улавяне на изображения; тя е за разказване на истории и споделяне на преживявания чрез визуални изображения.",
+  "Вземането на камерата със себе си на пътувания може да доведе до колекция от зашеметяващи пътешественически снимки.",
+  "Изследването на различни жанрове на фотографията, от портрети до пейзажи, може да разшири уменията ви и артистичните ви хоризонти.",
+  "Изборът на правилното оборудване за камерата и аксесоари може да направи значителна разлика в качеството на снимките ви.",
+  "Фотографията ви позволява да замразите моменти в времето, съхранявайки спомени за години напред.",
+  "Споделянето на снимките ви с други хора може да създаде връзки и разговори, събирайки хората чрез визуални изображения.",
+  "Експериментирането с различни техники на фотография, като дълга експозиция или макрофотография, може да отвори нови творчески възможности.",
+  "Фотографията не е само за улавяне на света; тя е за това как виждате и интерпретирате света през обектива си.",
+  "Отделянето на време да оцените и изучите работата на други фотографи може да ви вдъхнови и да информира вашата собствена фотография.",
+  "Както всяка снимка е уникална, така и всеки фотограф има свой собствен артистичен глас и перспектива.",
+  "Изследването на света чрез обектива на камерата може да доведе до по-дълбока оценка на красотата и сложността на живота."
 ];
 
-
-
-  export const HOW_IT_WORKS_STEPS = [
-    {
-      title: "Create Profile",
-      content: "In PhotoScope, set up your unique profile by providing essential details such as your name, username,and email. Customize your profile to showcase your artistic vision and connect with fellow photographers who share your passions.",
-      bgImage: "image/path/here",
-      icon: man,
-    },
-    {
-      title: "Share Your Photos",
-      content: "Harness the power of PhotoScope to effortlessly upload, manage, and showcase your stunning photos. Gain exposure by sharing your visual stories with the global PhotoScope community. Explore and engage with other photographers, sparking creative conversations and discovering new perspectives.",
-      bgImage: "image/path/here",
-      icon: woman,
-    },
-    {
-      title: "Join Photo Contests",
-      content: "Participate in exciting photography contests hosted by PhotoScope. Submit your best work and compete with talented photographers from around the world. Win recognition, prizes, and earn your spot in the PhotoScope Hall of Fame as you embrace the spirit of friendly competition.",
-      bgImage: "image/path/here",
-      icon: aparat,
-    },
-    {
-      title: "Embrace Your Creative Journey",
-      content: "With PhotoScope, you can seamlessly organize your photographic journey. Keep track of your favorite photography spots, equipment, and techniques. Remember, every photo you capture tells a unique story. Explore the world at your own pace, and let your creativity flow.",
-      bgImage: "image/path/here",
-      icon: progressIcon,
-    },
-  ];
-
-  export const CONTACTMS = "Welcome to our contact page! We value your feedback, inquiries, and suggestions. Whether you have a question about our products, need assistance with an order, or simply want to say hello, we'd love to hear from you. Please use the contact form below to reach out, and we'll get back to you as soon as possible."
+export const CONTACTMS = "Добре дошли на нашата страница за контакти! Ценим вашето мнение, запитвания и предложения. Независимо дали имате въпрос за нашите продукти, нужда от помощ с поръчка или просто искате да кажете здравей, ние ще се радваме да чуем от вас."
