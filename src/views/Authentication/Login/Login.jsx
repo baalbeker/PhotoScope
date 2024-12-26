@@ -43,15 +43,14 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        if (
-          error.code === "auth/invalid-login-credentials"
-        ) {
+        if (error.code === "auth/invalid-credential") {
           toast.error("Incorrect email or password! Please try again.");
         } else {
           toast.error("An error occurred. Please try again later.");
         }
       });
   };
+  
 
   return (
     <Flex
@@ -132,8 +131,8 @@ const Login = () => {
       position="top-center"
       toastStyle={{
         position: "relative",
-        top: ["10%", "30%", "40%"], // Responsive top positioning
-        left: ["10%", "20%", "30%"], // Responsive left positioning
+        top: ["10%", "30%", "40%"],
+        left: ["10%", "20%", "30%"],
       }}
     />
     </Flex>

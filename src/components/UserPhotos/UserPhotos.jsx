@@ -67,7 +67,7 @@ const UserPhotos = () => {
   }, [id, setPhotos]);
 
   return (
-    <Box w="100%" maxW="1560px" mx="auto" >
+    <Box w="100%" maxW="1560px" mx="auto">
       <Grid
         h="600px"
         templateRows="repeat(2, 1fr)"
@@ -100,11 +100,31 @@ const UserPhotos = () => {
                 </Text>
                 <Text>{user.email}</Text>
               </Box>
-              <Box display="flex" mb="8px">
+              {/* <Box display="flex" mb="8px">
                 <Text fontWeight="bold" mr="8px">
                   Photo count:
                 </Text>
                 <Text>{user.photoCount}</Text>
+              </Box> */}
+              <Box display="flex" mb="8px">
+                <Text fontWeight="bold" mr="8px">
+                  Role:
+                </Text>
+                <Text>
+                  {user.role === "admin" ? `"The EMPEROR"` : "Peasant"}
+                </Text>
+              </Box>
+              <Box display="flex" mb="8px">
+                <Text fontWeight="bold" mr="8px">
+                  Friends:
+                </Text>
+                <Text>{user.friends ? user.friends.length : 0}</Text>
+              </Box>
+              <Box display="flex" mb="8px">
+                <Text fontWeight="bold" mr="8px">
+                  Date joined:
+                </Text>
+                <Text>{user.dateJoined}</Text>
               </Box>
             </Box>
           </Flex>

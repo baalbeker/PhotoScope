@@ -12,8 +12,9 @@ import { AuthContext } from "../../context/AuthContext";
 import SinglePhotoView from "../SinglePhotoView/SinglePhotoView";
 
 const LatestPhotos = () => {
-  const { photos, setPhotos, selectedPhoto, setSelectedPhoto, loading } = useContext(AuthContext);
-  const latestPhotos = photos.reverse().slice(0, 6);
+  const { photos, setPhotos, selectedPhoto, setSelectedPhoto, loading } =
+    useContext(AuthContext);
+  // const latestPhotos = photos.reverse().slice(0, 6);
   const bg = useColorModeValue("gray.100", "gray.700");
   const openSinglePhotoView = (photo) => {
     setSelectedPhoto(photo);
@@ -30,8 +31,8 @@ const LatestPhotos = () => {
           thickness="6px"
           speed="0.65s"
           color="blue.500"
-          w="130px" // Set custom width
-          h="130px" // Set custom height
+          w="130px"
+          h="130px"
         />
       </Flex>
     );
@@ -39,16 +40,17 @@ const LatestPhotos = () => {
   return (
     <Box>
       <Grid
+        h="auto"
         templateColumns={{
           base: "repeat(1, 1fr)",
-          sm: "repeat(2, 1fr)",
-          lg: "repeat(3, 1fr)",
+          sm: "repeat(3, 1fr)",
+          md: "repeat(5, 1fr)",
         }}
-        gap={6}
-        mb={8}
+        gap={{ base: "1", md: "4" }}
       >
-        {latestPhotos.map((photo, index) => (
+        {photos.map((photo, index) => (
           <Box
+            mb={5}
             key={index}
             bg={bg}
             borderRadius="md"

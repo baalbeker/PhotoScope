@@ -9,9 +9,10 @@ import PageContent from "../../components/ProfileComponents/PageContent";
 import ProfileLogic from "../../logic/ProfileLogic";
 import Footer from "../../components/Footer/Footer"
 import 'react-toastify/dist/ReactToastify.css';
+import userImage from "../../assets/user.png"
 
 export default function Profile() {
-  const {name,email,avatar,family,username, isAdmin} = useContext(AuthContext);
+  const {name,email,avatar,family,username,isAdmin} = useContext(AuthContext);
   const {
     avatarInputRef,
     nameInputRef,
@@ -43,7 +44,7 @@ export default function Profile() {
           <Heading mt={5} mb={3}>Профил</Heading>
 
           <Box bg="secondary.card" rounded="lg" p={5}>
-            <Avatar size="2xl" src={avatar} />
+            <Avatar size="2xl" src={avatar || userImage} />
             <Stack spacing={4} marginBottom="1rem">
               <FormControl>
                 <FormLabel htmlFor="name">Име</FormLabel>
@@ -120,22 +121,7 @@ export default function Profile() {
                   />
                 </InputGroup>
               </FormControl>
-
-            </Stack>
-          </Box>
-
-          <Stack spacing={0} marginTop="2rem" marginBottom="1rem">
-            <Heading as="h4" size="md">
-              Защита
-            </Heading>
-            <Text color="gray.500" fontSize="md">
-              Сменете парола
-            </Text>
-          </Stack>
-
-          <Box bg="secondary.card" rounded="lg" p={5}>
-            <Stack spacing={4} marginBottom="1rem">
-
+              
             {isAdmin && (
               <FormControl>
               <Stack justifyContent="space-between" isInline>
@@ -145,7 +131,7 @@ export default function Profile() {
                 <Input
                   focusBorderColor="main.500"
                   type="email"
-                  placeholder="Enter user email"
+                  placeholder="Имейл"
                   ref={adminInputRef}
                   onChange={handleAddAdmin}
                 />
@@ -154,6 +140,20 @@ export default function Profile() {
             </FormControl>
             )}
 
+            </Stack>
+          </Box>
+
+          <Stack spacing={0} marginTop="2rem" marginBottom="1rem">
+            <Heading as="h4" size="md">
+              Защита
+            </Heading>
+            <Text color="gray.500" fontSize="md">
+              Настройки защита
+            </Text>
+          </Stack>
+
+          <Box bg="secondary.card" rounded="lg" p={5}>
+            <Stack spacing={4} marginBottom="1rem">
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
                   <FormLabel htmlFor="old_password">Сегашна парола</FormLabel>
@@ -164,7 +164,7 @@ export default function Profile() {
                     focusBorderColor="main.500"
                     id="old_password"
                     type="password"
-                    placeholder="Enter your current password"
+                    placeholder="Въведи сегашна парола"
                     ref={passwordInputRef}
                     onChange={handleCurrentPassword}
                   />
@@ -180,7 +180,7 @@ export default function Profile() {
                     focusBorderColor="main.500"
                     id="new_password"
                     type="password"
-                    placeholder="Enter your new password"
+                    placeholder="Въведи нова парола"
                     ref={passwordInputRef}
                     onChange={handleNewPassword}
                   />
@@ -198,7 +198,7 @@ export default function Profile() {
                     focusBorderColor="main.500"
                     id="new_password2"
                     type="password"
-                    placeholder="Confirm your new password"
+                    placeholder="Потвърди нова парола"
                     ref={passwordInputRef}
                     onChange={handleConfirmPassword}
 
@@ -219,7 +219,7 @@ export default function Profile() {
           <Box bg="secondary.card" rounded="lg">
             <Stack spacing={0} marginBottom="1rem">
               <Heading as="h4" size="md">
-                Опасна зона
+                Внимание
               </Heading>
               <Text color="gray.500" fontSize="sm">
                 Изтрийте профила си
@@ -228,7 +228,7 @@ export default function Profile() {
             <Stack>
               <DeleteUserDialog handleDeleteUser={handleDeleteUser} />
             </Stack>
-            <ToastContainer position="top-center" style={{ zIndex: 2001, top: 30 }} />
+            <ToastContainer position="top-center" style={{ zIndex: 2001}} />
           </Box>
         </Container>
         <Footer/>

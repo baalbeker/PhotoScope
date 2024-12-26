@@ -74,7 +74,7 @@ const CommentForm = ({ photo }) => {
           <Text>You are blocked and cannot post comments!</Text>
         </Alert>
       )}
-      <ToastContainer position="top-center" style={{ zIndex: 2001, top: 30 }} />
+      <ToastContainer position="top-center" style={{ zIndex: 2001}} />
     </Box>
   );
 };

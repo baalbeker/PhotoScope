@@ -96,6 +96,9 @@ const Register = () => {
   const addUser = async () => {
     const usersCollection = collection(db, "users")
 
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0];
+
     const docRef = await addDoc(usersCollection, {
       name: regName,
       family: regFamily,
@@ -106,6 +109,7 @@ const Register = () => {
       isBlocked: false,
       id: auth.currentUser.uid,
       photoCount: 0,
+      dateJoined: formattedDate,
     });
 
     const docID = docRef.id;

@@ -80,8 +80,6 @@ const Friends = () => {
 
   const textColor = useColorModeValue("gray.800", "gray.200");
   const cardBg = useColorModeValue("white", "gray.800");
-  const popoverBg = useColorModeValue("#777", "blue.600");
-  const popoverColor = useColorModeValue("black", "gray.200");
 
   return (
     <Box w="100%" h="100vh" mt={8} p={5} bg={bg}>
@@ -90,15 +88,20 @@ const Friends = () => {
         templateColumns={{ base: "1fr", md: "repeat(5, 1fr)" }}
         gap={4}
       >
-        <GridItem
-          colSpan={{ base: 5, md: 5 }}
-          rounded="md"
-          borderColor="gray.50"
-          h="200px"
-          bgImage={goalheader}
-          bgSize="cover"
-          bgPos="center"
-        />
+          <GridItem
+                      colSpan={5}
+                      rowSpan={1}
+            rounded="md"
+            borderColor="gray.50"
+            bgImage={goalheader}
+            bgSize="cover"
+            h={{ base: "10vh", md: "15vh" }}
+            p={6}
+          >
+            <Text mt={{ base: "1", md: "3vh" }} fontSize="25px" fontWeight="bold" color="white">
+              Приятели
+            </Text>
+          </GridItem>
 
         <GridItem colSpan={{ base: 5, md: 5 }}>
           <Divider mt={5} orientation="horizontal" />
@@ -172,14 +175,7 @@ const Friends = () => {
         </GridItem>
 
         <GridItem colSpan={{ base: 5, md: 5 }}>
-          <Text
-            mb={4}
-            fontSize={friendTextFontSize}
-            fontWeight="bold"
-            color={textColor}
-          >
-            Приятели
-          </Text>
+
 
           {isLoading ? (
             <Flex justifyContent="center" alignItems="center" h="200px">

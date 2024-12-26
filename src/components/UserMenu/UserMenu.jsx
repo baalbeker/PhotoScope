@@ -40,7 +40,7 @@ return (
       </Heading>
       <Flex color="gray" alignItems="center" justifyContent={{ base: 'center', md: 'flex-end' }}>
         <Text textAlign={{ base: 'center', md: 'right' }}>
-          {isAdmin ? ' Admin' : ' User'}
+          {isAdmin ? `"The EMPEROR"` : "Peasant"}
         </Text>
       </Flex>
       <ThemeButton />

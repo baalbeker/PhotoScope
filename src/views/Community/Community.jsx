@@ -71,8 +71,8 @@ const Community = () => {
           q = query(usersCollection);
         }
   
-        const data = await getDocs(q);
-        setUserList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        const data = await getDocs(q);        
+        setUserList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));        
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {
@@ -98,7 +98,7 @@ const Community = () => {
   }
 
   return (
-    <Box w="100%" mt={10} h="auto" p={4}>
+    <Box w="100%" mt={10} h="100vh" p={4}>
       <Container maxW="container.lg" centerContent>
         <Grid
           templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
@@ -112,9 +112,10 @@ const Community = () => {
             borderColor="gray.50"
             bgImage={goalheader}
             bgSize="cover"
-            p={7}
+            h={{ base: "10vh", md: "15vh" }}
+            p={6}
           >
-            <Text fontSize="xl" fontWeight="bold" color="white">
+            <Text mt={{ base: "1", md: "3vh" }} fontSize="25px" fontWeight="bold" color="white">
               Потребители
             </Text>
           </GridItem>
@@ -205,12 +206,12 @@ const Community = () => {
 
                   <Flex direction="row" align="center" gap={2}>
                     <Text fontWeight="bold">Role: </Text>
-                    <Text>{user.role}</Text>
+                    <Text>{user.role === "admin" ? `"The EMPEROR"` : "Peasant"}</Text>
                   </Flex>
 
                   <Flex direction="row" align="center" gap={2}>
-                    <Text fontWeight="bold">Status: </Text>
-                    <Text>{user.isBlocked ? "Blocked" : "Active"}</Text>
+                    <Text fontWeight="bold">Joined: </Text>
+                    <Text>{user.dateJoined}</Text>
                   </Flex>
 
                   <Flex direction="row" gap={4} justify="center" align="center">
@@ -285,6 +286,8 @@ const Community = () => {
                             </Button>
                           </Tooltip>
                         )}
+                      </>
+                    )}
                         <Button
                           size="sm"
                           onClick={() => userPhotos(user.docID)}
@@ -299,8 +302,6 @@ const Community = () => {
                         >
                           Photos
                         </Button>
-                      </>
-                    )}
                   </Flex>
                 </Flex>
               </Box>

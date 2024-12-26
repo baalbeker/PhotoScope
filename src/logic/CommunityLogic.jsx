@@ -1,4 +1,4 @@
-import { db } from "../config/firebase";
+import { db, storage } from "../config/firebase";
 import {
   deleteDoc,
   doc,
@@ -12,6 +12,8 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import defaultavatar from "../assets/user.png";
+import { deleteObject,ref } from "firebase/storage";
+
 
 const CommunityLogic = (setUserList) => {
   const { userDocID, name, family, email, username, avatar } =
@@ -46,6 +48,10 @@ const CommunityLogic = (setUserList) => {
           }
         }
       }
+      const userPhoto = `${userId}.png`;
+      console.log(userPhoto);
+      
+      deleteObject(ref(storage,userPhoto))
       // Finally, delete the user's document
       await deleteDoc(doc(db, "users", userId));
       // Update the user list in the UI
