@@ -33,7 +33,7 @@ const CommentList = ({ comments, photo }) => {
 
             <Button
                 size="xs"
-                colorScheme="green"
+                colorScheme="gray"
               onClick={() => handleCommentLike(comment.id, photo.docRef, userID)}
               disabled={comment.likedBy && comment.likedBy.includes(userID)}
             >
@@ -43,7 +43,7 @@ const CommentList = ({ comments, photo }) => {
 
             <Button
                 size="xs"
-                colorScheme="red"
+                colorScheme="gray"
               ml={2}
               onClick={() => handleCommentDislike(comment.id, photo.docRef, userID)}
               disabled={comment.dislikedBy && comment.dislikedBy.includes(userID)}
@@ -55,7 +55,7 @@ const CommentList = ({ comments, photo }) => {
             {(userID === comment.authorId || isAdmin) && (
               <Button
                 size="xs"
-                colorScheme="red"
+                colorScheme="gray"
                 ml={2}
                 onClick={() => deleteComment(photo.docRef, comment.id)}
               >

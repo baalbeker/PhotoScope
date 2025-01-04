@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect,useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import FriendsLogic from "../../logic/FriendsLogic";
 import userimage from "../../assets/user.png";
@@ -29,6 +29,9 @@ import {
 import { BsFillPersonXFill } from "react-icons/bs";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
+// import fart from '../../assets/fart.mp3'
+
+
 
 const Friends = () => {
   const { userDocID, friends, setFriends, requests, setRequests } = useContext(AuthContext);
@@ -40,6 +43,18 @@ const Friends = () => {
     handleDecline,
     bg,
   } = FriendsLogic();
+
+  // const audioRef = useRef(null);
+  // useEffect(() => {
+  //   audioRef.current = new Audio(fart);
+  //   audioRef.current.play();
+  //   return () => {
+  //     if (audioRef.current) {
+  //       audioRef.current.pause();
+  //       audioRef.current.currentTime = 0;
+  //     }
+  //   };
+  // }, []);
 
 
   useEffect(() => {
@@ -77,7 +92,6 @@ const Friends = () => {
   const gridColumns = useBreakpointValue({ base: "1fr", md: "repeat(3, 1fr)" });
   const friendTextFontSize = useBreakpointValue({ base: "14px", md: "lg" });
   const friendButtonSize = useBreakpointValue({ base: "xs", md: "sm" });
-
   const textColor = useColorModeValue("gray.800", "gray.200");
   const cardBg = useColorModeValue("white", "gray.800");
 

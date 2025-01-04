@@ -29,6 +29,7 @@ import {
   deletePhoto,
 } from "../../services/photoServices";
 import { AiFillLike, AiFillDislike, AiFillDelete } from "react-icons/ai";
+import "./SinglePhotoView.css";
 
 const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
   const { userID, userDocID, isAdmin } = useContext(AuthContext);
@@ -56,7 +57,10 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
           db,
           `photoData/${photo.docRef}/comments`
         );
-        const commentsQuery = query(commentsCollectionRef, orderBy("createdAt"));
+        const commentsQuery = query(
+          commentsCollectionRef,
+          orderBy("createdAt")
+        );
         const unsubscribe = onSnapshot(commentsQuery, (querySnapshot) => {
           const newComments = [];
           querySnapshot.forEach((doc) => {
@@ -77,7 +81,7 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
 
     return () => {
       // Cleanup: unsubscribe from comments listener
-      if (unsubscribe && typeof unsubscribe === 'function') {
+      if (unsubscribe && typeof unsubscribe === "function") {
         unsubscribe();
       }
     };
@@ -125,12 +129,19 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
       <ModalContent>
         <ModalCloseButton size="lg" top={-0.5} right={-1} />
         <ModalBody>
-          <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            textAlign="center"
+          >
             <Image src={photo.url} alt={`Photo`} mt="7%" />
-            <Flex justify="center">
-              <Text fontWeight="bold" mr="40px">
-                Uploader: @{photo.ownerName}
-              </Text>
+            <Flex justify="space-between" width="100%" align="center">
+              <Flex>
+                <Text fontWeight="bold">Uploader: </Text>
+                <Text ml={2} className="rainbow-text">@{photo.ownerName}</Text>
+              </Flex>
+
               {photo.createdAt && (
                 <Flex>
                   <Text mr={"10px"} fontWeight="bold" fontSize="sm">
@@ -154,7 +165,7 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
 
             <Flex alignItems="center" mt="2">
               <Button
-                colorScheme="green"
+                colorScheme="gray"
                 size="sm"
                 mr="2"
                 onClick={handleLikePhoto}
@@ -163,7 +174,7 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
                 <Text fontWeight="bold">{likes}</Text>
               </Button>
               <Button
-                colorScheme="red"
+                colorScheme="gray"
                 size="sm"
                 mr="2"
                 onClick={handleDislikePhoto}
@@ -173,9 +184,10 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
               </Button>
               {(isAdmin || userDocID === photo.owner) && (
                 <Button
-                  colorScheme="red"
+                  colorScheme="gray"
                   size="sm"
                   mr="2"
+                  fontSize="md"
                   onClick={deletePhotoHandler}
                 >
                   <AiFillDelete />

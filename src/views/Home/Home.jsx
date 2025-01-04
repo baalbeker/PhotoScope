@@ -7,9 +7,11 @@ import img3 from "../../assets/img3.jpg";
 import img4 from "../../assets/img4.jpg";
 import img5 from "../../assets/img5.jpg";
 
+
 const Home = () => {
   const [bgImageIndex, setBgImageIndex] = useState(0);
   const images = [img1, img2, img3, img4, img5];
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,7 +35,7 @@ const Home = () => {
           
         >
           <Text mt={{ base: "1", md: "6vh" }} textAlign="left" fontSize="25px" fontWeight="bold" color="white">
-            Снимки
+            Нови снимки
           </Text>
         </Box>
         <Box w="100%" mt={6}>

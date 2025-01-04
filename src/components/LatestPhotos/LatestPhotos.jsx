@@ -10,13 +10,18 @@ import {
 } from "@chakra-ui/react";
 import { AuthContext } from "../../context/AuthContext";
 import SinglePhotoView from "../SinglePhotoView/SinglePhotoView";
+import uploadphoto from "../../assets/uploadphoto.mp3"
+
 
 const LatestPhotos = () => {
   const { photos, setPhotos, selectedPhoto, setSelectedPhoto, loading } =
     useContext(AuthContext);
   // const latestPhotos = photos.reverse().slice(0, 6);
   const bg = useColorModeValue("gray.100", "gray.700");
+  const audio = new Audio(uploadphoto);
   const openSinglePhotoView = (photo) => {
+    // Play the sound when the photo is clicked
+    audio.play();
     setSelectedPhoto(photo);
   };
 

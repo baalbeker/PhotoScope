@@ -27,7 +27,7 @@ const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
         mb={{ base: 4, md: 2 }}
         fontSize={{ base: "lg", md: "xl" }}
       >
-        What’s your first and last name? We’re happy you’re here!
+        Какви са вашите имена? Радваме се че сте тук !
       </Heading>
       <Flex
         direction={{ base: "column", md: "row" }}
@@ -36,10 +36,10 @@ const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
       >
         <Box mt={4} w={{ base: "100%", md: "45%" }}>
           <FormControl mr={{ md: "5%" }} id="firstName" isRequired>
-            <FormLabel fontWeight={"normal"}>First name</FormLabel>
+            <FormLabel fontWeight={"normal"}>Име</FormLabel>
             <Input
               type="text"
-              placeholder="First name"
+              placeholder="Име"
               onChange={(e) => handleNameChange(e.target.value)}
             />
           </FormControl>
@@ -52,10 +52,10 @@ const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
 
         <Box mt={4} ml={{ base: 0, md: 3 }} w={{ base: "100%", md: "45%" }}>
           <FormControl id="last-name" isRequired>
-            <FormLabel fontWeight={"normal"}>Last name</FormLabel>
+            <FormLabel fontWeight={"normal"}>Фамилия</FormLabel>
             <Input
               type="text"
-              placeholder="Last name"
+              placeholder="Фамилия"
               onChange={(e) => handleFamilyChange(e.target.value)}
             />
           </FormControl>
@@ -67,7 +67,7 @@ const Form2 = ({ validateName, validateFamily, nameError, familyError }) => {
         </Box>
       </Flex>
       <Text align={"center"} mt={4}>
-        Let’s get to know a little about you.
+        Нека разберем малко повече за вас.
       </Text>
     </Box>
   );

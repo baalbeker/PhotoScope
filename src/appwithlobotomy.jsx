@@ -19,6 +19,10 @@ import UserPhotos from "./components/UserPhotos/UserPhotos";
 import PrivateRoute from "./components/PrivateRoute";
 import { useEffect, useState } from "react";
 
+// import lob1 from "./assets/lob/lob1.jpg";
+// import lob2 from "./assets/lob/lob2.jpg";
+// import lobsound from "./assets/lob/lobsound.mp3";
+
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -39,6 +43,37 @@ function App() {
     location.pathname !== "/" &&
     location.pathname !== "/register" &&
     location.pathname !== "/login";
+
+
+//LOBOTOMY
+  // const images = [lob1, lob2];
+  // const [overlayImage, setOverlayImage] = useState(null);
+  // const [overlayVisible, setOverlayVisible] = useState(false);
+
+  // const showRandomImage = () => {
+  //   const randomImage = images[Math.floor(Math.random() * images.length)];
+  //   setOverlayImage(randomImage);
+  //   setOverlayVisible(true);
+  //   const audio = new Audio(lobsound);
+  //   audio.play();
+  //   setTimeout(() => {
+  //     setOverlayVisible(false);
+  //   }, 1000);
+  // };
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     showRandomImage();
+
+  //     setTimeout(() => {
+  //       setOverlayVisible(false);
+  //     }, 1000);
+  //   }, Math.random() * 10000 + 80000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
+//-------------------------
+
 
   if (isLoading) {
     return null;
@@ -113,6 +148,22 @@ function App() {
             </Flex>
           </Flex>
         </Flex>
+
+        {/* {overlayVisible && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: `url(${overlayImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              zIndex: 9999,
+            }}
+          />
+        )} */}
       </ChakraProvider>
     </AuthProvider>
   );

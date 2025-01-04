@@ -30,7 +30,6 @@ export default function ProfileLogic() {
   const {
     name,
     setName,
-    password,
     setPassword,
     setEmail,
     setPhotoURL,
@@ -47,7 +46,7 @@ export default function ProfileLogic() {
   const [changedFamily, setChangedFamily] = useState("");
   const [changedEmail, setChangedEmail] = useState("");
   const [changedPhoto, setChangedPhoto] = useState(null);
-  const [currentPassword, setCurrentPassword] = useState("");
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [newAdmin, setNewAdmin] = useState("");
@@ -80,9 +79,7 @@ export default function ProfileLogic() {
   const handleAddAdmin = (event) => {
     setNewAdmin(event.target.value);
   };
-  const handleCurrentPassword = (event) => {
-    setCurrentPassword(event.target.value);
-  };
+
   const handleNewPassword = (event) => {
     setNewPassword(event.target.value);
   };
@@ -162,10 +159,6 @@ export default function ProfileLogic() {
     event.preventDefault();
     const userRef = doc(db, "users", userDocID);
 
-    if (currentPassword !== password) {
-      toast.error("Please input your current password to update profile");
-      return;
-    }
     if (newPassword && newPassword !== confirmPassword) {
       toast.error("Your changed passwords doesn't match");
       return;
@@ -194,41 +187,41 @@ export default function ProfileLogic() {
       await uploadBytes(fileRef, compressedFile);
       const photoURL = await getDownloadURL(fileRef);
       await updateProfile(auth.currentUser, { photoURL: photoURL });
-      console.log('photo uploaded');
+      console.log("photo uploaded");
       return photoURL;
     }
 
-      if (changedPhoto) {
-        if (avatar) {
-          const photoRef = ref(storage, avatar);
-          deleteObject(photoRef)
-            .then(() => {
-              return uploadPhoto(changedPhoto, userDocID);
-            })
-            .then((newPhotoURL) => {
-              setPhotoURL(newPhotoURL);
-              return updateDoc(userRef, { avatar: newPhotoURL });
-            })
-            .then(() => {
-              avatarInputRef.current.value = null;
-            })
-            .catch((error) => {
-              console.error("Error updating photo:", error);
-            });
-        } else {
-          uploadPhoto(changedPhoto, userID)
-            .then((newPhotoURL) => {
-              setPhotoURL(newPhotoURL);
-              return updateDoc(userRef, { avatar: newPhotoURL });
-            })
-            .then(() => {
-              avatarInputRef.current.value = null;
-            })
-            .catch((error) => {
-              console.error("Error uploading new photo:", error);
-            });
-        }
-      }     
+    if (changedPhoto) {
+      if (avatar) {
+        const photoRef = ref(storage, avatar);
+        deleteObject(photoRef)
+          .then(() => {
+            return uploadPhoto(changedPhoto, userDocID);
+          })
+          .then((newPhotoURL) => {
+            setPhotoURL(newPhotoURL);
+            return updateDoc(userRef, { avatar: newPhotoURL });
+          })
+          .then(() => {
+            avatarInputRef.current.value = null;
+          })
+          .catch((error) => {
+            console.error("Error updating photo:", error);
+          });
+      } else {
+        uploadPhoto(changedPhoto, userID)
+          .then((newPhotoURL) => {
+            setPhotoURL(newPhotoURL);
+            return updateDoc(userRef, { avatar: newPhotoURL });
+          })
+          .then(() => {
+            avatarInputRef.current.value = null;
+          })
+          .catch((error) => {
+            console.error("Error uploading new photo:", error);
+          });
+      }
+    }
 
     if (changedEmail) {
       updateEmail(auth.currentUser, changedEmail).then(() => {
@@ -311,7 +304,6 @@ export default function ProfileLogic() {
     handleChangeEmail,
     handleChangeAvatar,
     handleAddAdmin,
-    handleCurrentPassword,
     handleNewPassword,
     handleConfirmPassword,
     handleDeleteUser,

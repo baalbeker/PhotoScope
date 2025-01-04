@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import emailjs from "emailjs-com";
 import { CONTACTMS } from "../../common/constants";
 import goalheader from "../../assets/img5.jpg";
+import Footer from "../../components/Footer/Footer";
 
 const Contact = () => {
   const initialState = { name: "", email: "", message: "" };
@@ -53,6 +54,7 @@ const Contact = () => {
       h="87vh"
       w={{ base: "100%", md: "100vh" }}
       px={{ base: 4, md: 10 }}
+      mb
     >
       <Box
         bgImage={goalheader}

@@ -63,11 +63,12 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setIsAuth(true);
+        localStorage.setItem("isAuth", "true");  // Update localStorage
         setPhotoURL(user.photoURL || userImage);
         setUserID(user.uid);
       } else {
-        setAdmin(false);
         setIsAuth(false);
+        localStorage.setItem("isAuth", "false");  // Update localStorage
         setPhotoURL(userImage);
         setUserID("");
       }

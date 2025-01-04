@@ -46,7 +46,8 @@ const Navigation = () => {
         icon={<FiMenu />}
         onClick={onOpen}
         size="lg"
-        position="absolute"
+        fontSize="3xl"
+        position="fixed"
         right="1"
         zIndex="overlay"
       />

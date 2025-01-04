@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import {
   ref,
   uploadBytes,
@@ -12,8 +12,6 @@ import {
   addDoc,
   collection,
   updateDoc,
-  doc,
-  increment,
   serverTimestamp,
 } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
@@ -25,19 +23,46 @@ import {
   Text,
   FormControl,
   FormLabel,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import imageCompression from "browser-image-compression";
 import "react-toastify/dist/ReactToastify.css";
+import alien from "../../assets/alien.gif";
+import alienmusic from "../../assets/alienmusic.mp3";
 
 function Upload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
-  const { userID, userDocID, username } = useContext(AuthContext);
-
+  const { userID, userDocID, username, isBlocked } = useContext(AuthContext);
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
+  
+  const audioRef = useRef(null);
+useEffect(() => {
+  audioRef.current = new Audio(alienmusic);
+
+  const playAudio = async () => {
+    try {
+      await audioRef.current.play();
+    } catch (err) {
+      console.error("Failed to play audio:", err);
+    }
+  };
+
+  playAudio();
+
+  return () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+}, []);
+
 
   const handleUpload = async () => {
     try {
@@ -86,9 +111,6 @@ function Upload() {
         createdAt: serverTimestamp(),
       };
 
-      // const userRef = doc(db, `users/${userDocID}`);
-      // await updateDoc(userRef, { photoCount: increment(1) });
-
       const photoCollection = collection(db, "photoData");
       const docRef = await addDoc(photoCollection, photoData);
 
@@ -107,41 +129,55 @@ function Upload() {
   };
 
   return (
-    <Box
-      p={4}
-      borderWidth="1px"
-      borderRadius="md"
-      maxW={{ base: "100%", sm: "400px", md: "500px" }}
-      mx="auto"
-    >
+    <Box maxW={{ base: "100%", sm: "400px", md: "500px" }} mx="auto">
       <Heading as="h1" size="lg" mb={4}>
-        Upload a new photo
+        Качи нова снимка
       </Heading>
-      <FormControl>
-        <FormLabel>Select a Photo</FormLabel>
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          ref={fileInputRef}
-          mb={4}
-          w="100%"
-        />
-        {selectedFile && (
-          <Box>
-            <Text>Selected File: {selectedFile.name}</Text>
-            <Button
-              colorScheme="blue"
-              mt={2}
-              onClick={handleUpload}
-              width="100%"
-            >
-              Upload
-            </Button>
-          </Box>
-        )}
-      </FormControl>
+      {!isBlocked ? (
+        <FormControl borderWidth="1px" borderRadius="md" p={4}>
+          <FormLabel>Избери снимка</FormLabel>
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            mb={4}
+            w="100%"
+          />
+          {selectedFile && (
+            <Box>
+              <Text>Избрана снимка: {selectedFile.name}</Text>
+              <Button
+                colorScheme="blue"
+                mt={2}
+                onClick={handleUpload}
+                width="100%"
+              >
+                Качи
+              </Button>
+            </Box>
+          )}
+        </FormControl>
+      ) : (
+        <Alert status="error">
+          <AlertIcon />
+          <Text>Блокиран си и не можеш да качваш снимки!<br/>Моли Императора за прошка!</Text>
+          
+        </Alert>
+      )}
       <ToastContainer position="top-center" style={{ zIndex: 2001 }} />
+      <Box
+        display="flex"
+        justifyContent="center"
+        position="fixed"
+        bottom={0}
+        left={{ base: "30", sm: "45", md: "60" }}
+        right={0}
+        mb={4}
+        zIndex={999}
+      >
+        <img src={alien} alt="Alien gif" width="400" />
+      </Box>
     </Box>
   );
 }

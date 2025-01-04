@@ -28,11 +28,11 @@ const Form3 = ({
         <Box>
           <FormControl isRequired>
             <FormLabel fontSize={["14px", "15px", "16px", "17px"]} fontWeight="normal">
-              Username
+              Никнейм
             </FormLabel>
             <Input
               type="text"
-              placeholder="Username"
+              placeholder="Прякор"
               onChange={(e) => handleUsernameChange(e.target.value)}
               fontSize={["14px", "15px", "16px", "17px"]}
             />
@@ -43,11 +43,11 @@ const Form3 = ({
         <Box mt={4}>
           <FormControl isRequired>
             <FormLabel fontSize={["14px", "15px", "16px", "17px"]} fontWeight="normal">
-              Email
+              Имейл
             </FormLabel>
             <Input
               type="email"
-              placeholder="Email"
+              placeholder="Имейл"
               onChange={(e) => handleEmailChange(e.target.value)}
               fontSize={["14px", "15px", "16px", "17px"]}
             />
@@ -58,11 +58,11 @@ const Form3 = ({
         <Box mt={4}>
           <FormControl isRequired>
             <FormLabel fontSize={["14px", "15px", "16px", "17px"]} fontWeight="normal">
-              Password
+              Парола
             </FormLabel>
             <Input
               type="password"
-              placeholder="Password"
+              placeholder="Парола"
               onChange={(e) => handlePasswordChange(e.target.value)}
               fontSize={["14px", "15px", "16px", "17px"]}
             />

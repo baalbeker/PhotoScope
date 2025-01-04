@@ -10,7 +10,7 @@ function TestimonialCard(props) {
             maxW={'640px'}
             direction={{ base: 'column-reverse', md: 'row' }}
             width={'full'}
-            rounded={'md'}
+            // rounded={'md'}
             p={3}
             justifyContent={'space-between'}
             position={'relative'}
@@ -18,17 +18,14 @@ function TestimonialCard(props) {
         >
             <Flex direction={'column'} textAlign={'left'} justifyContent={'space-between'}>
                 <chakra.p
-                    fontFamily={'Inter'}
-                    fontWeight={'medium'}
                     fontSize={{ base: '14px', md: '15px' }} // Adjust font size for smaller screens
                     pb={4}
                 >
                     {content}
                 </chakra.p>
-                <chakra.p fontFamily={'Work Sans'} fontWeight={'bold'} fontSize={{ base: '14px', md: '16px' }}>
+                <chakra.p fontWeight={'bold'} fontSize={{ base: '14px', md: '16px' }}>
                     {name}
                     <chakra.span
-                        fontFamily={'Inter'}
                         fontWeight={'medium'}
                         color={'gray.500'}
                     >
@@ -61,18 +58,15 @@ export default function UserTestimonials() {
 
     <chakra.h1
         py={5}
-        fontSize={{ base: '32px', sm: '40px', md: '48px' }} // Регулирайте размера на шрифта за различни размери на екрани
-        fontFamily={'Work Sans'}
+        fontSize={{ base: '32px', sm: '40px', md: '48px' }}
         fontWeight={'bold'}
         color={useColorModeValue('gray.700', 'gray.50')}
     >
-        Вие сте в добра компания
+        Мнения от потребители
     </chakra.h1>
     <chakra.h2
         margin={'auto'}
-        width={{ base: '90%', sm: '80%', lg: '70%' }} // Регулирайте ширината за отзивчивост
-        fontFamily={'Inter'}
-        fontWeight={'bold'}
+        width={{ base: '90%', sm: '80%', lg: '70%' }}
         color={useColorModeValue('gray.500', 'gray.400')}
     >
         Разберете защо фотографите избират PhotoScope, за да постигнат своите креативни амбиции!
@@ -80,13 +74,11 @@ export default function UserTestimonials() {
 </Box>
 
             <SimpleGrid
-                columns={{ base: 1, sm: 2, xl: 2 }} // Ensures one column on mobile, two columns on larger screens
+                columns={1} // Ensures one column on mobile, two columns on larger screens
                 spacing={{ base: 8, sm: 10, md: 12, lg: 16 }} // Adjust spacing based on screen size
                 mt={16}
                 mb={16}
                 mx={'auto'}
-                fontWeight={'bold'}
-                fontFamily={'sans-serif'}
                 fontSize={'md'}
             >
                 {TESTIMONIALS.map((testimonial, index) => (

@@ -1,18 +1,34 @@
-import {Container,Avatar,Box,Text,Stack,InputGroup,Input,InputLeftElement,Icon,FormLabel,Button,Divider,FormControl,Heading,} from "@chakra-ui/react";
+import {
+  Container,
+  Avatar,
+  Box,
+  Text,
+  Stack,
+  InputGroup,
+  Input,
+  InputLeftElement,
+  Icon,
+  FormLabel,
+  Button,
+  Divider,
+  FormControl,
+  Heading,
+} from "@chakra-ui/react";
 import { FaRegEnvelope, FaLock, FaRegUser } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import DeleteUserDialog from "../../components/ProfileComponents/DeleteUserDialog";
 import PageContainer from "../../components/ProfileComponents/PageContainer";
 import PageContent from "../../components/ProfileComponents/PageContent";
 import ProfileLogic from "../../logic/ProfileLogic";
-import Footer from "../../components/Footer/Footer"
-import 'react-toastify/dist/ReactToastify.css';
-import userImage from "../../assets/user.png"
+import Footer from "../../components/Footer/Footer";
+import "react-toastify/dist/ReactToastify.css";
+import userImage from "../../assets/user.png";
 
 export default function Profile() {
-  const {name,email,avatar,family,username,isAdmin} = useContext(AuthContext);
+  const { name, email, avatar, family, username, isAdmin } =
+    useContext(AuthContext);
   const {
     avatarInputRef,
     nameInputRef,
@@ -27,7 +43,6 @@ export default function Profile() {
     handleChangeEmail,
     handleChangeAvatar,
     handleAddAdmin,
-    handleCurrentPassword,
     handleNewPassword,
     handleConfirmPassword,
     handleDeleteUser,
@@ -36,12 +51,13 @@ export default function Profile() {
     addAdmin,
   } = ProfileLogic();
 
-
   return (
     <PageContainer isFixedNav>
       <PageContent centerContent={true}>
         <Container maxW="container.sm">
-          <Heading mt={5} mb={3}>Профил</Heading>
+          <Heading mt={5} mb={3}>
+            Профил
+          </Heading>
 
           <Box bg="secondary.card" rounded="lg" p={5}>
             <Avatar size="2xl" src={avatar || userImage} />
@@ -49,7 +65,9 @@ export default function Profile() {
               <FormControl>
                 <FormLabel htmlFor="name">Име</FormLabel>
                 <InputGroup>
-                  <InputLeftElement><Icon as={FaRegUser} color="secondary.inputHelper" /></InputLeftElement>
+                  <InputLeftElement>
+                    <Icon as={FaRegUser} color="secondary.inputHelper" />
+                  </InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
                     type="text"
@@ -64,7 +82,9 @@ export default function Profile() {
               <FormControl>
                 <FormLabel htmlFor="family">Фамилия</FormLabel>
                 <InputGroup>
-                  <InputLeftElement><Icon as={FaRegUser} color="secondary.inputHelper" /></InputLeftElement>
+                  <InputLeftElement>
+                    <Icon as={FaRegUser} color="secondary.inputHelper" />
+                  </InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
                     type="text"
@@ -79,7 +99,9 @@ export default function Profile() {
               <FormControl>
                 <FormLabel htmlFor="username">Никнейм</FormLabel>
                 <InputGroup>
-                  <InputLeftElement><Icon as={FaRegUser} color="secondary.inputHelper" /></InputLeftElement>
+                  <InputLeftElement>
+                    <Icon as={FaRegUser} color="secondary.inputHelper" />
+                  </InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
                     type="text"
@@ -94,7 +116,9 @@ export default function Profile() {
               <FormControl>
                 <FormLabel htmlFor="email">Имейл</FormLabel>
                 <InputGroup>
-                  <InputLeftElement><Icon as={FaRegEnvelope} color="secondary.inputHelper" /></InputLeftElement>
+                  <InputLeftElement>
+                    <Icon as={FaRegEnvelope} color="secondary.inputHelper" />
+                  </InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
                     type="email"
@@ -108,10 +132,14 @@ export default function Profile() {
 
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
-                  <FormLabel htmlFor="new_avatar">Смени профилна снимка</FormLabel>
+                  <FormLabel htmlFor="new_avatar">
+                    Смени профилна снимка
+                  </FormLabel>
                 </Stack>
                 <InputGroup>
-                  <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
+                  <InputLeftElement>
+                    <Icon as={FaLock} color="secondary.inputHelper" />
+                  </InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
                     type="file"
@@ -121,25 +149,31 @@ export default function Profile() {
                   />
                 </InputGroup>
               </FormControl>
-              
-            {isAdmin && (
-              <FormControl>
-              <Stack justifyContent="space-between" isInline>
-                <FormLabel htmlFor="old_password">Добави админ</FormLabel>
-              </Stack>
-              <InputGroup>
-                <Input
-                  focusBorderColor="main.500"
-                  type="email"
-                  placeholder="Имейл"
-                  ref={adminInputRef}
-                  onChange={handleAddAdmin}
-                />
-                <Button ml={2} colorScheme="main" variant="outline" onClick={addAdmin}>Добави</Button>
-              </InputGroup>
-            </FormControl>
-            )}
 
+              {isAdmin && (
+                <FormControl>
+                  <Stack justifyContent="space-between" isInline>
+                    <FormLabel htmlFor="old_password">Добави админ</FormLabel>
+                  </Stack>
+                  <InputGroup>
+                    <Input
+                      focusBorderColor="main.500"
+                      type="email"
+                      placeholder="Имейл"
+                      ref={adminInputRef}
+                      onChange={handleAddAdmin}
+                    />
+                    <Button
+                      ml={2}
+                      colorScheme="main"
+                      variant="outline"
+                      onClick={addAdmin}
+                    >
+                      Добави
+                    </Button>
+                  </InputGroup>
+                </FormControl>
+              )}
             </Stack>
           </Box>
 
@@ -156,26 +190,12 @@ export default function Profile() {
             <Stack spacing={4} marginBottom="1rem">
               <FormControl>
                 <Stack justifyContent="space-between" isInline>
-                  <FormLabel htmlFor="old_password">Сегашна парола</FormLabel>
-                </Stack>
-                <InputGroup>
-                  <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
-                  <Input
-                    focusBorderColor="main.500"
-                    id="old_password"
-                    type="password"
-                    placeholder="Въведи сегашна парола"
-                    ref={passwordInputRef}
-                    onChange={handleCurrentPassword}
-                  />
-                </InputGroup>
-              </FormControl>
-              <FormControl>
-                <Stack justifyContent="space-between" isInline>
                   <FormLabel htmlFor="new_password">Нова парола</FormLabel>
                 </Stack>
                 <InputGroup>
-                  <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
+                  <InputLeftElement>
+                    <Icon as={FaLock} color="secondary.inputHelper" />
+                  </InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
                     id="new_password"
@@ -193,7 +213,9 @@ export default function Profile() {
                   </FormLabel>
                 </Stack>
                 <InputGroup>
-                  <InputLeftElement><Icon as={FaLock} color="secondary.inputHelper" /></InputLeftElement>
+                  <InputLeftElement>
+                    <Icon as={FaLock} color="secondary.inputHelper" />
+                  </InputLeftElement>
                   <Input
                     focusBorderColor="main.500"
                     id="new_password2"
@@ -201,21 +223,34 @@ export default function Profile() {
                     placeholder="Потвърди нова парола"
                     ref={passwordInputRef}
                     onChange={handleConfirmPassword}
-
                   />
                 </InputGroup>
               </FormControl>
-              
             </Stack>
           </Box>
 
-          <Stack direction={["column", "row"]} spacing="1rem" justify="end" marginTop="2rem">
-            <Button type="submit" colorScheme="main" variant="outline" onClick={updateInfo}>
+          <Stack
+            direction={["column", "row"]}
+            spacing="1rem"
+            justify="end"
+            marginTop="2rem"
+          >
+            <Button
+              type="submit"
+              colorScheme="messenger"
+              onClick={updateInfo}
+            >
               Запиши промени
             </Button>
-            <Button colorScheme="main" variant="outline" onClick={handleCancel}>Откажи</Button>
+            <Button colorScheme="gray" onClick={handleCancel}>
+              Откажи
+            </Button>
           </Stack>
-          <Divider marginTop="2rem" marginBottom="2rem" orientation="horizontal"/>
+          <Divider
+            marginTop="2rem"
+            marginBottom="2rem"
+            orientation="horizontal"
+          />
           <Box bg="secondary.card" rounded="lg">
             <Stack spacing={0} marginBottom="1rem">
               <Heading as="h4" size="md">
@@ -228,10 +263,10 @@ export default function Profile() {
             <Stack>
               <DeleteUserDialog handleDeleteUser={handleDeleteUser} />
             </Stack>
-            <ToastContainer position="top-center" style={{ zIndex: 2001}} />
+            <ToastContainer position="top-center" style={{ zIndex: 2001 }} />
           </Box>
         </Container>
-        <Footer/>
+        <Footer />
       </PageContent>
     </PageContainer>
   );

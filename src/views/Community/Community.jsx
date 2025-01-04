@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect,useRef } from "react";
 import {
   Box,
   Container,
@@ -17,6 +17,7 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 import { AiFillLock, AiFillUnlock } from "react-icons/ai";
+import { FaHouseUser } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import {
   BsFillPersonCheckFill,
@@ -40,6 +41,7 @@ const Community = () => {
   const [searchType, setSearchType] = useState("name");
   const { colorMode } = useColorMode();
   const bg = colorMode === "dark" ? "gray.800" : "white";
+  const debounceTimeout = useRef(null);
 
   const {
     handleDeleteUser,
@@ -49,42 +51,62 @@ const Community = () => {
     handleCancelFriendRequest,
   } = CommunityLogic(setUserList);
 
-
   useEffect(() => {
+    fetchUsers(searchTerm);
+  }, [searchType]);
   
-    const fetchUsers = async () => {
-      setIsLoading(true);
-      try {
-        const usersCollection = collection(db, "users");
-        console.log("community fetch");
+
+  const fetchUsers = async (term) => {
+    setIsLoading(true);
+    try {
+      const usersCollection = collection(db, "users");
+      let q;
   
-        let q;
-        if (searchTerm.trim() !== "") {
-          if (searchType === "name") {
-            q = query(usersCollection, where("name", "==", searchTerm));
-          } else if (searchType === "email") {
-            q = query(usersCollection, where("email", "==", searchTerm));
-          } else if (searchType === "username") {
-            q = query(usersCollection, where("username", "==", searchTerm));
-          }
-        } else {
+      if (term.trim() !== "") {
+        const termLower = term.toLowerCase(); // Convert term to lowercase for case-insensitive search
+  
+        if (searchType === "name") {
+          q = query(usersCollection); // Fetch all users
+        } else if (searchType === "email") {
+          q = query(usersCollection);
+        } else if (searchType === "username") {
           q = query(usersCollection);
         }
-  
-        const data = await getDocs(q);        
-        setUserList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));        
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        q = query(usersCollection); // No search term, fetch all users
       }
-    };
   
-    fetchUsers();
-  }, [searchTerm, searchType]);
+      const data = await getDocs(q);
+      const filteredData = data.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((user) => {
+          const value = user[searchType]?.toLowerCase() || ""; // Ensure null safety
+          return value.includes(term.toLowerCase());
+        });
+  
+      setUserList(filteredData);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   
 
-  const handleSearchTermChange = (event) => setSearchTerm(event.target.value);
+  const handleSearchTermChange = (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      fetchUsers(term);
+    }, 500);
+  };
+
   const handleSearchTypeChange = (event) => setSearchType(event.target.value);
 
   const userPhotos = (id) => navigate(`/user/${id}`);
@@ -190,8 +212,12 @@ const Community = () => {
                     top={2}
                     right={2}
                   >
-                    <Avatar size="md" src={user.avatar} />
-                    <Text noOfLines={1}>{user.name}</Text>
+                    <Avatar size="xl" src={user.avatar} />
+                  </Flex>
+
+                  <Flex direction="row" align="center" gap={2}>
+                    <Text fontWeight="bold">Name: </Text>
+                    <Text>{user.name + " " + user.family}</Text>
                   </Flex>
 
                   <Flex direction="row" align="center" gap={2}>
@@ -215,22 +241,24 @@ const Community = () => {
                   </Flex>
 
                   <Flex direction="row" gap={4} justify="center" align="center">
-                    {user.friends &&
-                    user.friends.find(
-                      (friend) => friend.userDocID === userDocID
-                    ) ? (
+                    {user.id === userDocID ? (
+                      <Tooltip label="This is you">
+                        <Button size="sm" variant="ghost" isDisabled>
+                          <FaHouseUser />
+                        </Button>
+                      </Tooltip>
+                    ) : user.friends &&
+                      user.friends.find((friend) => friend.userDocID === userDocID) ? (
                       <Tooltip label="Friend">
                         <Button size="sm" variant="ghost" colorScheme="green">
                           <BsFillPersonCheckFill />
                         </Button>
                       </Tooltip>
                     ) : user.requests &&
-                      user.requests.find(
-                        (request) => request.userDocID === userDocID
-                      ) ? (
+                      user.requests.find((request) => request.userDocID === userDocID) ? (
                       <Tooltip label="Cancel Friend Request">
                         <Button
-                          size="sm"
+                          size="md"
                           onClick={() => handleCancelFriendRequest(user.id)}
                           variant="ghost"
                           colorScheme="red"
@@ -241,7 +269,7 @@ const Community = () => {
                     ) : (
                       <Tooltip label="Send Friend Request">
                         <Button
-                          size="sm"
+                          size="md"
                           onClick={() => handleFriendRequest(user.id)}
                           variant="ghost"
                           colorScheme="blue"
@@ -255,7 +283,7 @@ const Community = () => {
                       <>
                         <Tooltip label="Delete User">
                           <Button
-                            size="sm"
+                            size="md"
                             onClick={() => handleDeleteUser(user.id)}
                             variant="ghost"
                             colorScheme="red"
@@ -266,7 +294,7 @@ const Community = () => {
                         {user.isBlocked ? (
                           <Tooltip label="Unblock User">
                             <Button
-                              size="sm"
+                              size="md"
                               onClick={() => handleUnblockUser(user.id)}
                               variant="ghost"
                               colorScheme="orange"
@@ -277,7 +305,7 @@ const Community = () => {
                         ) : (
                           <Tooltip label="Block User">
                             <Button
-                              size="sm"
+                              size="md"
                               onClick={() => handleBlockUser(user.id)}
                               variant="ghost"
                               colorScheme="red"
@@ -288,20 +316,20 @@ const Community = () => {
                         )}
                       </>
                     )}
-                        <Button
-                          size="sm"
-                          onClick={() => userPhotos(user.docID)}
-                          variant="solid"
-                          colorScheme="blue"
-                          textColor="white"
-                          border="2px solid"
-                          borderColor="blue.400"
-                          rounded="md"
-                          px={2}
-                          py={1}
-                        >
-                          Photos
-                        </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => userPhotos(user.docID)}
+                      variant="solid"
+                      colorScheme="blue"
+                      textColor="white"
+                      border="2px solid"
+                      borderColor="blue.400"
+                      rounded="md"
+                      px={2}
+                      py={1}
+                    >
+                      Photos
+                    </Button>
                   </Flex>
                 </Flex>
               </Box>

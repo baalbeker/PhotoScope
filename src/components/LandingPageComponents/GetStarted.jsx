@@ -2,7 +2,7 @@ import {Container,Stack,Flex,Box,Heading,Text,Button,Image,useColorModeValue} fr
 import PropTypes from 'prop-types';
 
 import Blob from './Blob';
-import image from "../../assets/runnin.jpg";
+import image from "../../assets/landing.jpg";
 
 
 const GetStarted = ({ onGetStartedClick }) => {

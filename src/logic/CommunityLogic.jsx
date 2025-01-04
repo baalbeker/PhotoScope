@@ -84,7 +84,7 @@ const CommunityLogic = (setUserList) => {
     await updateDoc(docRef, data);
     setUserList((prevUserList) =>
       prevUserList.map((user) =>
-        user.id === userId ? { ...user, isBlocked: null } : user
+        user.id === userId ? { ...user, isBlocked: false } : user
       )
     );
   };

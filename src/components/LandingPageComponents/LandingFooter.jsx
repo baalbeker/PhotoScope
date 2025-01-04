@@ -26,7 +26,7 @@ function LandingFooter() {
         <Box>
           <Image src={logo} alt="Logo" boxSize="100px" mt={10} />
         </Box>
-        <Text>© 2024 PhotoScope. All rights reserved</Text>
+        <Text >© 2024 PhotoScope. All rights reserved</Text>
         <Stack direction={'row'} spacing={3}>
           {nav_items.map((navItem) => (
             <Link
