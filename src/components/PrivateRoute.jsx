@@ -6,7 +6,7 @@ const PrivateRoute = ({ element }) => {
   const { isLoggedIn } = useContext(AuthContext);
 
   if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return element;

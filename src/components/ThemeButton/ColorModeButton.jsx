@@ -1,12 +1,12 @@
 import {IconButton,useColorMode } from "@chakra-ui/react"
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-// import wow from '../../assets/wow.mp3'
+import plank from '../../assets/plank.mp3'
 
 const ThemeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-    // const audio = new Audio(wow);
+    const audio = new Audio(plank);
     const toggle = () => {
-      // audio.play();
+      audio.play();
       toggleColorMode()
     };
 

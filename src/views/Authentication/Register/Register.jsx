@@ -1,18 +1,17 @@
-import { useState} from 'react';
-import { Flex, Box, Progress, Image, Button, Stack, useColorModeValue, ButtonGroup } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Flex, Box, Image, Button, Stack, useColorModeValue, ButtonGroup } from '@chakra-ui/react';
 import { db, auth } from "../../../config/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { addDoc, collection, updateDoc, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Logo from "../../../assets/logo.png"
-import Form2 from './Forms/Form2';
-import Form3 from './Forms/Form3';
+import Logo from "../../../assets/logo.png";
+import Forms from './Forms';
 import Loading from '../../../components/Loading/Loading';
+import cj from '../../../assets/cj.mp3'
+
 
 const Register = () => {
-  const [step, setStep] = useState(2); // Start directly at step 2
-  const [progress, setProgress] = useState(33.33); // Adjust progress for step 2
   const [isLoading, setIsLoading] = useState(false);
   let navigate = useNavigate();
 
@@ -22,19 +21,27 @@ const Register = () => {
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
 
-  const [usernameError, setUsernameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [familyError, setFamilyError] = useState('');
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [familyError, setFamilyError] = useState("");
 
-  const usersCollectionRef = collection(db, 'users');
+  const usersCollectionRef = collection(db, "users");
   const usersQuery = query(usersCollectionRef);
+
+        const audio = new Audio(cj);
+        const toggle = () => {
+          audio.play();
+        };
 
   const validateUsername = async (username) => {
     if (username.length < 2 || username.length > 20) {
-      setUsernameError("Потребителското име трябва да бъде между 2 и 20 символа");
+      setUsernameError(
+        "Потребителското име трябва да бъде между 2 и 20 символа"
+      );
     } else {
+      setUsernameError("");
       const querySnapshot = await getDocs(usersQuery);
       const existingUser = querySnapshot.docs.find(
         (doc) => doc.data().username === username
@@ -42,62 +49,63 @@ const Register = () => {
       if (existingUser) {
         setUsernameError("Потребителското име вече съществува");
       } else {
-        setUsernameError("");
         setRegUsername(username);
       }
     }
   };
-  
+
   const validateEmail = async (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(email)) {
       setEmailError("Невалиден имейл адрес");
     } else {
+      setEmailError("");
+
       const querySnapshot = await getDocs(
         query(usersCollectionRef, where("email", "==", email))
       );
+
       if (!querySnapshot.empty) {
         setEmailError("Имейлът вече съществува");
       } else {
-        setEmailError("");
         setRegEmail(email);
       }
     }
   };
-  
+
   const validatePassword = async (password) => {
     if (password.length < 6) {
-      setPasswordError('Паролата трябва да е поне 6 символа');
+      setPasswordError("Паролата трябва да е поне 6 символа");
     } else {
-      setPasswordError('');
+      setPasswordError("");
       setRegPassword(password);
     }
-  }
-  
+  };
+
   const validateName = async (name) => {
     if (name.length < 3) {
-      setNameError('Името трябва да е поне 3 символа');
+      setNameError("Името трябва да е поне 3 символа");
     } else {
-      setNameError('');
+      setNameError("");
       setRegName(name);
     }
-  }
-  
+  };
+
   const validateFamily = async (family) => {
     if (family.length < 3) {
-      setFamilyError('Фамилията трябва да е поне 3 символа');
+      setFamilyError("Фамилията трябва да е поне 3 символа");
     } else {
-      setFamilyError('');
+      setFamilyError("");
       setRegFamily(family);
     }
-  }
-  
+  };
 
   const addUser = async () => {
     const usersCollection = collection(db, "users");
 
     const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().split('T')[0];
+    const formattedDate = currentDate.toISOString().split("T")[0];
 
     const docRef = await addDoc(usersCollection, {
       name: regName,
@@ -108,20 +116,19 @@ const Register = () => {
       role: "user",
       isBlocked: false,
       id: auth.currentUser.uid,
-      photoCount: 0,
       dateJoined: formattedDate,
     });
 
     const docID = docRef.id;
     const dataWithDocID = { ...addUser, docID: docID };
     await updateDoc(docRef, dataWithDocID);
-  }
+  };
 
   const updateName = () => {
     updateProfile(auth.currentUser, {
-      displayName: `${regName} ${regFamily}`
-    })
-  }
+      displayName: `${regName} ${regFamily}`,
+    });
+  };
 
   const signUp = (e) => {
     e.preventDefault();
@@ -138,23 +145,22 @@ const Register = () => {
       })
       .finally(() => {
         setIsLoading(false);
+        toggle()
         navigate("/home");
       });
   };
 
   const checkFormValidity = () => {
-    switch (step) {
-      case 2:
-        return !regName || !regFamily;
-      case 3:
-        return !regUsername || !regEmail || !regPassword;
-      default:
-        return false;
-    }
+    return !regName || !regFamily || !regUsername || !regEmail || !regPassword;
   };
 
   return (
-    <Flex w="90%" align={"center"} justify={"center"} bg={useColorModeValue("gray.50", "gray.800")}>
+    <Flex
+      w="90%"
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
       <Stack maxW={{ base: "100%", sm: "80%", md: "md" }} w="100%" px={4}>
         <Stack align={"center"}>
           <Image src={Logo} alt="Energize Logo" w={64} />
@@ -164,69 +170,49 @@ const Register = () => {
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
-          p={{ base: 4, md: 3 }} // Adjust padding for smaller screens
+          p={{ base: 4, md: 3 }}
         >
           <Stack spacing={4}>
-            <Progress hasStripe value={progress} mb="5%" isAnimated />
+            <Forms
+              validateName={validateName}
+              validateFamily={validateFamily}
+              validateUsername={validateUsername}
+              validateEmail={validateEmail}
+              validatePassword={validatePassword}
+              nameError={nameError}
+              familyError={familyError}
+              usernameError={usernameError}
+              emailError={emailError}
+              passwordError={passwordError}
+            />
 
-            {step === 2 ? (
-              <Form2
-                validateName={validateName}
-                validateFamily={validateFamily}
-                nameError={nameError}
-                familyError={familyError}
-              />
-            ) : step === 3 ? (
-              <Form3
-                validateUsername={validateUsername}
-                validateEmail={validateEmail}
-                validatePassword={validatePassword}
-                usernameError={usernameError}
-                emailError={emailError}
-                passwordError={passwordError}
-              />
-            ) : null}
-
-            <ButtonGroup mt="5%" w="100%">
-              <Flex w="100%" direction={{ base: "column", md: "row" }} justifyContent="space-between">
+            <ButtonGroup mt={{ base: "-5", md: "-20" }}>
+              <Flex
+                w="100%"
+                direction={{ base: "column", md: "row" }}
+                justifyContent="space-around"
+              >
                 <Button
-                  w={{ base: "100%", sm: "45%", md: "7rem" }}
-                  onClick={
-                    step === 3
-                      ? signUp
-                      : () => {
-                          setStep(step + 1);
-                          setProgress(progress + 33.33);
-                        }
-                  }
-                  colorScheme="teal"
-                  variant="outline"
+                  w={{ base: "100%", sm: "45%", md: "9rem" }}
+                  onClick={signUp}
+                  colorScheme="twitter"
+                  variant="solid"
                   isDisabled={checkFormValidity()}
                   mb={3}
                 >
-                  {step === 3 ? "Регистрация" : "Напред"}
+                  Регистрация
                 </Button>
 
                 <Button
-                  onClick={() => {
-                    if (step === 2) {
-                      navigate("/login");
-                    } else {
-                      setStep(step - 1);
-                      setProgress(progress - 33.33);
-                    }
-                  }}
-                  colorScheme="teal"
-                  variant="solid"
-                  w={{ base: "100%", sm: "45%", md: "7rem" }} // Adjust width for smaller screens
-                  mb={{ base: "1rem", sm: "0", md: "0" }} // Adjust margin for smaller screens
-                  mr={{ base: "0", sm: "5%" }}
+                  onClick={() => navigate("/login")}
+                  variant="outline"
+                  _hover={{ bg: "gray.200" }}
+                  w={{ base: "100%", sm: "45%", md: "9rem" }}
                 >
                   Назад
                 </Button>
               </Flex>
             </ButtonGroup>
-
           </Stack>
         </Box>
       </Stack>

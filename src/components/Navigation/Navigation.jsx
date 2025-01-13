@@ -24,6 +24,7 @@ import { AuthContext } from "../../context/AuthContext";
 import logo from "../../assets/logo.png";
 import logo2 from "../../assets/logo2.png";
 import NavItem from "./NavItem";
+import { FiCodesandbox } from "react-icons/fi";
 
 const MotionBox = motion(Box);
 
@@ -114,6 +115,20 @@ const Navigation = () => {
               active={location.pathname === "/profile"}
               onClick={onClose} 
             />
+            <NavItem
+              link="/dynamic"
+              icon={FiCodesandbox}
+              title="Говно код"
+              active={location.pathname === "/dynamic"}
+              onClick={onClose} 
+            />
+            <NavItem
+              link="/fortune-wheel"
+              icon={FiCodesandbox}
+              title="Fortune Wheel"
+              active={location.pathname === "/fortune-wheel"}
+              onClick={onClose} 
+            />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
@@ -175,6 +190,19 @@ const Navigation = () => {
           icon={CgProfile}
           title="Профил"
           active={location.pathname === "/profile"}
+        />
+        <NavItem
+          link="/dynamic"
+          icon={FiCodesandbox}
+          title="Говно код"
+          active={location.pathname === "/dynamic"}
+        />
+        <NavItem
+          link="/fortune-wheel"
+          icon={FiCodesandbox}
+          title="Fortune Wheel"
+          active={location.pathname === "/fortune-wheel"}
+          onClick={onClose} 
         />
       </Flex>
     </Flex>

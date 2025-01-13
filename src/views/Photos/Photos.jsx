@@ -107,21 +107,22 @@ const Photos = () => {
           ))}
         </Grid>
 
+        {/* Center the button using Flex and proper alignment */}
         {photos.length > visiblePhotos && (
-          <Button
-            mt={4}
-            mb={4}
-            onClick={loadMorePhotos}
-            bg="blue.500"
-            color="white"
-            _hover={{ bg: "blue.600" }}
-            _active={{ bg: "blue.700" }}
-            borderRadius="md"
-            px={4}
-            py={2}
-          >
-            Повече
-          </Button>
+          <Flex justify="center" w="100%" mt={4} mb={4}>
+            <Button
+              onClick={loadMorePhotos}
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+              _active={{ bg: "blue.700" }}
+              borderRadius="md"
+              px={4}
+              py={2}
+            >
+              Повече
+            </Button>
+          </Flex>
         )}
 
         {selectedPhoto && (

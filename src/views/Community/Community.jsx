@@ -29,7 +29,7 @@ import goalheader from "../../assets/img5.jpg";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../config/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import { useColorMode } from "@chakra-ui/react";
 
 const Community = () => {
@@ -104,7 +104,7 @@ const Community = () => {
 
     debounceTimeout.current = setTimeout(() => {
       fetchUsers(term);
-    }, 500);
+    }, 1000);
   };
 
   const handleSearchTypeChange = (event) => setSearchType(event.target.value);

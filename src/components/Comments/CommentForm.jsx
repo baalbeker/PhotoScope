@@ -5,10 +5,17 @@ import { AuthContext } from '../../context/AuthContext';
 import { Box, Textarea, Button, Alert, AlertIcon, Text } from '@chakra-ui/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import quag from '../../assets/quag.mp3'
+
 
 const CommentForm = ({ photo }) => {
   const [commentText, setCommentText] = useState('');
   const { isBlocked, userID, username } = useContext(AuthContext);
+
+    const audio = new Audio(quag);
+    const toggle = () => {
+      audio.play();
+    };
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +33,7 @@ const CommentForm = ({ photo }) => {
         dislikes: [],
         likes: []
       });
+      toggle()
       setCommentText('');
       toast.success('Comment uploaded successfully')
     } catch (error) {

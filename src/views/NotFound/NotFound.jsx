@@ -7,7 +7,7 @@ const NotFound = () => {
       <div className="overlay"></div>
       <div className="terminal">
         <h1>
-          Error <span className="errorcode">404</span>
+          Error <span className="errorcode">504</span>
         </h1>
         <p className="output">
           The page you are looking for might have been removed, had its name

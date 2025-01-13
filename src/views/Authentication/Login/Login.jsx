@@ -23,6 +23,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useContext, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Logo from "../../../assets/logo.png";
+import daddy from "../../../assets/daddy.mp3";
+
 
 const Login = () => {
   const { setIsLoggedIn, email, setEmail, password, setPassword } =
@@ -33,12 +35,18 @@ const Login = () => {
     window.scrollTo(0, 0);
   }, []);
 
+    const audio = new Audio(daddy);
+    const toggle = () => {
+      audio.play();
+    };
+
   const signIn = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         localStorage.setItem("isAuth", true);
         setIsLoggedIn(true);
+        toggle()
         navigate("/home");
       })
       .catch((error) => {
@@ -99,7 +107,7 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </FormControl>
-              <Stack mt={5} spacing={10}>
+              <Stack mt={5}>
                 <Button
                   type="submit"
                   bg={"blue.400"}
@@ -107,6 +115,14 @@ const Login = () => {
                   _hover={{ bg: "blue.500" }}
                 >
                   Влез
+                </Button>
+                <Button
+                  as={RouterLink}
+                  to="/"
+                  variant="outline"
+                  _hover={{ bg: "gray.200" }}
+                >
+                  Назад
                 </Button>
                 <Box>
                   <Text align={"center"}>

@@ -111,26 +111,8 @@ export default function ProfileLogic() {
 
   const handleDeleteUser = () => {
     console.log("delete user fetch");
-    if (photoURL) {
-      const photoRef = ref(storage, photoURL);
-      deleteObject(photoRef)
-        .then(() => {
-          deleteUser(auth.currentUser)
-            .then(() => {
-              deleteDoc(doc(db, "users", userDocID));
-              toast.success("User successfully deleted!");
-            })
-            .then(() => {
-              navigate("/login");
-            })
-            .catch((error) => {
-              console.error("Error deleting user: " + error);
-            });
-        })
-        .catch((error) => {
-          console.error("Error deleting user photo from storage: " + error);
-        });
-    } else {
+  
+    const deleteUserAction = () => {
       deleteUser(auth.currentUser)
         .then(() => {
           deleteDoc(doc(db, "users", userDocID));
@@ -142,8 +124,22 @@ export default function ProfileLogic() {
         .catch((error) => {
           console.error("Error deleting user: " + error);
         });
+    };
+  
+    if (avatar) {
+      deleteObject(ref(storage, avatar))
+        .then(() => {
+          deleteUserAction(); // Call the deleteUserAction after the photo deletion
+        })
+        .catch((error) => {
+          console.error("Error deleting user photo from storage: " + error);
+          deleteUserAction(); // Proceed to delete the user even if photo deletion fails
+        });
+    } else {
+      deleteUserAction(); // Directly delete the user if there is no photoURL
     }
   };
+  
 
   const handleCancel = () => {
     avatarInputRef.current.value = null;

@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { FaRegEnvelope, FaLock, FaRegUser } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import DeleteUserDialog from "../../components/ProfileComponents/DeleteUserDialog";
 import PageContainer from "../../components/ProfileComponents/PageContainer";
@@ -25,6 +25,7 @@ import ProfileLogic from "../../logic/ProfileLogic";
 import Footer from "../../components/Footer/Footer";
 import "react-toastify/dist/ReactToastify.css";
 import userImage from "../../assets/user.png";
+import elevator from '../../assets/elevator.mp3'
 
 export default function Profile() {
   const { name, email, avatar, family, username, isAdmin } =
@@ -50,6 +51,19 @@ export default function Profile() {
     updateInfo,
     addAdmin,
   } = ProfileLogic();
+
+  useEffect(() => {
+    const audio = new Audio(elevator);
+    audio.play().catch((error) => {
+      console.error("Audio playback failed:", error);
+    });
+
+    return () => {
+      // Clean up audio playback if necessary
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, []);
 
   return (
     <PageContainer isFixedNav>

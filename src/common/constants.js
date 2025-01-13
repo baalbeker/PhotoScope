@@ -1,11 +1,7 @@
-import man from "../assets/man.png"
-import woman from "../assets/woman.png"
-import aparat from "../assets/aparat.png"
-import progressIcon from "../assets/pace.png"
-import terminator from "../assets/terminator.jpg"
-import rosen from "../assets/rosen.jpg"
-import andrewT from "../assets/andrewT.png"
-import serena from "../assets/serena.png"
+
+import tiho from "../assets/tiho.png"
+import krasi from "../assets/krasi.png"
+import stanka from "../assets/stanka.png"
 
 export const nav_items = [
   {
@@ -24,26 +20,27 @@ export const nav_items = [
 
 export const TESTIMONIALS = [
   {
-    name: 'Росен Антонов',
+    name: 'Станко Келешов',
+    role: 'Кварталния дилър',
+    content:
+    "Сами, абе може ли да дойдеш да погледнеш нещо",
+    avatar: stanka,
+  },
+  {
+    name: 'Тищо',
     role: 'Фотограф',
     content:
-      "Откакто използвам PhotoScope, вече не се чудя къде да показвам последните си снимки. Просто ги качвам и ги споделям със света.",
-    avatar: rosen,
+      "Откакто използвам PhotoScope, вече си снимам гъза по цял ден",
+    avatar: tiho,
   },
   {
-    name: 'Боб Шатърбъг',
-    role: 'Дрон фотограф',
+    name: 'Краси',
+    role: 'Майкрософт ентусиаст',
     content:
-    "Улавяйте моментите, живейте деня! PhotoScope трансформира моето хоби във фотография в визуално пътуване на изследване и споделяне.",
-    avatar: terminator,
+    "МАМКА МУ ШЕЙБА ВЛЕЗНА МИ А КЕЙС",
+    avatar: krasi,
   },
-  {
-    name: 'Петко Ваков',
-    role: 'Дюнерджия',
-    content:
-    "Здравейте, колеги фотографи! PhotoScope и неговите функции изцяло подобриха моите фотографски умения. Това е като да имаш лична галерия, в която да показваш работата си и да се свързваш с други творчески умове. ",
-    avatar: andrewT,
-  },
+
 ];
 
 

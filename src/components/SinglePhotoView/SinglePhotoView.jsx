@@ -30,6 +30,10 @@ import {
 } from "../../services/photoServices";
 import { AiFillLike, AiFillDislike, AiFillDelete } from "react-icons/ai";
 import "./SinglePhotoView.css";
+import gay from '../../assets/gay.mp3'
+import soul from '../../assets/soul.mp3'
+
+
 
 const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
   const { userID, userDocID, isAdmin } = useContext(AuthContext);
@@ -37,6 +41,16 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [comments, setComments] = useState([]);
+
+      const audio = new Audio(gay);
+      const toggle = () => {
+        audio.play();
+      };
+
+      const secondAudio = new Audio(soul);
+      const secondToggle = () => {
+        secondAudio.play();
+      };
 
   useEffect(() => {
     setIsOpen(true);
@@ -93,6 +107,7 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
   };
 
   const handleLikePhoto = async () => {
+    toggle()
     const updatedPhotoData = await handleLike(photo, userID);
     setPhoto((prevState) => ({
       ...prevState,
@@ -115,6 +130,7 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
   };
 
   const deletePhotoHandler = async () => {
+    secondToggle()
     await deletePhoto(photo, setPhotos, userDocID);
     handleClose();
   };

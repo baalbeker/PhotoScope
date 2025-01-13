@@ -7,12 +7,13 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Container,
+  Flex,
 } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import emailjs from "emailjs-com";
 import { CONTACTMS } from "../../common/constants";
 import goalheader from "../../assets/img5.jpg";
-import Footer from "../../components/Footer/Footer";
 
 const Contact = () => {
   const initialState = { name: "", email: "", message: "" };
@@ -49,76 +50,82 @@ const Contact = () => {
   };
 
   return (
-    <Box
-      textAlign="center"
-      h="87vh"
-      w={{ base: "100%", md: "100vh" }}
-      px={{ base: 4, md: 10 }}
-      mb
-    >
-      <Box
-        bgImage={goalheader}
-        colSpan={5}
-        rowSpan={1}
-        bgSize="cover"
-        bgPosition="center"
-        w="100%"
-        h={{ base: "10vh", md: "20vh" }}
-        rounded="md"
-        // mb={4}
-        p={6}
-      >
-        <Text
-          mt={{ base: "1", md: "10vh" }}
-          textAlign="left"
-          fontSize="25px"
-          fontWeight="bold"
-          color="white"
+    <Container h="82vh" minWidth="100%" align="center" overflowY="scroll">
+      <Flex direction="column" align="flex-start" justify="flex-start">
+        <Box
+          bgImage={goalheader}
+          bgSize="cover"
+          bgPosition="center"
+          w="100%"
+          h={{ base: "10vh", md: "20vh" }}
+          rounded="md"
+          mb={4}
+          p={6}
         >
-          Свържете се с нас
-        </Text>
-      </Box>
-      <Text p={7}>{CONTACTMS}</Text>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel htmlFor="name">Име</FormLabel>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            isRequired
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel htmlFor="email">Имейл</FormLabel>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            isRequired
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel htmlFor="message">Съобщение</FormLabel>
-          <Textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            isRequired
-          />
-        </FormControl>
-        <Button type="submit" mt={4} colorScheme="teal">
-          Изпрати
-        </Button>
-      </form>
-      <ToastContainer position="top-center" style={{ zIndex: 2001 }} />
-    </Box>
+          <Text
+            mt={{ base: "1", md: "6vh" }}
+            textAlign="left"
+            fontSize="25px"
+            fontWeight="bold"
+            color="white"
+          >
+            Свържете се с нас
+          </Text>
+        </Box>
+        <Text p={7}>{CONTACTMS}</Text>
+      </Flex>
+  
+      {/* New Flex container for the form */}
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        w="100%"
+        maxW="600px"
+        m="0 auto"
+      >
+        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+          <FormControl>
+            <FormLabel htmlFor="name">Име</FormLabel>
+            <Input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              isRequired
+            />
+          </FormControl>
+          <FormControl mt={4}>
+            <FormLabel htmlFor="email">Имейл</FormLabel>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              isRequired
+            />
+          </FormControl>
+          <FormControl mt={4}>
+            <FormLabel htmlFor="message">Съобщение</FormLabel>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              isRequired
+            />
+          </FormControl>
+          <Button type="submit" mt={4} colorScheme="teal" width="100%">
+            Изпрати
+          </Button>
+        </form>
+        <ToastContainer position="top-center" style={{ zIndex: 2001 }} />
+      </Flex>
+    </Container>
   );
+  
 };
 
 export default Contact;

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect,useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import FriendsLogic from "../../logic/FriendsLogic";
 import userimage from "../../assets/user.png";
@@ -29,12 +29,12 @@ import {
 import { BsFillPersonXFill } from "react-icons/bs";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
-// import fart from '../../assets/fart.mp3'
-
+import { useNavigate } from "react-router-dom";
 
 
 const Friends = () => {
-  const { userDocID, friends, setFriends, requests, setRequests } = useContext(AuthContext);
+  const { userDocID, friends, setFriends, requests, setRequests } =
+    useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const {
     handleAccept,
@@ -44,24 +44,11 @@ const Friends = () => {
     bg,
   } = FriendsLogic();
 
-  // const audioRef = useRef(null);
-  // useEffect(() => {
-  //   audioRef.current = new Audio(fart);
-  //   audioRef.current.play();
-  //   return () => {
-  //     if (audioRef.current) {
-  //       audioRef.current.pause();
-  //       audioRef.current.currentTime = 0;
-  //     }
-  //   };
-  // }, []);
-
-
   useEffect(() => {
     const fetchFriends = async () => {
       setIsLoading(true);
       try {
-        const userDocRef = doc(db, "users", userDocID);
+        const userDocRef = doc(db, "users", userDocID); //current logged in user
         const userDocSnapshot = await getDoc(userDocRef);
         const userData = userDocSnapshot.data();
 
@@ -69,7 +56,7 @@ const Friends = () => {
           const requestsData = userData.requests || [];
           setRequests(requestsData);
 
-          const friendsData = userData.friends || [];
+          const friendsData = userData.friends || []; //the array of friends of the user
           const friendPromises = friendsData.map(async (friend) => {
             const friendDocRef = doc(db, "users", friend.userDocID);
             const friendDocSnapshot = await getDoc(friendDocRef);
@@ -89,6 +76,13 @@ const Friends = () => {
     fetchFriends();
   }, [userDocID, setRequests, setFriends]);
 
+
+
+  const navigate = useNavigate();
+  const handleChat = (recipientDocID) => {
+    navigate(`/chat/${recipientDocID}`);
+  };
+  
   const gridColumns = useBreakpointValue({ base: "1fr", md: "repeat(3, 1fr)" });
   const friendTextFontSize = useBreakpointValue({ base: "14px", md: "lg" });
   const friendButtonSize = useBreakpointValue({ base: "xs", md: "sm" });
@@ -102,20 +96,25 @@ const Friends = () => {
         templateColumns={{ base: "1fr", md: "repeat(5, 1fr)" }}
         gap={4}
       >
-          <GridItem
-                      colSpan={5}
-                      rowSpan={1}
-            rounded="md"
-            borderColor="gray.50"
-            bgImage={goalheader}
-            bgSize="cover"
-            h={{ base: "10vh", md: "15vh" }}
-            p={6}
+        <GridItem
+          colSpan={5}
+          rowSpan={1}
+          rounded="md"
+          borderColor="gray.50"
+          bgImage={goalheader}
+          bgSize="cover"
+          h={{ base: "10vh", md: "15vh" }}
+          p={6}
+        >
+          <Text
+            mt={{ base: "1", md: "3vh" }}
+            fontSize="25px"
+            fontWeight="bold"
+            color="white"
           >
-            <Text mt={{ base: "1", md: "3vh" }} fontSize="25px" fontWeight="bold" color="white">
-              Приятели
-            </Text>
-          </GridItem>
+            Приятели
+          </Text>
+        </GridItem>
 
         <GridItem colSpan={{ base: 5, md: 5 }}>
           <Divider mt={5} orientation="horizontal" />
@@ -189,8 +188,6 @@ const Friends = () => {
         </GridItem>
 
         <GridItem colSpan={{ base: 5, md: 5 }}>
-
-
           {isLoading ? (
             <Flex justifyContent="center" alignItems="center" h="200px">
               <Spinner size="xl" />
@@ -207,7 +204,23 @@ const Friends = () => {
                     boxShadow="sm"
                     textAlign="center"
                     bg={cardBg}
+                    position="relative"
                   >
+                    <Button
+                      position="absolute"
+                      top="10px"
+                      right="10px"
+                      size="sm"
+                      variant="ghost"
+                      colorScheme="red"
+                      onClick={() => handleRemoveFriend(user.docID)}
+                    >
+                      <Box
+                        as={BsFillPersonXFill}
+                        width="20px"
+                        height="20px"
+                      />
+                    </Button>
                     <Avatar
                       size="lg"
                       src={user.avatar ? user.avatar : userimage}
@@ -228,18 +241,12 @@ const Friends = () => {
                     </Text>
                     <Button
                       mt={3}
-                      size={friendButtonSize}
-                      variant="ghost"
-                      colorScheme="red"
-                      onClick={() => handleRemoveFriend(user.docID)}
+                      size="md"
+                      colorScheme="green"
+                      variant="solid"
+                      onClick={() => handleChat(user.docID)}
                     >
-                      <Box
-                        as={BsFillPersonXFill}
-                        width="24px"
-                        height="24px"
-                        mr={2}
-                      />
-                      Премахни
+                      Chat
                     </Button>
                   </Box>
                 ) : null
