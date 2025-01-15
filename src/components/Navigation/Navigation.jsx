@@ -116,13 +116,6 @@ const Navigation = () => {
               onClick={onClose} 
             />
             <NavItem
-              link="/dynamic"
-              icon={FiCodesandbox}
-              title="Говно код"
-              active={location.pathname === "/dynamic"}
-              onClick={onClose} 
-            />
-            <NavItem
               link="/fortune-wheel"
               icon={FiCodesandbox}
               title="Fortune Wheel"
@@ -190,12 +183,6 @@ const Navigation = () => {
           icon={CgProfile}
           title="Профил"
           active={location.pathname === "/profile"}
-        />
-        <NavItem
-          link="/dynamic"
-          icon={FiCodesandbox}
-          title="Говно код"
-          active={location.pathname === "/dynamic"}
         />
         <NavItem
           link="/fortune-wheel"

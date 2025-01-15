@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Logo from "../../../assets/logo.png";
 import Forms from './Forms';
 import Loading from '../../../components/Loading/Loading';
-import cj from '../../../assets/cj.mp3'
+// import cj from '../../../assets/cj.mp3'
 
 
 const Register = () => {
@@ -30,10 +30,10 @@ const Register = () => {
   const usersCollectionRef = collection(db, "users");
   const usersQuery = query(usersCollectionRef);
 
-        const audio = new Audio(cj);
-        const toggle = () => {
-          audio.play();
-        };
+        // const audio = new Audio(cj);
+        // const toggle = () => {
+        //   audio.play();
+        // };
 
   const validateUsername = async (username) => {
     if (username.length < 2 || username.length > 20) {
@@ -145,7 +145,7 @@ const Register = () => {
       })
       .finally(() => {
         setIsLoading(false);
-        toggle()
+        // toggle()
         navigate("/home");
       });
   };

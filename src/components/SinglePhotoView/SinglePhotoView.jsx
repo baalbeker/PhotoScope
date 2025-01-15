@@ -30,7 +30,7 @@ import {
 } from "../../services/photoServices";
 import { AiFillLike, AiFillDislike, AiFillDelete } from "react-icons/ai";
 import "./SinglePhotoView.css";
-import gay from '../../assets/gay.mp3'
+import openphoto from '../../assets/openphoto.mp3'
 import soul from '../../assets/soul.mp3'
 
 
@@ -42,7 +42,7 @@ const SinglePhotoView = ({ photo, onClose, setPhoto, setPhotos }) => {
   const [dislikes, setDislikes] = useState(0);
   const [comments, setComments] = useState([]);
 
-      const audio = new Audio(gay);
+      const audio = new Audio(openphoto);
       const toggle = () => {
         audio.play();
       };

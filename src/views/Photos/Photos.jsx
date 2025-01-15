@@ -16,7 +16,7 @@ import img2 from "../../assets/img2.jpg";
 import img3 from "../../assets/img3.jpg";
 import img4 from "../../assets/img4.jpg";
 import img5 from "../../assets/img5.jpg";
-import uploadphoto from "../../assets/uploadphoto.mp3";
+import openphoto from "../../assets/openphoto.mp3";
 
 const Photos = () => {
   const {
@@ -31,7 +31,7 @@ const Photos = () => {
   const [bgImageIndex, setBgImageIndex] = useState(0);
   const images = [img1, img2, img3, img4, img5];
 
-  const audio = new Audio(uploadphoto);
+  const audio = new Audio(openphoto);
 
   const openSinglePhotoView = (photo) => {
     audio.play();

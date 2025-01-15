@@ -23,7 +23,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useContext, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Logo from "../../../assets/logo.png";
-import daddy from "../../../assets/daddy.mp3";
+// import daddy from "../../../assets/daddy.mp3";
 
 
 const Login = () => {
@@ -35,10 +35,10 @@ const Login = () => {
     window.scrollTo(0, 0);
   }, []);
 
-    const audio = new Audio(daddy);
-    const toggle = () => {
-      audio.play();
-    };
+    // const audio = new Audio(daddy);
+    // const toggle = () => {
+    //   audio.play();
+    // };
 
   const signIn = (e) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ const Login = () => {
       .then(() => {
         localStorage.setItem("isAuth", true);
         setIsLoggedIn(true);
-        toggle()
+        // toggle()
         navigate("/home");
       })
       .catch((error) => {

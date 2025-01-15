@@ -19,8 +19,6 @@ import Contact from "./views/Contact/Contact";
 import UserPhotos from "./components/UserPhotos/UserPhotos";
 import PrivateRoute from "./components/PrivateRoute";
 import Chat from './views/Chat/Chat'
-import DynamicPage from "./views/DynamicPage/DynamicPage";
-import DynamicContent from "./views/DynamicPage/DynamicContent";
 import FortuneWheel from "./views/FortuneWheel/FortuneWheel";
 
 function App() {
@@ -28,7 +26,6 @@ function App() {
   const navigate = useNavigate();
   const { colorMode } = useColorMode();
   const [isLoading, setIsLoading] = useState(true);
-  const [dynamicRoutes, setDynamicRoutes] = useState([]);
   const isAuth = localStorage.getItem("isAuth") === "true";
 
   useEffect(() => {
@@ -86,10 +83,6 @@ function App() {
                 <Route path="/user/:id" element={<PrivateRoute element={<UserPhotos />} />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/chat/:recipientDocID" element={<PrivateRoute element={<Chat />} />} />
-                <Route path="/dynamic" element={<DynamicPage dynamicRoutes={dynamicRoutes} setDynamicRoutes={setDynamicRoutes} />} />
-                {dynamicRoutes.map((route, index) => (
-                  <Route key={index} path={route.path} element={<DynamicContent componentCode={route.component} />} />
-                ))}
               </Routes>
               <ThemeButton />
             </Flex>
